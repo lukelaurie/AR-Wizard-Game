@@ -22,6 +22,8 @@ public class PlayerCam : NetworkBehaviour
 
     void Update()
     {
+        if (orientation == null) return;
+
         // get mouse input
         float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
         float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;
