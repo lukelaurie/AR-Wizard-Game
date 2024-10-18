@@ -143,6 +143,10 @@ PlayerSettings:
   preloadedAssets:
   - {fileID: 4800000, guid: b02d09082cbc14569ae46c12d9836abc, type: 3}
   - {fileID: 4800000, guid: f40a6c94c8e1b494d93d434ae522a14f, type: 3}
+  - {fileID: -2237503864104003938, guid: cc4d2a1964ac04ac580bf0e57dcec094, type: 2}
+  - {fileID: 11400000, guid: 01e62e0dd01f63c409efbcba3a704a9f, type: 2}
+  - {fileID: 94757734608324842, guid: 8cf5151693a07c440a386455f09a1134, type: 2}
+  - {fileID: 11400000, guid: cb433053d2184c14d814b90423866542, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -163,6 +167,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
+    Standalone: com.DefaultCompany.AR-Wizard
     iPhone: com.DefaultCompany.AR-Wizard
   buildNumber:
     Standalone: 0
@@ -862,11 +867,11 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: 8758b018-435b-4617-b56e-025eb02f965f
+  cloudProjectId: 77ca4549-7852-4f46-baea-5cd7f77492b4
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
   projectName: AR Wizard
-  organizationId: porkloinial
+  organizationId: lukelaurie13
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}
