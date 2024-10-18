@@ -22,6 +22,6 @@ public class GameUIManager : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         createGameCanvas.gameObject.SetActive(false);
-        startCamera.gameObject.SetActive(false);
+        // startCamera.gameObject.SetActive(false);
     }
 }

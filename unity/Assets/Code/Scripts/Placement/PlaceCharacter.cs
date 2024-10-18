@@ -8,19 +8,13 @@ using UnityEngine.EventSystems;
 public class PlaceCharacter : NetworkBehaviour
 {
     [SerializeField] private GameObject placementObject;
-
+    [SerializeField] private Camera mainCam;
 
     private bool isPlaced = false;
-    private Camera mainCam;
-
 
     public static event Action characterPlaced;
     // Update is called once per frame
 
-    private void Start()
-    {
-        mainCam = GameObject.FindObjectOfType<Camera>();
-    }
 
     void Update()
     {
@@ -94,7 +88,13 @@ public class PlaceCharacter : NetworkBehaviour
     {
         GameObject character = Instantiate(placementObject, positon, rotation);
 
+        Debug.Log(placementObject);
+        Debug.Log(positon);
+        Debug.Log(rotation);
+        Debug.Log(character.ToString());
+        
         NetworkObject characterNetworkObject = character.GetComponent<NetworkObject>();
+        
 
         characterNetworkObject.SpawnWithOwnership(callerID);
 
