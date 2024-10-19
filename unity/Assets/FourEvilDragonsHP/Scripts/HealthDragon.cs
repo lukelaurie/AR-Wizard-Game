@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DragonBossAttack : MonoBehaviour
+public class HealthDragon : MonoBehaviour
 {
     public int health;
     public int maxHealth = 1000;
@@ -22,7 +22,7 @@ public class DragonBossAttack : MonoBehaviour
 
     public void TakeDamage(int amount)
     {
-        health -= amount
+        health -= amount;
         if(health <= 0)
         {
             //play death animation
