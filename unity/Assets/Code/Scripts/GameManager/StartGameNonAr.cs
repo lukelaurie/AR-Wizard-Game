@@ -45,28 +45,4 @@ public class StartGameNonAr : NetworkBehaviour
             // StartCoroutine(CheckForConnectionTimeout());
         });
     }
-
-    private IEnumerator CheckForConnectionTimeout()
-    {
-        float timout = 2f;
-        float timer = 0f;
-
-        while (timer < timout)
-        {
-            if (NetworkManager.Singleton.IsConnectedClient)
-            {
-                yield break; // user connected so stop the coroutine
-            }
-
-            timer += 1;
-            System.Threading.Thread.Sleep(1000);
-            yield return null;
-        }
-
-        if (!NetworkManager.Singleton.IsConnectedClient)
-        {
-            Debug.LogError("Connection timed out. Failed to connect to server");
-            NetworkManager.Singleton.Shutdown();
-        }
-    }
 }

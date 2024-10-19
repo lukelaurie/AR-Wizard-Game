@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 public class PlaceCharacter : NetworkBehaviour
 {
     [SerializeField] private GameObject placementObject;
-
+    
 
     private bool isPlaced = false;
     private Camera mainCam;
