@@ -17,10 +17,10 @@ public class PlaceCharacter : NetworkBehaviour
     public static event Action characterPlaced;
     // Update is called once per frame
 
-    private void Start()
-    {
-        mainCam = GameObject.FindObjectOfType<Camera>();
-    }
+    // private void Start()
+    // {
+    //     mainCam = Camera.current;
+    // }
 
     void Update()
     {
@@ -76,7 +76,7 @@ public class PlaceCharacter : NetworkBehaviour
 
     void TouchToRay(Vector3 touch)
     {
-        Ray ray = mainCam.ScreenPointToRay(touch);
+        Ray ray = Camera.main.ScreenPointToRay(touch);
         RaycastHit hit;
 
         // checks if the ray from the camera hit a physical game object
