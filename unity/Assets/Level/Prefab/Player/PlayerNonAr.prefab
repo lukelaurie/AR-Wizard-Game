@@ -341,8 +341,9 @@ GameObject:
   - component: {fileID: 8842977709521623667}
   - component: {fileID: 1258427668300214771}
   - component: {fileID: 1244170508711991105}
+  - component: {fileID: 606233953193540891}
   m_Layer: 0
-  m_Name: PlayerObj
+  m_Name: PlayerNonAr
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -477,3 +478,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraHolder: {fileID: 2685874167464360285}
   offset: {x: 0, y: 0, z: 0}
+--- !u!114 &606233953193540891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2806718501574609571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e889e9ee69229d4e98e9588f6718cc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  placementObject: {fileID: 7261152975830172777, guid: 139c42c7256d0439bb41846fcd8a4f63, type: 3}
+  mainCam: {fileID: 3812193401467533940}

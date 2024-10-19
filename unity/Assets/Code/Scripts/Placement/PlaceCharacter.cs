@@ -11,22 +11,12 @@ public class PlaceCharacter : NetworkBehaviour
     
 
     private bool isPlaced = false;
-    private Camera mainCam;
-
+    [SerializeField] private Camera mainCam;
 
     public static event Action characterPlaced;
-    // Update is called once per frame
-
-    // private void Start()
-    // {
-    //     mainCam = Camera.current;
-    // }
 
     void Update()
     {
-        // if (AllPlayerDataManager.Instance != default &&
-        //     AllPlayerDataManager.Instance.GetHasPlacerPlaced(NetworkManager.Singleton.LocalClientId)) return;
-
 #if UNITY_EDITOR
         if (Input.GetMouseButtonDown(0))
         {
@@ -76,7 +66,7 @@ public class PlaceCharacter : NetworkBehaviour
 
     void TouchToRay(Vector3 touch)
     {
-        Ray ray = Camera.main.ScreenPointToRay(touch);
+        Ray ray = mainCam.ScreenPointToRay(touch);
         RaycastHit hit;
 
         // checks if the ray from the camera hit a physical game object
@@ -97,6 +87,8 @@ public class PlaceCharacter : NetworkBehaviour
         NetworkObject characterNetworkObject = character.GetComponent<NetworkObject>();
 
         characterNetworkObject.SpawnWithOwnership(callerID);
+
+        Debug.Log("here3");
 
         // AllPlayerDataManager.Instance.AddPlacedPlayer(callerID);
     }
