@@ -17,5 +17,13 @@ jobs:
     - name: Install SSH client 
       run: sudo apt-get install -y openssh-client 
 
-    - name: test step
-      run: echo "Testin in the job rn"
+    - name: Add PEM key
+      run: |
+        mkdir -p ~/.ssh 
+        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa 
+        chmod 600 ~/.ssh/id_rsa 
+
+    - name: test
+      run: |
+        echo "starting"
+        cat ~/.ssh/id_rsa 
