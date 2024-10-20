@@ -38,6 +38,4 @@ jobs:
       run: | 
         ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
         # the deployment code here 
-        cd AR-Wizard-Game
-        ls
-        bash build_project/deploy.sh
+        bash AR-Wizard-Game/build_project/deploy.sh
