@@ -1,84 +1,104 @@
-// using System;
-// using System.Collections;
-// using System.Collections.Generic;
-// using Niantic.Lightship.SharedAR.Colocalization;
-// using Unity.Netcode;
-// using UnityEngine;
-// using UnityEngine.UI;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using Niantic.Lightship.SharedAR.Colocalization;
+using Unity.Netcode;
+using UnityEngine;
+using UnityEngine.UI;
 
-// public class StartGameAr : MonoBehaviour
-// {
-//     [SerializeField] private SharedSpaceManager sharedSpaceManager;
-//     const int MAX_AMOUNT_CLIENTS_ROOM = 2;
+public class StartGameAr : NetworkBehaviour
+{
+    [SerializeField] private SharedSpaceManager sharedSpaceManager;
+    const int MAX_AMOUNT_CLIENTS_ROOM = 2;
 
-//     [SerializeField] private Texture2D targetImage;
-//     [SerializeField] private float targetImageSize;
-//     private string roomName = "TestRoom";
+    [SerializeField] private Texture2D targetImage;
+    [SerializeField] private float targetImageSize;
+    private readonly string roomName = "TestRoom";
 
-//     [SerializeField] private Button startGameButton;
-//     [SerializeField] private Button createRoomButton;
-//     [SerializeField] private Button joinRoomButton;
-//     private bool isHost;
+    [SerializeField] private Button startGameButton;
+    [SerializeField] private Button createRoomButton;
+    [SerializeField] private Button joinRoomButton;
+    [SerializeField] private Button clientJoinSever;
+    private bool isHost;
 
-//     public static event Action OnStartSharedSpaceHost;
-//     public static event Action OnJoinSharedSpaceClient;
-//     public static event Action OnStartGame;
-//     public static event Action OnStartSharedSpace;
+    public static event Action OnStartSharedSpaceHost;
+    public static event Action OnJoinSharedSpaceClient;
+    public static event Action OnStartGame;
+    public static event Action OnStartSharedSpace;
 
-//     private void Awake()
-//     {
-//         DontDestroyOnLoad(gameObject);
-//         sharedSpaceManager.sharedSpaceManagerStateChanged += SharedSpaceManagerOnSharedSpaceManagerStateChange;
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+        sharedSpaceManager.sharedSpaceManagerStateChanged += SharedSpaceManagerStateChange;
 
-//         startGameButton.onClick.AddListener(StartGame);
-//         createRoomButton.onClick.AddListener(CreateGameHost);
-//         joinRoomButton.onClick.AddListener(JoinGameClient);
+        startGameButton.onClick.AddListener(StartGame);
+        createRoomButton.onClick.AddListener(CreateGameHost);
+        joinRoomButton.onClick.AddListener(JoinGameClient);
 
-//         startGameButton.interactable = false;
-//     }
+        startGameButton.interactable = false;
+    }
 
-//     private void SharedSpaceManagerOnSharedSpaceManagerStateChange(SharedSpaceManager.SharedSpaceManagerStateChangeEventArgs obj)
-//     {
-//         if (obj.Tracking)
-//         {
-//             startGameButton.interactable = true;
-//             createRoomButton.interactable = false; 
-//             joinRoomButton.interactable = false;
-//         }
-//     }
+    private void SharedSpaceManagerStateChange(SharedSpaceManager.SharedSpaceManagerStateChangeEventArgs obj)
+    {
+        if (obj.Tracking)
+        {
+            startGameButton.interactable = true;
+            createRoomButton.interactable = false; 
+            joinRoomButton.interactable = false;
+        }
+    }
 
-//     void StartGame()
-//     {
-//         onStartGame?.Invoke();
-//         if (isHost)
-//         {
-//             NetworkManager.Singleton.StartHost();
-//         }
-//         else 
-//         {
-//             NetworkManager.Singleton.StartClient();
-//         }
-//     }
+    void StartGame()
+    {
+        OnStartGame?.Invoke();
+        if (isHost)
+        {
+            NetworkManager.Singleton.StartHost();
+        }
+        else 
+        {
+            NetworkManager.Singleton.StartClient();
+        }
+    }
 
-//     void StartSharedSpace() {
+    void StartSharedSpace() {
+        OnStartSharedSpace?.Invoke();
 
-//     }
+        if (sharedSpaceManager.GetColocalizationType() == SharedSpaceManager.ColocalizationType.MockColocalization) {
+            var mockTrackingArgs = ISharedSpaceTrackingOptions.CreateMockTrackingOptions();
+            var roomArgs = ISharedSpaceRoomOptions.CreateLightshipRoomOptions(
+                roomName,MAX_AMOUNT_CLIENTS_ROOM,"MockColocalizationDemo"
+            );
 
-//     void StartSharedSpace() {
+            sharedSpaceManager.StartSharedSpace(mockTrackingArgs, roomArgs);
+            return;
+        }
 
-//     }
+        if (sharedSpaceManager.GetColocalizationType() == SharedSpaceManager.ColocalizationType.ImageTrackingColocalization) {
+            var imageTrackingOptions = ISharedSpaceTrackingOptions.CreateImageTrackingOptions(
+                targetImage, targetImageSize
+            );
 
-//     void CreateGameHost()
-//     {
-//         isHost = true;
-//         onStartSharedSpaceHost?.Invoke();
-//         StartSharedSpace();
-//     }
+            var roomArgs = ISharedSpaceRoomOptions.CreateLightshipRoomOptions(
+                roomName,MAX_AMOUNT_CLIENTS_ROOM,"ImageColocalizationDemo"
+            );
 
-//     void JoinGameClient()
-//     {
-//         isHost = false;
-//         onJoinSharedSpaceClient?.Invoke();
-//         JoinSharedSpace();
-//     }
-// }
+            sharedSpaceManager.StartSharedSpace(imageTrackingOptions, roomArgs);
+            return;
+        }
+    }
+
+    void CreateGameHost()
+    {
+        isHost = true;
+        OnStartSharedSpaceHost?.Invoke();
+        StartSharedSpace();
+    }
+
+    void JoinGameClient()
+    {
+        isHost = false;
+        OnJoinSharedSpaceClient?.Invoke();
+        StartSharedSpace();
+    }
+}

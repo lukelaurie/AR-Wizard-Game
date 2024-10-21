@@ -8,25 +8,15 @@ using UnityEngine.EventSystems;
 public class PlaceCharacter : NetworkBehaviour
 {
     [SerializeField] private GameObject placementObject;
-
+    
 
     private bool isPlaced = false;
-    private Camera mainCam;
-
+    [SerializeField] private Camera mainCam;
 
     public static event Action characterPlaced;
-    // Update is called once per frame
-
-    private void Start()
-    {
-        mainCam = GameObject.FindObjectOfType<Camera>();
-    }
 
     void Update()
     {
-        // if (AllPlayerDataManager.Instance != default &&
-        //     AllPlayerDataManager.Instance.GetHasPlacerPlaced(NetworkManager.Singleton.LocalClientId)) return;
-
 #if UNITY_EDITOR
         if (Input.GetMouseButtonDown(0))
         {
@@ -97,6 +87,8 @@ public class PlaceCharacter : NetworkBehaviour
         NetworkObject characterNetworkObject = character.GetComponent<NetworkObject>();
 
         characterNetworkObject.SpawnWithOwnership(callerID);
+
+        Debug.Log("here3");
 
         // AllPlayerDataManager.Instance.AddPlacedPlayer(callerID);
     }
