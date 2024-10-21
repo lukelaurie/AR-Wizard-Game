@@ -1,7 +1,11 @@
 #!/bin/bash
 
-git pull
+BRNCH_NAME = "$1"
+echo "$BRNCH_NAME"
 cd AR-Wizard-Game/unity/game_build/
+
+git checkout $BRNCH_NAME
+git pull
 
 chmod +x game.x86_64
 
