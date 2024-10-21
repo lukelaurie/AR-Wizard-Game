@@ -9,14 +9,11 @@ using Unity.Netcode.Transports.UTP;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StartGameAr : NetworkBehaviour
+public class StartGameAr : MonoBehaviour
 {
     [SerializeField] private SharedSpaceManager sharedSpaceManager;
-    const int MAX_AMOUNT_CLIENTS_ROOM = 5;
-
     [SerializeField] private Texture2D targetImage;
     [SerializeField] private float targetImageSize;
-    private readonly string roomName = "TestRoom";
 
     [SerializeField] private Button startGameButton;
     [SerializeField] private Button joinServerButton;
@@ -29,12 +26,10 @@ public class StartGameAr : NetworkBehaviour
 
     private void Start()
     {
-        // Netcode connection event callback
         NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnectedCallback;
         DontDestroyOnLoad(gameObject);
-        sharedSpaceManager.sharedSpaceManagerStateChanged += SharedSpaceManagerStateChange;
 
-        //startGameButton.onClick.AddListener(StartGame);
+        // startGameButton.onClick.AddListener(StartGame);
 
         joinServerButton.onClick.AddListener(() =>
         {
@@ -50,17 +45,11 @@ public class StartGameAr : NetworkBehaviour
         StartSharedSpace();
     }
 
-    private void SharedSpaceManagerStateChange(SharedSpaceManager.SharedSpaceManagerStateChangeEventArgs obj)
-    {
-        if (obj.Tracking)
-        {
-            joinServerButton.interactable = true;
-            startServerButton.interactable = true;
-        }
-    }
-
     void StartSharedSpace()
     {
+        string roomName = "Random1Room";
+        const int MAX_AMOUNT_CLIENTS_ROOM = 32;
+
         OnStartSharedSpace?.Invoke();
 
         if (sharedSpaceManager.GetColocalizationType() == SharedSpaceManager.ColocalizationType.MockColocalization)
@@ -91,6 +80,7 @@ public class StartGameAr : NetworkBehaviour
 
     void JoinServer(string ip, ushort port)
     {
+        LightshipNetcodeTransport.
         NetworkManager.Singleton.StartClient();
         OnJoinSharedSpaceClient?.Invoke();
         Debug.Log("Starting Client...");
@@ -98,7 +88,7 @@ public class StartGameAr : NetworkBehaviour
 
     void StartServer()
     {
-        NetworkManager.Singleton.StartHost();
+        NetworkManager.Singleton.StartServer();
         OnStartSharedSpaceServer?.Invoke();
         Debug.Log("Starting The Dedicated Server...");
     }

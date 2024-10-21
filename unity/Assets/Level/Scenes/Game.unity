@@ -132,6 +132,7 @@ GameObject:
   m_Component:
   - component: {fileID: 77684469}
   - component: {fileID: 77684470}
+  - component: {fileID: 77684471}
   m_Layer: 0
   m_Name: XR Origin
   m_TagString: Untagged
@@ -173,6 +174,21 @@ MonoBehaviour:
   m_CameraFloorOffsetObject: {fileID: 530167393}
   m_RequestedTrackingOriginMode: 0
   m_CameraYOffset: 1.1176
+--- !u!114 &77684471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 77684468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5e00303423314ba88f0be8d259dfe62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _colocalizationType: 999
+  _sharedArRootPrefab: {fileID: 4781414300907772666, guid: addffc4d55be14f14b776b2b504b86d6, type: 3}
+  _arLocationManager: {fileID: 0}
 --- !u!1 &100391519
 GameObject:
   m_ObjectHideFlags: 0
@@ -1804,7 +1820,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 894163051}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
@@ -1830,10 +1846,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daee0291f4dfd1a40873b7e25a400dd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sharedSpaceManager: {fileID: 894163055}
+  sharedSpaceManager: {fileID: 77684471}
   targetImage: {fileID: 0}
   targetImageSize: 0
-  startGameButton: {fileID: 131009420}
+  startGameButton: {fileID: 0}
   joinServerButton: {fileID: 523478524}
   startServerButton: {fileID: 1949011249}
 --- !u!114 &894163055
@@ -1843,7 +1859,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 894163051}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c5e00303423314ba88f0be8d259dfe62, type: 3}
   m_Name: 
@@ -2749,8 +2765,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1846014606}
-  - component: {fileID: 1846014605}
   - component: {fileID: 1846014604}
+  - component: {fileID: 1846014607}
   m_Layer: 0
   m_Name: NetworkManagerAr
   m_TagString: Untagged
@@ -2770,7 +2786,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39a7c1e438dc4e689f75a8ff942540a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1846014605
+--- !u!4 &1846014606
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1846014603}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.020532131, y: 1.1807926, z: -0.33257866}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1846014607
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2788,7 +2819,7 @@ MonoBehaviour:
     PlayerPrefab: {fileID: 0}
     Prefabs:
       NetworkPrefabsLists:
-      - {fileID: 11400000, guid: a9f028a57b71c504b90029c6e4dc0cd5, type: 2}
+      - {fileID: 11400000, guid: 93f3f5ab3c21cf5438a5a76770aa7cf2, type: 2}
     TickRate: 30
     ClientConnectionBufferTimeout: 10
     ConnectionApproval: 0
@@ -2806,22 +2837,7 @@ MonoBehaviour:
     EnableNetworkLogs: 1
     OldPrefabList: []
   RunInBackground: 1
-  LogLevel: 0
---- !u!4 &1846014606
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1846014603}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.020532131, y: 1.1807926, z: -0.33257866}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  LogLevel: 1
 --- !u!1 &1879596364
 GameObject:
   m_ObjectHideFlags: 0
