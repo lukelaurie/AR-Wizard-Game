@@ -1,8 +1,8 @@
 #!/bin/bash
 
-BRANCH_NAME = "$1"
+BRANCH_NAME="$1"
 cd AR-Wizard-Game/
-git checkout $BRANCH_NAME
+git checkout "$BRANCH_NAME"
 git pull
 
 cd unity/game_build/
