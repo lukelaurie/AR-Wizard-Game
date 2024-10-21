@@ -27,8 +27,10 @@ public class StartGameAr : NetworkBehaviour
     public static event Action OnStartGame;
     public static event Action OnStartSharedSpace;
 
-    private void Awake()
+    private void Start()
     {
+        // Netcode connection event callback
+        NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnectedCallback;
         DontDestroyOnLoad(gameObject);
         sharedSpaceManager.sharedSpaceManagerStateChanged += SharedSpaceManagerStateChange;
 
@@ -45,16 +47,15 @@ public class StartGameAr : NetworkBehaviour
             StartServer();
         });
 
-        startGameButton.interactable = false;
+        StartSharedSpace();
     }
 
     private void SharedSpaceManagerStateChange(SharedSpaceManager.SharedSpaceManagerStateChangeEventArgs obj)
     {
         if (obj.Tracking)
         {
-            startGameButton.interactable = true;
-            joinServerButton.interactable = false;
-            startServerButton.interactable = false;
+            joinServerButton.interactable = true;
+            startServerButton.interactable = true;
         }
     }
 
@@ -90,7 +91,6 @@ public class StartGameAr : NetworkBehaviour
 
     void JoinServer(string ip, ushort port)
     {
-        StartSharedSpace();
         NetworkManager.Singleton.StartClient();
         OnJoinSharedSpaceClient?.Invoke();
         Debug.Log("Starting Client...");
@@ -98,9 +98,13 @@ public class StartGameAr : NetworkBehaviour
 
     void StartServer()
     {
-        StartSharedSpace();
         NetworkManager.Singleton.StartHost();
         OnStartSharedSpaceServer?.Invoke();
         Debug.Log("Starting The Dedicated Server...");
+    }
+
+    private void OnClientConnectedCallback(ulong clientId)
+    {
+        Debug.Log($"Client connected: {clientId}");
     }
 }
