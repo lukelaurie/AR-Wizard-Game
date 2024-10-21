@@ -867,11 +867,11 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: 77ca4549-7852-4f46-baea-5cd7f77492b4
+  cloudProjectId: 8758b018-435b-4617-b56e-025eb02f965f
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
   projectName: AR Wizard
-  organizationId: lukelaurie13
+  organizationId: porkloinial
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}

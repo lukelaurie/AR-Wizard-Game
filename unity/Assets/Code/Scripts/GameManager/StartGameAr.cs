@@ -2,26 +2,27 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Niantic.Lightship.SharedAR.Colocalization;
+using Niantic.Lightship.SharedAR.Netcode;
+using Niantic.Lightship.SharedAR.Rooms;
 using Unity.Netcode;
+using Unity.Netcode.Transports.UTP;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class StartGameAr : NetworkBehaviour
 {
     [SerializeField] private SharedSpaceManager sharedSpaceManager;
-    const int MAX_AMOUNT_CLIENTS_ROOM = 2;
+    const int MAX_AMOUNT_CLIENTS_ROOM = 5;
 
     [SerializeField] private Texture2D targetImage;
     [SerializeField] private float targetImageSize;
     private readonly string roomName = "TestRoom";
 
     [SerializeField] private Button startGameButton;
-    [SerializeField] private Button createRoomButton;
-    [SerializeField] private Button joinRoomButton;
-    [SerializeField] private Button clientJoinSever;
-    private bool isHost;
+    [SerializeField] private Button joinServerButton;
+    [SerializeField] private Button startServerButton;
 
-    public static event Action OnStartSharedSpaceHost;
+    public static event Action OnStartSharedSpaceServer;
     public static event Action OnJoinSharedSpaceClient;
     public static event Action OnStartGame;
     public static event Action OnStartSharedSpace;
@@ -31,9 +32,18 @@ public class StartGameAr : NetworkBehaviour
         DontDestroyOnLoad(gameObject);
         sharedSpaceManager.sharedSpaceManagerStateChanged += SharedSpaceManagerStateChange;
 
-        startGameButton.onClick.AddListener(StartGame);
-        createRoomButton.onClick.AddListener(CreateGameHost);
-        joinRoomButton.onClick.AddListener(JoinGameClient);
+        //startGameButton.onClick.AddListener(StartGame);
+
+        joinServerButton.onClick.AddListener(() =>
+        {
+            //EC2 INSTANCE: "18.117.251.172"
+            JoinServer("127.0.0.1", 7777);
+        });
+
+        startServerButton.onClick.AddListener(() =>
+        {
+            StartServer();
+        });
 
         startGameButton.interactable = false;
     }
@@ -43,44 +53,34 @@ public class StartGameAr : NetworkBehaviour
         if (obj.Tracking)
         {
             startGameButton.interactable = true;
-            createRoomButton.interactable = false; 
-            joinRoomButton.interactable = false;
+            joinServerButton.interactable = false;
+            startServerButton.interactable = false;
         }
     }
 
-    void StartGame()
+    void StartSharedSpace()
     {
-        OnStartGame?.Invoke();
-        if (isHost)
-        {
-            NetworkManager.Singleton.StartHost();
-        }
-        else 
-        {
-            NetworkManager.Singleton.StartClient();
-        }
-    }
-
-    void StartSharedSpace() {
         OnStartSharedSpace?.Invoke();
 
-        if (sharedSpaceManager.GetColocalizationType() == SharedSpaceManager.ColocalizationType.MockColocalization) {
+        if (sharedSpaceManager.GetColocalizationType() == SharedSpaceManager.ColocalizationType.MockColocalization)
+        {
             var mockTrackingArgs = ISharedSpaceTrackingOptions.CreateMockTrackingOptions();
             var roomArgs = ISharedSpaceRoomOptions.CreateLightshipRoomOptions(
-                roomName,MAX_AMOUNT_CLIENTS_ROOM,"MockColocalizationDemo"
+                roomName, MAX_AMOUNT_CLIENTS_ROOM, "MockColocalizationDemo"
             );
 
             sharedSpaceManager.StartSharedSpace(mockTrackingArgs, roomArgs);
             return;
         }
 
-        if (sharedSpaceManager.GetColocalizationType() == SharedSpaceManager.ColocalizationType.ImageTrackingColocalization) {
+        if (sharedSpaceManager.GetColocalizationType() == SharedSpaceManager.ColocalizationType.ImageTrackingColocalization)
+        {
             var imageTrackingOptions = ISharedSpaceTrackingOptions.CreateImageTrackingOptions(
                 targetImage, targetImageSize
             );
 
             var roomArgs = ISharedSpaceRoomOptions.CreateLightshipRoomOptions(
-                roomName,MAX_AMOUNT_CLIENTS_ROOM,"ImageColocalizationDemo"
+                roomName, MAX_AMOUNT_CLIENTS_ROOM, "ImageColocalizationDemo"
             );
 
             sharedSpaceManager.StartSharedSpace(imageTrackingOptions, roomArgs);
@@ -88,17 +88,19 @@ public class StartGameAr : NetworkBehaviour
         }
     }
 
-    void CreateGameHost()
+    void JoinServer(string ip, ushort port)
     {
-        isHost = true;
-        OnStartSharedSpaceHost?.Invoke();
         StartSharedSpace();
+        NetworkManager.Singleton.StartClient();
+        OnJoinSharedSpaceClient?.Invoke();
+        Debug.Log("Starting Client...");
     }
 
-    void JoinGameClient()
+    void StartServer()
     {
-        isHost = false;
-        OnJoinSharedSpaceClient?.Invoke();
         StartSharedSpace();
+        NetworkManager.Singleton.StartHost();
+        OnStartSharedSpaceServer?.Invoke();
+        Debug.Log("Starting The Dedicated Server...");
     }
 }

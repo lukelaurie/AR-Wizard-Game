@@ -6,43 +6,39 @@ using UnityEngine.UI;
 
 public class StartGameNonAr : NetworkBehaviour
 {
-    [SerializeField] private Button startHost;
-    [SerializeField] private Button startClient;
-    [SerializeField] private Button clientJoinSever;
+    [SerializeField] private Button joinServerButton;
+    [SerializeField] private Button startServerButton;
 
     void Start()
     {
         // check if running on the server 
         if (Application.isBatchMode)
         {
-            Debug.Log("Starting The Dedicated Server...");
-            NetworkManager.Singleton.StartServer();
-        }
-        else
-        {
-            clientJoinSever.onClick.AddListener(() =>
-            {
-                string ip = "18.117.251.172";
-                ushort port = 7777;
-
-                NetworkManager.Singleton.GetComponent<UnityTransport>().SetConnectionData(ip, port);
-                NetworkManager.Singleton.StartClient();
-
-                // StartCoroutine(CheckForConnectionTimeout());
-            });
+            StartServer();
+            return;
         }
 
-        // by default these will run on localhost for testing purposes
-        startHost.onClick.AddListener(() =>
+        joinServerButton.onClick.AddListener(() =>
         {
-            NetworkManager.Singleton.StartHost();
+            //EC2 INSTANCE: "18.117.251.172"
+            JoinServer("127.0.0.1", 7777);
         });
 
-        startClient.onClick.AddListener(() =>
+        startServerButton.onClick.AddListener(() =>
         {
-            NetworkManager.Singleton.StartClient();
-
-            // StartCoroutine(CheckForConnectionTimeout());
+            StartServer();
         });
+    }
+
+    void JoinServer(string ip, ushort port)
+    {
+        NetworkManager.Singleton.GetComponent<UnityTransport>().SetConnectionData(ip, port);
+        NetworkManager.Singleton.StartClient();
+    }
+
+    void StartServer()
+    {
+        Debug.Log("Starting The Dedicated Server...");
+        NetworkManager.Singleton.StartServer();
     }
 }

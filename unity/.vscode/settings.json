@@ -51,5 +51,10 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "unity.sln"
+    "editor.defaultFormatter": "ms-dotnettools.csharp",
+    "dotnet.defaultSolution": "unity.sln",
+    "[csharp]": {
+    "editor.defaultFormatter": "ms-dotnettools.csharp",
+    "editor.formatOnSave": true,
+  }
 }
