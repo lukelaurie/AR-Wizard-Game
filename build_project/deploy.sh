@@ -1,10 +1,9 @@
 #!/bin/bash
 
-BRNCH_NAME = "$1"
-echo "$BRNCH_NAME"
+BRANCH_NAME = "$1"
 cd AR-Wizard-Game/unity/game_build/
 
-git checkout $BRNCH_NAME
+git checkout $BRANCH_NAME
 git pull
 
 chmod +x game.x86_64
