@@ -1,6 +1,5 @@
 #!/bin/bash
 
-git checkout multiplayer-online
 git pull
 cd AR-Wizard-Game/unity/game_build/
 

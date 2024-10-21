@@ -27,8 +27,6 @@ public class StartGameNonAr : NetworkBehaviour
 
                 NetworkManager.Singleton.GetComponent<UnityTransport>().SetConnectionData(ip, port);
                 NetworkManager.Singleton.StartClient();
-
-                // StartCoroutine(CheckForConnectionTimeout());
             });
         }
 
@@ -41,8 +39,6 @@ public class StartGameNonAr : NetworkBehaviour
         startClient.onClick.AddListener(() =>
         {
             NetworkManager.Singleton.StartClient();
-
-            // StartCoroutine(CheckForConnectionTimeout());
         });
     }
 }
