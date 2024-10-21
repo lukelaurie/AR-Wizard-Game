@@ -80,7 +80,6 @@ public class StartGameAr : MonoBehaviour
 
     void JoinServer(string ip, ushort port)
     {
-        LightshipNetcodeTransport.
         NetworkManager.Singleton.StartClient();
         OnJoinSharedSpaceClient?.Invoke();
         Debug.Log("Starting Client...");
