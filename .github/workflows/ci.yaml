@@ -33,18 +33,4 @@ jobs:
 
         ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
         # the deployment code here 
-        # bash AR-Wizard-Game/build_project/deploy.sh "$BRANCH_NAME"
-        
-        cd AR-Wizard-Game/
-        git checkout $BRANCH_NAME
-        git pull
-
-        cd unity/game_build/
-
-        chmod +x game.x86_64
-
-        # kill old server and start the new one 
-        pkill -f game.x86_64
-        nohup ./game.x86_64 -batchmode -nographics &
-
-        echo "after"
+        bash AR-Wizard-Game/build_project/deploy.sh "$BRANCH_NAME"
