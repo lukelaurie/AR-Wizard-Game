@@ -91,14 +91,14 @@ public class StartGameAr : MonoBehaviour
     {
         NetworkManager.Singleton.StartClient();
         OnJoinSharedSpaceClient?.Invoke();
-        Debug.Log("Starting Client...");
+        Debug.Log("Starting AR Client...");
     }
 
     void StartServer()
     {
         NetworkManager.Singleton.StartServer();
         OnStartSharedSpaceServer?.Invoke();
-        Debug.Log("Starting The Dedicated Server...");
+        Debug.Log("Starting The AR Dedicated Server...");
     }
 
     private void OnClientConnectedCallback(ulong clientId)
