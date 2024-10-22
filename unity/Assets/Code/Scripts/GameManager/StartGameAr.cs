@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Niantic.Lightship.AR.Settings;
 using Niantic.Lightship.SharedAR.Colocalization;
 using Niantic.Lightship.SharedAR.Netcode;
 using Niantic.Lightship.SharedAR.Rooms;
@@ -29,20 +30,28 @@ public class StartGameAr : MonoBehaviour
         NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnectedCallback;
         DontDestroyOnLoad(gameObject);
 
-        // startGameButton.onClick.AddListener(StartGame);
+        StartSharedSpace();
+
+        System.Random random = new System.Random();
+        int randomNumber = random.Next();
+        PrivacyData.SetUserId(randomNumber.ToString());
+
+        // check if running on the server 
+        if (Application.isBatchMode)
+        {
+            StartServer();
+            return;
+        }
 
         joinServerButton.onClick.AddListener(() =>
         {
-            //EC2 INSTANCE: "18.117.251.172"
-            JoinServer("127.0.0.1", 7777);
+            JoinServer();
         });
 
         startServerButton.onClick.AddListener(() =>
         {
             StartServer();
         });
-
-        StartSharedSpace();
     }
 
     void StartSharedSpace()
@@ -78,7 +87,7 @@ public class StartGameAr : MonoBehaviour
         }
     }
 
-    void JoinServer(string ip, ushort port)
+    void JoinServer()
     {
         NetworkManager.Singleton.StartClient();
         OnJoinSharedSpaceClient?.Invoke();
