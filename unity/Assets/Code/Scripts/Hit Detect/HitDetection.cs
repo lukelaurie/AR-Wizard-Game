@@ -12,6 +12,7 @@ public class HitDetection : MonoBehaviour
     public Button fireButton;
 
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,6 +40,25 @@ public class HitDetection : MonoBehaviour
             if (Physics.Raycast(ray, out hit))
             {
                 hitObj = hit.transform.gameObject;
+
+                if(hitObj.CompareTag("Dragon"))
+                {
+                    Debug.Log("hit enemy");
+                    Enemy enemyScript = hitObj.GetComponent<Enemy>();
+                    
+                    // Check if the component exists to avoid null reference errors
+                    if (enemyScript != null)
+                    {
+                        Debug.Log("in this if statement!!!!!");
+                        // Call the TakeDamage method from the Enemy script
+                        enemyScript.TakeDamage(50);
+                    }
+                    else
+                    {
+                        Debug.LogError("Enemy script not found on the object.");
+                    }
+                }
+
                 collision = hit.point;
                 Renderer renderer = hitObj.GetComponent<Renderer>();
                 if (renderer != null)
