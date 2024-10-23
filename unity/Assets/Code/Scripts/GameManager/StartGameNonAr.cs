@@ -8,6 +8,8 @@ public class StartGameNonAr : NetworkBehaviour
 {
     [SerializeField] private Button joinServerButton;
     [SerializeField] private Button startServerButton;
+    [SerializeField] private Canvas createGameCanvas;
+    [SerializeField] private Camera startCamera;
 
     void Start()
     {
@@ -17,6 +19,8 @@ public class StartGameNonAr : NetworkBehaviour
             StartServer();
             return;
         }
+
+        createGameCanvas.gameObject.SetActive(true);
 
         joinServerButton.onClick.AddListener(() =>
         {
@@ -38,7 +42,13 @@ public class StartGameNonAr : NetworkBehaviour
 
     void StartServer()
     {
-        Debug.Log("Starting The Dedicated Server...");
-        NetworkManager.Singleton.StartServer();
+        Debug.Log("Starting The Dedicated Host...");
+        NetworkManager.Singleton.StartHost();
+    }
+
+    public override void OnNetworkSpawn()
+    {
+        createGameCanvas.gameObject.SetActive(false);
+        startCamera.gameObject.SetActive(false);
     }
 }

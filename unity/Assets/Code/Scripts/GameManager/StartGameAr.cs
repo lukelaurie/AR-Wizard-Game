@@ -18,20 +18,22 @@ public class StartGameAr : MonoBehaviour
 
     [SerializeField] private Button startGameButton;
     [SerializeField] private Button joinServerButton;
+    [SerializeField] private Canvas createGameCanvas;
     [SerializeField] private Button startServerButton;
 
-    public static event Action OnStartSharedSpaceServer;
+    public static event Action OnStartSharedSpaceHost;
     public static event Action OnJoinSharedSpaceClient;
     public static event Action OnStartGame;
     public static event Action OnStartSharedSpace;
+
+    private bool isHost;
 
     private void Start()
     {
         NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnectedCallback;
         DontDestroyOnLoad(gameObject);
 
-        StartSharedSpace();
-
+        // give each player a id
         System.Random random = new System.Random();
         int randomNumber = random.Next();
         PrivacyData.SetUserId(randomNumber.ToString());
@@ -43,18 +45,29 @@ public class StartGameAr : MonoBehaviour
             return;
         }
 
-        joinServerButton.onClick.AddListener(() =>
-        {
-            JoinServer();
-        });
+        toggleInitialButtons();
 
-        startServerButton.onClick.AddListener(() =>
-        {
-            StartServer();
-        });
+        startGameButton.onClick.AddListener(StartGame);
+        joinServerButton.onClick.AddListener(JoinServer);
+        startServerButton.onClick.AddListener(StartServer);
+
+        BlitImageForColocalization.OnTextureRendered += BlitImageForColocalizationOnTextureRender;
     }
 
-    void StartSharedSpace()
+    private void BlitImageForColocalizationOnTextureRender(Texture2D texture)
+    {
+        // when the user joins a game the image gets pushed into the texture so 
+        // we can now set that texture and start up our room
+        SetTargetImage(texture);
+        StartSharedSpace();
+    }
+
+    private void SetTargetImage(Texture2D texture)
+    {
+        targetImage = texture;
+    }
+
+    private void StartSharedSpace()
     {
         string roomName = "Random1Room";
         const int MAX_AMOUNT_CLIENTS_ROOM = 32;
@@ -87,22 +100,52 @@ public class StartGameAr : MonoBehaviour
         }
     }
 
-    void JoinServer()
+    private void JoinServer()
     {
-        NetworkManager.Singleton.StartClient();
+        isHost = false;
+        toggleButtonsOff();
         OnJoinSharedSpaceClient?.Invoke();
-        Debug.Log("Starting AR Client...");
     }
 
-    void StartServer()
+    private void StartServer()
     {
-        NetworkManager.Singleton.StartServer();
-        OnStartSharedSpaceServer?.Invoke();
-        Debug.Log("Starting The AR Dedicated Server...");
+        isHost = true;
+        toggleButtonsOff();
+        OnStartSharedSpaceHost?.Invoke();
+
+    }
+
+    private void StartGame() {
+        OnStartGame?.Invoke();
+
+        if (isHost)
+        {
+            Debug.Log("Starting The AR Dedicated Server...");
+            NetworkManager.Singleton.StartHost();
+        }
+        else 
+        {
+            NetworkManager.Singleton.StartClient();
+            Debug.Log("Starting AR Client...");
+        }
+
+        createGameCanvas.gameObject.SetActive(false);
     }
 
     private void OnClientConnectedCallback(ulong clientId)
     {
         Debug.Log($"Client connected: {clientId}");
+    }
+
+    private void toggleInitialButtons() {
+        startGameButton.interactable = false;
+        joinServerButton.interactable = true;
+        startServerButton.interactable = true;
+    }
+
+    private void toggleButtonsOff() {
+        startGameButton.interactable = true;
+        joinServerButton.interactable = false;
+        startServerButton.interactable = false;
     }
 }
