@@ -844,23 +844,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 246a43d4e694157478543d768abd5d92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <IsLocalPlayer>k__BackingField: 0
-  <IsOwner>k__BackingField: 0
-  <IsServer>k__BackingField: 0
-  <ServerIsHost>k__BackingField: 0
-  <IsClient>k__BackingField: 0
-  <IsHost>k__BackingField: 0
-  <IsOwnedByServer>k__BackingField: 0
-  <IsSpawned>k__BackingField: 0
-  m_NetworkObject: {fileID: 0}
-  <NetworkObjectId>k__BackingField: 0
-  <NetworkBehaviourId>k__BackingField: 0
-  NetworkBehaviourIdCache: 0
-  <OwnerClientId>k__BackingField: 0
-  m_VarInit: 0
-  <m_TargetIdBeingSynchronized>k__BackingField: 0
-  createGameCanvas: {fileID: 158804457}
-  startCamera: {fileID: 1063045029}
 --- !u!1 &223974226
 GameObject:
   m_ObjectHideFlags: 0
@@ -1556,6 +1539,7 @@ GameObject:
   - component: {fileID: 797485214}
   - component: {fileID: 797485213}
   - component: {fileID: 797485215}
+  - component: {fileID: 797485216}
   m_Layer: 0
   m_Name: Meshing
   m_TagString: Untagged
@@ -1637,6 +1621,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   meshManager: {fileID: 797485214}
+--- !u!114 &797485216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 797485211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b15f82cc229284894964d2d30806969d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HumanSegmentationStencilMode: 0
+  m_HumanSegmentationDepthMode: 0
+  m_EnvironmentDepthMode: 1
+  m_EnvironmentDepthTemporalSmoothing: 1
+  m_OcclusionPreferenceMode: 0
 --- !u!1 &810344321
 GameObject:
   m_ObjectHideFlags: 0
