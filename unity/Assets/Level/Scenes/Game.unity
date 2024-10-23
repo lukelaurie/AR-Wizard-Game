@@ -2119,7 +2119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5e00303423314ba88f0be8d259dfe62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _colocalizationType: 999
+  _colocalizationType: 1
   _sharedArRootPrefab: {fileID: 4781414300907772666, guid: addffc4d55be14f14b776b2b504b86d6, type: 3}
   _arLocationManager: {fileID: 0}
 --- !u!114 &894163056
