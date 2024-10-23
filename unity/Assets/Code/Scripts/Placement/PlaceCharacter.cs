@@ -15,6 +15,14 @@ public class PlaceCharacter : NetworkBehaviour
 
     public static event Action characterPlaced;
 
+    void Start()
+    {
+        if (mainCam == null)
+        {
+            mainCam = GameObject.FindObjectOfType<Camera>();
+        }
+    }
+
     void Update()
     {
 #if UNITY_EDITOR

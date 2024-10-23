@@ -73,6 +73,7 @@ crashlytics-build.properties
 
 # BUILDS redundant?
 /Builds
+/IOS_BUILD
 
 # Data
 /data

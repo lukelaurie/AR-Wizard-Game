@@ -1,86 +1,98 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Niantic.Lightship.AR.Settings;
 using Niantic.Lightship.SharedAR.Colocalization;
+using Niantic.Lightship.SharedAR.Netcode;
+using Niantic.Lightship.SharedAR.Rooms;
 using Unity.Netcode;
+using Unity.Netcode.Transports.UTP;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StartGameAr : NetworkBehaviour
+public class StartGameAr : MonoBehaviour
 {
     [SerializeField] private SharedSpaceManager sharedSpaceManager;
-    const int MAX_AMOUNT_CLIENTS_ROOM = 2;
-
     [SerializeField] private Texture2D targetImage;
     [SerializeField] private float targetImageSize;
-    private readonly string roomName = "TestRoom";
 
     [SerializeField] private Button startGameButton;
-    [SerializeField] private Button createRoomButton;
-    [SerializeField] private Button joinRoomButton;
-    [SerializeField] private Button clientJoinSever;
-    private bool isHost;
+    [SerializeField] private Button joinServerButton;
+    [SerializeField] private Canvas createGameCanvas;
+    [SerializeField] private Button startServerButton;
 
     public static event Action OnStartSharedSpaceHost;
     public static event Action OnJoinSharedSpaceClient;
     public static event Action OnStartGame;
     public static event Action OnStartSharedSpace;
 
-    private void Awake()
+    private bool isHost;
+
+    private void Start()
     {
+        NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnectedCallback;
         DontDestroyOnLoad(gameObject);
-        sharedSpaceManager.sharedSpaceManagerStateChanged += SharedSpaceManagerStateChange;
+
+        // give each player a id
+        System.Random random = new System.Random();
+        int randomNumber = random.Next();
+        PrivacyData.SetUserId(randomNumber.ToString());
+
+        // check if running on the server 
+        if (Application.isBatchMode)
+        {
+            StartServer();
+            return;
+        }
+
+        toggleInitialButtons();
 
         startGameButton.onClick.AddListener(StartGame);
-        createRoomButton.onClick.AddListener(CreateGameHost);
-        joinRoomButton.onClick.AddListener(JoinGameClient);
+        joinServerButton.onClick.AddListener(JoinServer);
+        startServerButton.onClick.AddListener(StartServer);
 
-        startGameButton.interactable = false;
+        BlitImageForColocalization.OnTextureRendered += BlitImageForColocalizationOnTextureRender;
     }
 
-    private void SharedSpaceManagerStateChange(SharedSpaceManager.SharedSpaceManagerStateChangeEventArgs obj)
+    private void BlitImageForColocalizationOnTextureRender(Texture2D texture)
     {
-        if (obj.Tracking)
-        {
-            startGameButton.interactable = true;
-            createRoomButton.interactable = false; 
-            joinRoomButton.interactable = false;
-        }
+        // when the user joins a game the image gets pushed into the texture so 
+        // we can now set that texture and start up our room
+        SetTargetImage(texture);
+        StartSharedSpace();
     }
 
-    void StartGame()
+    private void SetTargetImage(Texture2D texture)
     {
-        OnStartGame?.Invoke();
-        if (isHost)
-        {
-            NetworkManager.Singleton.StartHost();
-        }
-        else 
-        {
-            NetworkManager.Singleton.StartClient();
-        }
+        targetImage = texture;
     }
 
-    void StartSharedSpace() {
+    private void StartSharedSpace()
+    {
+        string roomName = "Random1Room";
+        const int MAX_AMOUNT_CLIENTS_ROOM = 32;
+
         OnStartSharedSpace?.Invoke();
 
-        if (sharedSpaceManager.GetColocalizationType() == SharedSpaceManager.ColocalizationType.MockColocalization) {
+        if (sharedSpaceManager.GetColocalizationType() == SharedSpaceManager.ColocalizationType.MockColocalization)
+        {
             var mockTrackingArgs = ISharedSpaceTrackingOptions.CreateMockTrackingOptions();
             var roomArgs = ISharedSpaceRoomOptions.CreateLightshipRoomOptions(
-                roomName,MAX_AMOUNT_CLIENTS_ROOM,"MockColocalizationDemo"
+                roomName, MAX_AMOUNT_CLIENTS_ROOM, "MockColocalizationDemo"
             );
 
             sharedSpaceManager.StartSharedSpace(mockTrackingArgs, roomArgs);
             return;
         }
 
-        if (sharedSpaceManager.GetColocalizationType() == SharedSpaceManager.ColocalizationType.ImageTrackingColocalization) {
+        if (sharedSpaceManager.GetColocalizationType() == SharedSpaceManager.ColocalizationType.ImageTrackingColocalization)
+        {
             var imageTrackingOptions = ISharedSpaceTrackingOptions.CreateImageTrackingOptions(
                 targetImage, targetImageSize
             );
 
             var roomArgs = ISharedSpaceRoomOptions.CreateLightshipRoomOptions(
-                roomName,MAX_AMOUNT_CLIENTS_ROOM,"ImageColocalizationDemo"
+                roomName, MAX_AMOUNT_CLIENTS_ROOM, "ImageColocalizationDemo"
             );
 
             sharedSpaceManager.StartSharedSpace(imageTrackingOptions, roomArgs);
@@ -88,17 +100,52 @@ public class StartGameAr : NetworkBehaviour
         }
     }
 
-    void CreateGameHost()
-    {
-        isHost = true;
-        OnStartSharedSpaceHost?.Invoke();
-        StartSharedSpace();
-    }
-
-    void JoinGameClient()
+    private void JoinServer()
     {
         isHost = false;
+        toggleButtonsOff();
         OnJoinSharedSpaceClient?.Invoke();
-        StartSharedSpace();
+    }
+
+    private void StartServer()
+    {
+        isHost = true;
+        toggleButtonsOff();
+        OnStartSharedSpaceHost?.Invoke();
+
+    }
+
+    private void StartGame() {
+        OnStartGame?.Invoke();
+
+        if (isHost)
+        {
+            Debug.Log("Starting The AR Dedicated Server...");
+            NetworkManager.Singleton.StartHost();
+        }
+        else 
+        {
+            NetworkManager.Singleton.StartClient();
+            Debug.Log("Starting AR Client...");
+        }
+
+        createGameCanvas.gameObject.SetActive(false);
+    }
+
+    private void OnClientConnectedCallback(ulong clientId)
+    {
+        Debug.Log($"Client connected: {clientId}");
+    }
+
+    private void toggleInitialButtons() {
+        startGameButton.interactable = false;
+        joinServerButton.interactable = true;
+        startServerButton.interactable = true;
+    }
+
+    private void toggleButtonsOff() {
+        startGameButton.interactable = true;
+        joinServerButton.interactable = false;
+        startServerButton.interactable = false;
     }
 }
