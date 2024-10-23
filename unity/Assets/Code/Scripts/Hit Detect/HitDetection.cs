@@ -16,10 +16,16 @@ public class HitDetection : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (fireButton != null)
+        if (camera == null)
         {
-            fireButton.onClick.AddListener(Fire);
+            camera = GameObject.FindObjectOfType<Camera>();
         }
+
+        fireButton.onClick.AddListener(() =>
+        {
+            Debug.Log("button click");
+            Fire();
+        });
     }
 
     // Update is called once per frame
@@ -27,6 +33,7 @@ public class HitDetection : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1))
         {
+            Debug.Log("right click");
             Fire();
         }
     }
@@ -41,11 +48,11 @@ public class HitDetection : MonoBehaviour
             {
                 hitObj = hit.transform.gameObject;
 
-                if(hitObj.CompareTag("Dragon"))
+                if (hitObj.CompareTag("Dragon"))
                 {
                     Debug.Log("hit enemy");
                     Enemy enemyScript = hitObj.GetComponent<Enemy>();
-                    
+
                     // Check if the component exists to avoid null reference errors
                     if (enemyScript != null)
                     {

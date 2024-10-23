@@ -2017,6 +2017,7 @@ GameObject:
   - component: {fileID: 2078211780302720510}
   - component: {fileID: 5613856204530317468}
   - component: {fileID: 7967516286696732123}
+  - component: {fileID: 1917486027168040340}
   m_Layer: 0
   m_Name: Albino
   m_TagString: Dragon
@@ -2032,15 +2033,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4503023165952098552}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.35, y: -0.02, z: -4.18}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: 0.0069707106, z: -0, w: -0.99997574}
+  m_LocalPosition: {x: 6.357273, y: -0.02000001, z: -4.4946427}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4503023165951814110}
   - {fileID: 4503023165951784768}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -360.799, z: 0}
 --- !u!95 &4503023165944770388
 Animator:
   serializedVersion: 5
@@ -2101,7 +2102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 235273654
+  GlobalObjectIdHash: 2333674999
   InScenePlacedSourceGlobalObjectIdHash: 2756512769
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -2165,10 +2166,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94a35f2f39bbba940a382501d6ea1c69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
-  maxHealth: 1000
   healthBar: {fileID: 3575986388356970058}
   enemyAnimator: {fileID: 4503023165944770388}
+--- !u!114 &1917486027168040340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4503023165952098552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57c28ed28c284b8bbb08e7d5bded1bd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _putInSharedOrigin: 0
 --- !u!1 &4503023165952099980
 GameObject:
   m_ObjectHideFlags: 0
