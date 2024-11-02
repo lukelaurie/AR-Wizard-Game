@@ -12,4 +12,4 @@ sudo systemctl start postgresql
 
 echo "Starting Go Sever..."
 go build ./cmd/app/main.go
-./main.exe
+./main
