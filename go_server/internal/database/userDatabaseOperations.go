@@ -7,8 +7,8 @@ import (
 	"github.com/lukelaurie/AR-Wizard-Game/go_server/internal/model"
 )
 
-func RetrieveUser(username string) (model.User, error) {
-	var user model.User
+func RetrieveUser(username string) (model.Player, error) {
+	var user model.Player
 
 	err := DB.First(&user, "username = ?", username).Error
 	if err != nil {
@@ -18,7 +18,7 @@ func RetrieveUser(username string) (model.User, error) {
 }
 
 func RegisterUser(username string, password string, w http.ResponseWriter) bool {
-	newUser := model.User{
+	newUser := model.Player{
 		Username: username,
 		Password: password,
 	}

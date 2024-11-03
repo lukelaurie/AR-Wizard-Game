@@ -1,6 +1,6 @@
 package model
 
-type User struct {
+type Player struct {
 	Username string `gorm:"primaryKey"`
 	Password string `gorm:"not null"`
 }
