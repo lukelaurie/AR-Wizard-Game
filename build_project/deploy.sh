@@ -22,6 +22,23 @@ sudo pkill -f main
 echo "Starting PostgreSQL..."
 sudo systemctl start postgresql
 
+# Wait for PostgreSQL to be fully ready before proceeding
+echo "Checking PostgreSQL status..."
+for i in {1..10}; do
+  if pg_isready -h 127.0.0.1 -p 5432 -U postgres; then
+    echo "PostgreSQL is ready!"
+    break
+  fi
+  echo "Waiting for PostgreSQL to start..."
+  sleep 2
+done
+
+# If PostgreSQL is not ready, exit the script with an error
+if ! pg_isready -h 127.0.0.1 -p 5432 -U postgres; then
+  echo "PostgreSQL failed to start."
+  exit 1
+fi
+
 echo "Starting Go Sever..."
 go build ./cmd/app/main.go
 nohup ./main > /dev/null 2>&1 &
