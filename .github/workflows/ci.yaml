@@ -35,4 +35,4 @@ jobs:
         # the deployment code here 
         cd AR-Wizard-Game
         git restore build_project/deploy.sh
-        bash AR-Wizard-Game/build_project/deploy.sh "$BRANCH_NAME"
+        bash build_project/deploy.sh "$BRANCH_NAME"
