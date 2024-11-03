@@ -1,7 +1,6 @@
 #!/bin/bash
 
 BRANCH_NAME="$1"
-cd AR-Wizard-Game/
 git checkout "$BRANCH_NAME"
 git pull
 

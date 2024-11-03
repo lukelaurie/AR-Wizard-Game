@@ -33,5 +33,6 @@ jobs:
 
         ssh -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
         # the deployment code here 
-        git restore AR-Wizard-Game/build_project/deploy.sh
+        cd AR-Wizard-Game
+        git restore build_project/deploy.sh
         bash AR-Wizard-Game/build_project/deploy.sh "$BRANCH_NAME"
