@@ -10,7 +10,6 @@ public class PlaceCharacter : NetworkBehaviour
     [SerializeField] private GameObject placementObject;
 
 
-    private bool isPlaced = false;
     [SerializeField] private Camera mainCam;
 
     public static event Action characterPlaced;
@@ -26,10 +25,10 @@ public class PlaceCharacter : NetworkBehaviour
     void Update()
     {
 #if UNITY_EDITOR
-        if (isPlaced || !IsHost)
-        {
-            return;
-        }
+        // if (isPlaced || !IsHost)
+        // {
+        //     return;
+        // }
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -100,9 +99,7 @@ public class PlaceCharacter : NetworkBehaviour
         NetworkObject characterNetworkObject = character.GetComponent<NetworkObject>();
 
         characterNetworkObject.SpawnWithOwnership(callerID);
-
-        isPlaced = true;
-
+        
         // AllPlayerDataManager.Instance.AddPlacedPlayer(callerID);
     }
 }
