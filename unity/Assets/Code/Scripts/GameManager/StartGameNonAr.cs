@@ -55,4 +55,5 @@ public class StartGameNonAr : NetworkBehaviour
         createGameCanvas.gameObject.SetActive(false);
         startCamera.gameObject.SetActive(false);
     }
+    
 }
