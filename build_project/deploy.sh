@@ -4,7 +4,6 @@ BRANCH_NAME="$1"
 git checkout "$BRANCH_NAME"
 git pull
 
-
 # Start up the unity server
 cd unity/game_build/
 chmod +x game.x86_64
