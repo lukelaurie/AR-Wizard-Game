@@ -25,7 +25,7 @@ sudo systemctl start postgresql
 echo "Starting Go Sever..."
 sudo pkill -f main
 go build ./cmd/app/main.go
-nohup ./main > /dev/null 2>&1 &
+nohup ./main
 
 disown
 # Exit the script
