@@ -33,6 +33,7 @@ for i in {1..10}; do
   sleep 2
 done
 
+
 # If PostgreSQL is not ready, exit the script with an error
 if ! pg_isready -h 127.0.0.1 -p 5432 -U postgres; then
   echo "PostgreSQL failed to start."
