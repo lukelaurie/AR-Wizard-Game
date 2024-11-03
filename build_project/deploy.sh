@@ -18,11 +18,11 @@ nohup ./game.x86_64 -batchmode -nographics > /dev/null 2>&1 &
 cd ../../go_server
 
 # Check if PostgreSQL is running
+sudo pkill -f main
 echo "Starting PostgreSQL..."
 sudo systemctl start postgresql
 
 echo "Starting Go Sever..."
-sudo pkill -f main
 go build ./cmd/app/main.go
 nohup ./main
 
