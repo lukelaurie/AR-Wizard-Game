@@ -29,7 +29,6 @@ sudo pkill -f main
 go build ./cmd/app/main.go
 nohup ./main > /dev/null 2>&1 &
 
-
 disown
 # Exit the script
 exit 0
