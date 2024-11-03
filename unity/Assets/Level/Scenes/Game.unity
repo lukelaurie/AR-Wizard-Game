@@ -977,6 +977,7 @@ MonoBehaviour:
   joinServerButton: {fileID: 523478524}
   startServerButton: {fileID: 1949011249}
   createGameCanvas: {fileID: 158804457}
+  joinEC2Button: {fileID: 2028676766}
   startCamera: {fileID: 1063045029}
 --- !u!1 &490101982
 GameObject:
@@ -1273,7 +1274,7 @@ MonoBehaviour:
   ConnectionData:
     Address: 127.0.0.1
     Port: 7777
-    ServerListenAddress: 127.0.0.1
+    ServerListenAddress: 0.0.0.0
   DebugSimulator:
     PacketDelayMS: 0
     PacketJitterMS: 0
