@@ -6,5 +6,5 @@ import (
 )
 
 func Test(writter http.ResponseWriter, res *http.Request) {
-	json.NewEncoder(writter).Encode("testing2")
+	json.NewEncoder(writter).Encode("testing23")
 }
