@@ -546,7 +546,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -629,7 +629,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireball: {fileID: 8634321614551258705, guid: d6cd1333671fc964b95053165f336027, type: 3}
   speed: 8
-  spawnDist: 1.5
+  spawnDist: 1
   camera: {fileID: 3812193401467533940}
 --- !u!1 &3964152609730271146
 GameObject:

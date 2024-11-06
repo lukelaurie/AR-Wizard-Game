@@ -19363,7 +19363,7 @@ GameObject:
   - component: {fileID: 7691871114072602530}
   m_Layer: 0
   m_Name: Fireball_Particles
-  m_TagString: Untagged
+  m_TagString: Fireball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -24232,6 +24232,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43a66ac5db963104ebaa330cc93325ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageAmount: 10
+  lifetime: 3
 --- !u!65 &7691871114072602530
 BoxCollider:
   m_ObjectHideFlags: 0

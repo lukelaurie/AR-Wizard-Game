@@ -5,8 +5,8 @@ using UnityEngine;
 public class PlayerShoot : MonoBehaviour
 {
     public GameObject fireball;
-    public float speed = 20f;
-    public float spawnDist = 1.5f;
+    public float speed = 8f;
+    public float spawnDist = 1f;
     public Camera camera;
 
     //public Transform targetPosition;

@@ -82,7 +82,7 @@ public class PlaceCharacter : NetworkBehaviour
         {
             GameObject hitObject = hit.collider.gameObject;
 
-            if (hitObject.tag != "Dragon")
+            if (hitObject.tag != "Dragon" && hitObject.tag != "Fireball")
             {
                 // calculate rotation of the object relative to object location
                 Quaternion rotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
