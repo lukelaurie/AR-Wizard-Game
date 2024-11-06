@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthBar : MonoBehaviour
+public class HealthBar: MonoBehaviour
 {
     [SerializeField] private Slider slider;
+
     //[SerializeField] private Slider camera;
     //[SerializeField] private Slider target;
     //commented out stuff is for showing slider towards player, might remove
@@ -15,7 +16,6 @@ public class HealthBar : MonoBehaviour
         slider.value = curVal / maxValue;
     }
 
-    // Update is called once per frame
     void Update()
     {
         //might need to rework for multiple players

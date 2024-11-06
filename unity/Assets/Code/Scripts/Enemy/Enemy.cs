@@ -7,6 +7,7 @@ using UnityEngine.AI;
 //used for dragon enemies,etc
 public class Enemy : MonoBehaviour
 {
+    //test
     //TODO: walk around, face player
     //TODO: jump attack, fireball attack, audio effects, etc.
     private float waitTime = 3.0f;
@@ -14,7 +15,7 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] float health;
     [SerializeField] float maxHealth = 200f;
-    [SerializeField] HealthBar healthBar;
+    HealthBar healthBar;
 
 
     //public NavMeshAgent enemy;

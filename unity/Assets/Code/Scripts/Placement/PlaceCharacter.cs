@@ -80,9 +80,14 @@ public class PlaceCharacter : NetworkBehaviour
         // checks if the ray from the camera hit a physical game object
         if (Physics.Raycast(ray, out hit))
         {
-            // calculate rotation of the object relative to object location
-            Quaternion rotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
-            SpawnPlayerServerRpc(hit.point, rotation, NetworkManager.Singleton.LocalClientId);
+            GameObject hitObject = hit.collider.gameObject;
+
+            if (hitObject.tag != "Dragon")
+            {
+                // calculate rotation of the object relative to object location
+                Quaternion rotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
+                SpawnPlayerServerRpc(hit.point, rotation, NetworkManager.Singleton.LocalClientId);
+            }
         }
     }
 

@@ -4,29 +4,43 @@ using UnityEngine;
 
 public class Fireball : MonoBehaviour
 {
-    // Start is called before the first frame update
+    //public Transform target;
+    //public float speed = 5f;
+    public float damageAmount = 10f;
+    public float lifetime = 3f;
+
     void Start()
     {
-        
+        //destroy object after certain period of time so it doesnt take up space in the scene
+        Destroy(gameObject, lifetime);
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        //Vector3 direction = (target.position - transform.position).normalized;
+        //transform.position += direction * speed * Time.deltaTime;
+        //this.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(0, 0, 0))
     }
 
     void OnCollisionEnter(Collision collision)
     {
-        // Check if the object collided with a specific tag
-        Destroy(gameObject);
-
-        if (collision.gameObject.TryGetComponent<Enemy>(out Enemy enemyComponent))
+        if (collision.gameObject.tag != "Player")
         {
-            enemyComponent.TakeDamage(10);
-            Debug.Log("collided with enemy");
-            // Handle collision logic here
+            // Check if the object collided with a specific tag
+            Destroy(gameObject);
+            Debug.Log("fireball destroyed");
+
+            //add explosion particle
+            GameObject colidedObject = collision.gameObject;
+            //Debug.log(colidedObject.transform.parent);
+            //GameObject parentObject = colidedObject.transform.parent.gameObject;
+            if (colidedObject.TryGetComponent<Enemy>(out Enemy enemyComponent))
+            {
+                enemyComponent.TakeDamage(damageAmount);
+                Debug.Log($"fireball delt {damageAmount} damage to enemy");
+                // Handle collision logic here
+            }
+            //tell enemies to take damage
         }
-        //tell enemies to take damage
     }
 }
