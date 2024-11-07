@@ -38,9 +38,10 @@ if ! pg_isready -h 127.0.0.1 -p 5432 -U postgres; then
 fi
 
 sudo pkill -f main
-echo "Starting The Go Sever..."
+echo "Starting The New Go Sever..."
 go build ./cmd/app/main.go
-nohup ./main
+# nohup ./main
+./main
 
 disown
 # Exit the script
