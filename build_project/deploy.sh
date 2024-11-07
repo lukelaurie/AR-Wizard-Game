@@ -9,6 +9,7 @@ cd unity/game_build/
 chmod +x game.x86_64
 
 # kill old server and start the new one 
+echo "Starting Unity Server..."
 sudo pkill -f game.x86_64
 nohup ./game.x86_64 -batchmode -nographics > /dev/null 2>&1 &
 
@@ -30,7 +31,6 @@ for i in {1..10}; do
   echo "Waiting for PostgreSQL to start..."
   sleep 2
 done
-
 
 # If PostgreSQL is not ready, exit the script with an error
 if ! pg_isready -h 127.0.0.1 -p 5432 -U postgres; then
