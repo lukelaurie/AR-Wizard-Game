@@ -45,5 +45,4 @@ go build ./cmd/app/main.go
 ./main
 
 disown
-# Exit the script
 exit 0
