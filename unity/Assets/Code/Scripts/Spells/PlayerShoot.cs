@@ -6,7 +6,7 @@ public class PlayerShoot : MonoBehaviour
 {
     public GameObject fireball;
     public float speed = 8f;
-    public float spawnDist = 1.5f;
+    public float spawnDist = 2f;
     public Camera camera;
 
     //public Transform targetPosition;

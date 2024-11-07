@@ -1,21 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.AI;
 
 //keeps track of health, moveSpeed, animations, and following
 //used for dragon enemies,etc
-public class Enemy : MonoBehaviour
+public class Enemy : NetworkBehaviour
 {
-    //test
     //TODO: walk around, face player
     //TODO: jump attack, fireball attack, audio effects, etc.
     private float waitTime = 3.0f;
     private float timer = 0.0f;
 
-    [SerializeField] float health;
-    [SerializeField] float maxHealth = 200f;
-    HealthBar healthBar;
+    private NetworkVariable<float> health = new NetworkVariable<float>();
+    private float maxHealth;
+    [SerializeField] HealthBar healthBar;
 
 
     //public NavMeshAgent enemy;
@@ -36,7 +36,9 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
-        health = maxHealth;
+        maxHealth = 200f;
+        UpdateHealthServerRpc(maxHealth);
+        // health = maxHealth;
         //need to find player object
         //target = GameObject.Find("Player").transform;
     }
@@ -44,6 +46,10 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //play take damage animation
+        healthBar.UpdateHealthBar(health.Value, maxHealth);
+
+
         //enemy.SetDestination(Player.position);
         /*if(target)
         {
@@ -118,10 +124,9 @@ public class Enemy : MonoBehaviour
             //enemyAnimator.SetBool("GetHit", true);
             //enemyAnimator.SetBool("GetHit", false);
 
-            health -= damageAmount;
-            //play take damage animation
-            healthBar.UpdateHealthBar(health, maxHealth);
-            if (health <= 0)
+            UpdateHealthServerRpc(health.Value - damageAmount);
+
+            if (health.Value <= 0)
             {
                 //play death animation
 
@@ -145,4 +150,11 @@ public class Enemy : MonoBehaviour
         Debug.Log("Waited for 3 seconds!");
         // Add your logic here (e.g., triggering an animation, spawning an object, etc.)
     }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void UpdateHealthServerRpc(float newHealth)
+    {
+        health.Value = newHealth;
+    }
+
 }
