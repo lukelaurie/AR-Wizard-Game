@@ -16,6 +16,8 @@ nohup ./game.x86_64 -batchmode -nographics > /dev/null 2>&1 &
 # start up the go server
 cd ../../go_server
 
+sudo systemctl stop postgresql
+
 # Check if PostgreSQL is running
 echo "Starting PostgreSQL..."
 sudo systemctl start postgresql
