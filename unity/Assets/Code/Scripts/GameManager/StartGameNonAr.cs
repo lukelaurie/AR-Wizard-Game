@@ -30,7 +30,7 @@ public class StartGameNonAr : NetworkBehaviour
 
         startServerButton.onClick.AddListener(() =>
         {
-            StartServer();
+            NetworkManager.Singleton.StartHost();
         });
 
         joinEC2Button.onClick.AddListener(() => {
@@ -47,7 +47,7 @@ public class StartGameNonAr : NetworkBehaviour
     void StartServer()
     {
         Debug.Log("Starting The Dedicated Host...");
-        NetworkManager.Singleton.StartHost();
+        NetworkManager.Singleton.StartServer();
     }
 
     public override void OnNetworkSpawn()
