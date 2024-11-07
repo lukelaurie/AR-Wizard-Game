@@ -16,6 +16,8 @@ nohup ./game.x86_64 -batchmode -nographics > /dev/null 2>&1 &
 # start up the go server
 cd ../../go_server
 
+go build ./cmd/app/main.go
+
 echo "Stopping unity server"
 sudo systemctl stop postgresql
 
@@ -42,7 +44,6 @@ fi
 
 sudo pkill -f main
 echo "Starting Go Sever..."
-go build ./cmd/app/main.go
 # nohup ./main
 ./main
 
