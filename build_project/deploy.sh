@@ -18,6 +18,8 @@ cd ../../go_server
 
 sudo pkill -f main
 
+sudo systemctl stop postgresql
+
 # Check if PostgreSQL is running
 echo "Starting PostgreSQL..."
 sudo systemctl start postgresql
