@@ -55,7 +55,7 @@ func LoginUser(w http.ResponseWriter, r *http.Request) {
 		Value:    tokenString,
 		Expires:  time.Now().Add(time.Hour * 72),
 		HttpOnly: true,
-		Secure:   true,
+		Secure:   false,
 		Path:     "/",
 	})
 
