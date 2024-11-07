@@ -6,7 +6,7 @@ public class PlayerShoot : MonoBehaviour
 {
     public GameObject fireball;
     public float speed = 8f;
-    public float spawnDist = 1f;
+    public float spawnDist = 1.5f;
     public Camera camera;
 
     //public Transform targetPosition;
@@ -37,7 +37,7 @@ public class PlayerShoot : MonoBehaviour
         // The point in world space where the ray hits (we assume a flat plane at spawnDistance distance)
         RaycastHit hit;
         Physics.Raycast(ray, out hit, Mathf.Infinity);
-        Vector3 spawnPos = transform.position + transform.forward * spawnDist;
+        Vector3 spawnPos = camera.transform.position + camera.transform.forward * spawnDist;
         // Spawn the object at the point where the ray hit, with the forward direction based on the camera
         GameObject projectile = Instantiate(fireball, spawnPos, Quaternion.LookRotation(ray.direction));
         projectile.GetComponent<Rigidbody>().velocity = ray.direction * speed;
