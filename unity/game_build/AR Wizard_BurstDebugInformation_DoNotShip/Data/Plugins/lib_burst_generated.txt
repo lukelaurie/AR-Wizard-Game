@@ -9,6 +9,7 @@ Library: C:\Users\Luke\Desktop\Projects\Unity\AR-Wizard-Game\unity\Temp\BurstOut
 --target-framework=NetFramework
 --generate-link-xml=Temp\burst.link.xml
 --temp-folder=C:\Users\Luke\Desktop\Projects\Unity\AR-Wizard-Game\unity\Temp\Burst
+--debug=Full
 --key-folder=C:/Program Files/Unity/Hub/Editor/2022.3.46f1/Editor/Data/PlaybackEngines/LinuxStandaloneSupport
 --decode-folder=C:\Users\Luke\Desktop\Projects\Unity\AR-Wizard-Game\unity\Library\Burst
 --output=C:\Users\Luke\Desktop\Projects\Unity\AR-Wizard-Game\unity\Temp\BurstOutput\Data\Plugins\lib_burst_generated
@@ -118,6 +119,7 @@ Library: C:\Users\Luke\Desktop\Projects\Unity\AR-Wizard-Game\unity\Temp\BurstOut
 --target-framework=NetFramework
 --generate-link-xml=Temp\burst.link.xml
 --temp-folder=C:\Users\Luke\Desktop\Projects\Unity\AR-Wizard-Game\unity\Temp\Burst
+--debug=Full
 --key-folder=C:/Program Files/Unity/Hub/Editor/2022.3.46f1/Editor/Data/PlaybackEngines/LinuxStandaloneSupport
 --decode-folder=C:\Users\Luke\Desktop\Projects\Unity\AR-Wizard-Game\unity\Library\Burst
 --output=C:\Users\Luke\Desktop\Projects\Unity\AR-Wizard-Game\unity\Temp\BurstOutput\Data\Plugins\lib_burst_generated
