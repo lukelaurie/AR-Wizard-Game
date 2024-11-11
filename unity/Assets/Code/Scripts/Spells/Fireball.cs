@@ -8,6 +8,7 @@ public class Fireball : MonoBehaviour
     //public float speed = 5f;
     public float damageAmount = 10f;
     public float lifetime;
+    public GameObject explosion;
 
     void Start()
     {
@@ -32,16 +33,15 @@ public class Fireball : MonoBehaviour
             Debug.Log("fireball destroyed");
 
             //add explosion particle
+            Instantiate(explosion, collision.contacts[0].point, Quaternion.identity);
+
             GameObject colidedObject = collision.gameObject;
-            //Debug.log(colidedObject.transform.parent);
-            //GameObject parentObject = colidedObject.transform.parent.gameObject;
+
             if (colidedObject.TryGetComponent<Enemy>(out Enemy enemyComponent))
             {
                 enemyComponent.TakeDamage(damageAmount);
                 Debug.Log($"fireball delt {damageAmount} damage to enemy");
-                // Handle collision logic here
             }
-            //tell enemies to take damage
         }
     }
 }
