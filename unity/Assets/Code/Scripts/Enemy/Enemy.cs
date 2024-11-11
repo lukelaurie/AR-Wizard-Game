@@ -8,13 +8,14 @@ using UnityEngine.AI;
 //used for dragon enemies,etc
 public class Enemy : NetworkBehaviour
 {
-    //TODO: walk around, face player
+    //TODO: walk around, face player (mabye)
     //TODO: jump attack, fireball attack, audio effects, etc.
+
     private float waitTime = 3.0f;
     private float timer = 0.0f;
 
     private NetworkVariable<float> health = new NetworkVariable<float>();
-    private float maxHealth;
+    private float maxHealth = 200f;
     [SerializeField] HealthBar healthBar;
 
 
@@ -22,6 +23,8 @@ public class Enemy : NetworkBehaviour
     //public Transform Player;
 
     public Animator enemyAnimator;
+
+    private bool canBeHit;
 
     /*[SerializeField] float moveSpeed = 5f;
     Rigidbody rb;
@@ -38,6 +41,8 @@ public class Enemy : NetworkBehaviour
     {
         maxHealth = 200f;
         UpdateHealthServerRpc(maxHealth);
+        canBeHit= true;
+
         // health = maxHealth;
         //need to find player object
         //target = GameObject.Find("Player").transform;
@@ -67,21 +72,8 @@ public class Enemy : NetworkBehaviour
             // generate rand wait time between 4 and 6 sec to roar
             int randInt = Random.Range(6, 8);
 
-            /*enemyAnimator.SetBool("Scream", true);
-            //enemyAnimator.SetBool("Scream", false);
-            float screamTime = 1.0f;
-            float screamStartTime = 0.0f;
-            screamStartTime += Time.deltaTime;
-            if(screamStartTime >= screamTime)
-            {
-                enemyAnimator.SetBool("Scream", false);
-            }*/
             enemyAnimator.Play("Scream");
             enemyAnimator.Play("Idle");
-            //enemyAnimator.SetBool("Scream", false);
-
-            //enemyAnimator.Play("Scream");
-            //enemyAnimator.SetBool("Scream", false);
             //play a scream sound
 
             waitTime = (float)randInt;
@@ -105,50 +97,62 @@ public class Enemy : NetworkBehaviour
 
     public void TakeDamage(float damageAmount)
     {
+        if (!canBeHit)
+        {
+            Debug.Log("!canBeHit in Enemy.cs");
+            return;
+        }
+        Debug.Log("Called TakeDamage in Enemy.cs");
+
         int randInt = Random.Range(0, 5);
 
         //has a chance to randomly block an attack
         if (randInt == 0)
         {
-            //Debug.Log("defended within Enemy.cs");
+            Debug.Log("defended within Enemy.cs");
             enemyAnimator.Play("Defend");
-            enemyAnimator.Play("Idle");
-            //enemyAnimator.SetBool("Defend", true);
-            //enemyAnimator.SetBool("Defend", false);
+
+            canBeHit = false;
+            StartCoroutine(WaitAndPerformAction());
         }
         else
         {
             Debug.Log("took damage within Enemy.cs");
             enemyAnimator.Play("Get Hit");
-            enemyAnimator.Play("Idle");
-            //enemyAnimator.SetBool("GetHit", true);
-            //enemyAnimator.SetBool("GetHit", false);
+
+            canBeHit = false;
+            StartCoroutine(WaitAndPerformAction());
 
             UpdateHealthServerRpc(health.Value - damageAmount);
 
             if (health.Value <= 0)
             {
-                //play death animation
+                Debug.Log("Played death animation");
 
                 float newTime = 0.0f;
                 float animTime = 3.0f;
-                //have death animation be unineruptable
+
                 enemyAnimator.Play("Die");
-                StartCoroutine(WaitAndPerformAction());
+                StartCoroutine(WaitAndDestroy());
+                canBeHit = false;
             }
         }
     }
 
-    private IEnumerator WaitAndPerformAction()
+    private IEnumerator WaitAndDestroy()
     {
-        // Wait for 2 seconds
         yield return new WaitForSeconds(3f);
 
-        // Perform the action after the wait
-        Debug.Log("play death animation");
         Destroy(gameObject);
-        Debug.Log("Waited for 3 seconds!");
-        // Add your logic here (e.g., triggering an animation, spawning an object, etc.)
+        Debug.Log("Died after 3 seconds");
+    }
+
+    private IEnumerator WaitAndPerformAction()
+    {
+        yield return new WaitForSeconds(1f);
+
+        enemyAnimator.Play("Idle");
+        canBeHit = true;
     }
 
     [ServerRpc(RequireOwnership = false)]

@@ -7,11 +7,12 @@ public class Fireball : MonoBehaviour
     //public Transform target;
     //public float speed = 5f;
     public float damageAmount = 10f;
-    public float lifetime = 3f;
+    public float lifetime;
 
     void Start()
     {
         //destroy object after certain period of time so it doesnt take up space in the scene
+        lifetime = 4f;
         Destroy(gameObject, lifetime);
     }
 
