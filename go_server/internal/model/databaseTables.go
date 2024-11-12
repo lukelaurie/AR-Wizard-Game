@@ -7,7 +7,7 @@ type Player struct {
 }
 
 type PlayerSpell struct {
-	SpellName string `gorm:"primaryKey"`
+	SpellName string `gorm:"not null"`
 	Username  string `gorm:"not null"`
-	Level    int    `gorm:"default:1"`
+	Level     int    `gorm:"default:1"`
 }
