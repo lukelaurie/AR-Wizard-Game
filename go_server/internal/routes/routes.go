@@ -21,6 +21,9 @@ func InitializeRoutes() *mux.Router {
 	protectedRouter.Use(middleware.CheckAuthMiddleware) // apply the middleware to first authorize
 
 	protectedRouter.HandleFunc("/test", handler.Test).Methods("GET")
+	protectedRouter.HandleFunc("/create-room", handler.CreateRoom).Methods("GET")
+	protectedRouter.HandleFunc("/join-room", handler.JoinRoom).Methods("GET")
+	protectedRouter.HandleFunc("/end-game", handler.EndGame).Methods("POST")
 
 	return router
 }
