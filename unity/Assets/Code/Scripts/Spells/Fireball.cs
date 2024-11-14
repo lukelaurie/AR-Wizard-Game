@@ -19,7 +19,6 @@ public class Fireball : MonoBehaviour
     {
         if (collision.gameObject.tag != "Player")
         {
-            Destroy(gameObject);
             Debug.Log("fireball destroyed");
 
             //add explosion particle
@@ -32,6 +31,7 @@ public class Fireball : MonoBehaviour
                 enemyComponent.TakeDamage(damageAmount);
                 Debug.Log($"fireball delt {damageAmount} damage to enemy");
             }
+            Destroy(gameObject);
         }
     }
 }
