@@ -37,6 +37,20 @@ func RegisterUser(username string, password string, w http.ResponseWriter) bool 
 	return true
 }
 
+func UpdateUserCoins(username string, coins int) error {
+	var player model.Player
+	err := DB.First(&player, "username = ?", username).Error
+	if err != nil {
+		return err
+	} 
+
+	player.Coins += coins
+
+	// update the player to have the new coins
+	err = DB.Save(&player).Error
+	return nil
+}
+
 func isUniqueViolation(err error, constraint string) bool {
 	return strings.Contains(err.Error(), "unique constraint") &&
 		strings.Contains(err.Error(), constraint)

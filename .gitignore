@@ -5,5 +5,5 @@
 unity_clone_0/
 unity_clone_1/
 
-.env
-build_and_run.sh
+go_server/**/.env
+go_server/**/build_and_run.sh

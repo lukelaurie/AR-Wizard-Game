@@ -46,7 +46,12 @@ func InitDb() {
 func updateTable() error {
 	err := DB.AutoMigrate(&model.Player{})
 	if err != nil {
-		return fmt.Errorf("error updating the User table in database: %v", err)
+		return fmt.Errorf("error updating the Player table in database: %v", err)
+	}
+
+	err = DB.AutoMigrate(&model.PlayerSpell{})
+	if err != nil {
+		return fmt.Errorf("error updating the PlayerSpell table in database: %v", err)
 	}
 
 	return nil
