@@ -927,7 +927,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2847599674
+  GlobalObjectIdHash: 3788168258
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -1073,7 +1073,9 @@ MonoBehaviour:
   fireball: {fileID: 8634321614551258705, guid: d6cd1333671fc964b95053165f336027, type: 3}
   speed: 8
   spawnDist: 2
+  lightningSpawnDist: 4
   camera: {fileID: 3812193401467533940}
+  lightning: {fileID: 8297969081835673719, guid: 5b2066b37d9c9e94998ed02b0df55f8e, type: 3}
 --- !u!1 &3964152609730271146
 GameObject:
   m_ObjectHideFlags: 0

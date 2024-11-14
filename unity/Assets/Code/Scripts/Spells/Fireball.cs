@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Fireball : MonoBehaviour
 {
-    //public Transform target;
-    //public float speed = 5f;
     public float damageAmount = 10f;
     public float lifetime;
     public GameObject explosion;
@@ -17,18 +15,10 @@ public class Fireball : MonoBehaviour
         Destroy(gameObject, lifetime);
     }
 
-    void Update()
-    {
-        //Vector3 direction = (target.position - transform.position).normalized;
-        //transform.position += direction * speed * Time.deltaTime;
-        //this.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(0, 0, 0))
-    }
-
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag != "Player")
         {
-            // Check if the object collided with a specific tag
             Destroy(gameObject);
             Debug.Log("fireball destroyed");
 
