@@ -48,7 +48,57 @@ func UpdateUserCoins(username string, coins int) error {
 
 	// update the player to have the new coins
 	err = DB.Save(&player).Error
+	if err != nil {
+		return err
+	}
+
 	return nil
+}
+
+func UpgradeUserSpell(username string, spellName string) error {
+	var playerSpell model.PlayerSpell
+	err := DB.Where("username = ? AND spell_name = ?", username, spellName).First(&playerSpell).Error
+	if err != nil {
+		return err
+	} 
+
+	// update the player to have the new level
+	err = DB.Model(&playerSpell).
+	Where("username = ? AND spell_name = ?", username, spellName).
+	Update("level", playerSpell.Level + 1).Error
+	
+	return err
+}
+
+func RetrieveUserCoins(username string) (int, error) {
+	var player model.Player
+	err := DB.First(&player, "username = ?", username).Error
+	if err != nil {
+		return -1, err
+	} 
+
+	return player.Coins, nil
+}
+
+func RetrieveUserSpells(username string) ([]model.PlayerSpell, error) {
+	var playerSpells []model.PlayerSpell
+	err := DB.Find(&playerSpells, "username = ?", username).Error
+	if err != nil {
+		return playerSpells, err
+	} 
+
+	return playerSpells, nil
+}
+
+func AddNewUserSpell(username string, spellName string) error {
+	newSpell := model.PlayerSpell{
+		SpellName: spellName,
+		Username: username,
+		Level: 1,
+	}
+
+	// insert the spell into the database 
+	return DB.Create(&newSpell).Error
 }
 
 func isUniqueViolation(err error, constraint string) bool {
