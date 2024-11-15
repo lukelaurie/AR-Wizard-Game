@@ -10,7 +10,7 @@ public class PlayerCam : NetworkBehaviour
 
     [SerializeField] private Transform orientation;
 
-    private float xRotation; 
+    private float xRotation;
     private float yRotation;
 
     void Start()

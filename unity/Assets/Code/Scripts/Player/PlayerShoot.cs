@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerShoot : MonoBehaviour
 {
+    public Button fireButton;
+    public Button lightningButton;
     public GameObject fireball;
     public float speed = 8f;
     public float spawnDist = 2f;
@@ -20,7 +23,8 @@ public class PlayerShoot : MonoBehaviour
 
     void Start()
     {
-        //empty for now
+        fireButton.onClick.AddListener(ShootFireball);
+        lightningButton.onClick.AddListener(ShootLightning);
     }
 
     void Update()
@@ -34,8 +38,10 @@ public class PlayerShoot : MonoBehaviour
             fireballTimer = 0;
         }
 
+
+
         lightningTimer += Time.deltaTime;
-        if(Input.GetKey(KeyCode.L) && lightningTimer >= lWaitTime)
+        if (Input.GetKey(KeyCode.L) && lightningTimer >= lWaitTime)
         {
             ShootLightning();
             lightningTimer = 0;
