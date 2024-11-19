@@ -1977,8 +1977,8 @@ GameObject:
   m_Component:
   - component: {fileID: 699831932104471596}
   - component: {fileID: 6813466037561763581}
-  - component: {fileID: 3560183358942798707}
   - component: {fileID: 3510056695076331496}
+  - component: {fileID: 3560183358942798707}
   m_Layer: 0
   m_Name: NewAlbino
   m_TagString: Dragon
@@ -1996,7 +1996,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6760020690430794418}
@@ -2025,21 +2025,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &3560183358942798707
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6739088511435197133}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cef61facbca90ff418dc78d4446855bc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 0
-  maxHealth: 200
-  enemyAnimator: {fileID: 6813466037561763581}
 --- !u!114 &3510056695076331496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2061,6 +2046,20 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+--- !u!114 &3560183358942798707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6739088511435197133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cef61facbca90ff418dc78d4446855bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthBar: {fileID: 0}
+  enemyAnimator: {fileID: 6813466037561763581}
 --- !u!1 &6750535430045099800
 GameObject:
   m_ObjectHideFlags: 0

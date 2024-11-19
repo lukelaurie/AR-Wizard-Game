@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3845141843
+  GlobalObjectIdHash: 3159476225
   InScenePlacedSourceGlobalObjectIdHash: 945624831
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -98,5 +98,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e889e9ee69229d4e98e9588f6718cc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  placementObject: {fileID: 7261152975830172777, guid: 139c42c7256d0439bb41846fcd8a4f63, type: 3}
+  placementObject: {fileID: 6739088511435197133, guid: 2f8b4a6dbba08c24e8690a207e35a2da, type: 3}
   mainCam: {fileID: 0}
