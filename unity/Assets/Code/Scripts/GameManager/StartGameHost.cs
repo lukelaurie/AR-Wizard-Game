@@ -44,17 +44,20 @@ public class StartGameHost : MonoBehaviour
     }
 
     private async void NotifyClientsStartGame() {
-        string[] players = await RoomManager.Instance.GetPlayersInRoom();
+        string[] roomPlayers = await RoomManager.Instance.GetPlayersInRoom();
 
-        Debug.Log("top");
+        foreach (var player in roomPlayers)
+        {
+            Debug.Log(player);
+        }
+
         foreach (var client in NetworkManager.Singleton.ConnectedClientsList)
         {
-            Debug.Log("in");
-            var clientObj = client.PlayerObject.GetComponent<StartGameClient>();
-            Debug.Log(clientObj);
-            if (clientObj != null)
+            var clientNotifyObj = client.PlayerObject.GetComponent<NotifyClient>();
+            var clientData = client.PlayerObject.GetComponent<PlayerData>();
+            if (clientNotifyObj != null && Array.Exists(roomPlayers, player => player == clientData.username))
             {
-                clientObj.JoinGameClientRpc("test");
+                clientNotifyObj.JoinGameClientRpc();
             }
         }
     }

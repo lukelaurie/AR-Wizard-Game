@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class PlayerData : MonoBehaviour
 {
-    public static string username = "user3";
+    public string username = "user3";
 }

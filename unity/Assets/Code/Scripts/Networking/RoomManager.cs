@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -120,9 +121,17 @@ public class RoomManager : MonoBehaviour
             string response = request.downloadHandler.text.Trim();
             Debug.Log($"Players in room: {response}");
 
-            string[] players = response.Split(',');
-
-            return players;
+            // try to deserialize the object into a list of strings
+            try 
+            {
+                string[] players = JsonConvert.DeserializeObject<string[]>(response); 
+                return players;
+            }
+            catch (JsonException ex)
+            {
+                Debug.LogError("Error parsing the json");
+                return null;
+            }
         }
     }
 }
