@@ -1,6 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class RoomManager : MonoBehaviour
 {
@@ -22,10 +25,104 @@ public class RoomManager : MonoBehaviour
     }
 
     // create a new room on the go server 
-    public string CreateRoom()
+    public async Task<string> CreateRoom()
     {
-        Debug.Log(GlobalConfig.baseURL);
-        int x = 1000;
-        return x.ToString();
+        string url = $"{GlobalConfig.baseURL}/api/protected/create-room";
+        string cookieToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzIzMjExMDcsInVzZXJuYW1lIjoidXNlcjQifQ.Vh6BDKjrJ9dhAdvsUkaNRU6mZDEqXDJQ3ilmbvYXiek";
+
+        using (UnityWebRequest request = new UnityWebRequest(url, "POST")) // using ensures removed after 
+        {
+            request.SetRequestHeader("Content-Type", "application/json");
+            request.SetRequestHeader("Cookie", $"token={cookieToken}");
+
+            // allows the response to be stored
+            request.downloadHandler = new DownloadHandlerBuffer();
+
+            // Send the web request 
+            UnityWebRequestAsyncOperation operation = request.SendWebRequest();
+            while (!operation.isDone)
+            {
+                await Task.Yield();
+            }
+
+            // check for a response of 200 
+            if (request.result != UnityWebRequest.Result.Success)
+            {
+                Debug.LogError($"Error creating room: {request.error}");
+                return null;
+            }
+
+            // parse the response 
+            string roomID = request.downloadHandler.text.Trim();
+            Debug.Log($"Room with ID: {roomID} created successfully");
+
+            return roomID;
+        }
+    }
+
+    // try joining a room from the id from the user 
+    public async Task<bool> JoinRoom(string roomId)
+    {
+        string url = $"{GlobalConfig.baseURL}/api/protected/join-room?roomNumber={roomId}";
+        string cookieToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzIzMjE5OTQsInVzZXJuYW1lIjoidXNlcjMifQ.s0zyOnT4T1q5592MKPxhEcwphazkSN8W1y1c0-MBCWQ";
+
+        using (UnityWebRequest request = new UnityWebRequest(url, "GET")) // using ensures removed after 
+        {
+            request.SetRequestHeader("Content-Type", "application/json");
+            request.SetRequestHeader("Cookie", $"token={cookieToken}");
+
+            // Send the web request 
+            UnityWebRequestAsyncOperation operation = request.SendWebRequest();
+            while (!operation.isDone)
+            {
+                await Task.Yield();
+            }
+
+            // check for a response of 200 
+            if (request.result != UnityWebRequest.Result.Success)
+            {
+                Debug.LogError($"Error joining room: {request.error}");
+                return false;
+            }
+
+            return true;
+        }
+    }
+
+    // get all the players in the current room 
+    public async Task<string[]> GetPlayersInRoom()
+    {
+        string url = $"{GlobalConfig.baseURL}/api/protected/get-room";
+        string cookieToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzIzMjExMDcsInVzZXJuYW1lIjoidXNlcjQifQ.Vh6BDKjrJ9dhAdvsUkaNRU6mZDEqXDJQ3ilmbvYXiek";
+
+        using (UnityWebRequest request = new UnityWebRequest(url, "GET")) // using ensures removed after 
+        {
+            request.SetRequestHeader("Content-Type", "application/json");
+            request.SetRequestHeader("Cookie", $"token={cookieToken}");
+
+            // allows the response to be stored
+            request.downloadHandler = new DownloadHandlerBuffer();
+
+            // Send the web request 
+            UnityWebRequestAsyncOperation operation = request.SendWebRequest();
+            while (!operation.isDone)
+            {
+                await Task.Yield();
+            }
+
+            // check for a response of 200 
+            if (request.result != UnityWebRequest.Result.Success)
+            {
+                Debug.LogError($"Error creating room: {request.error}");
+                return null;
+            }
+
+            string response = request.downloadHandler.text.Trim();
+            Debug.Log($"Players in room: {response}");
+
+            string[] players = response.Split(',');
+
+            return players;
+        }
     }
 }
