@@ -26,21 +26,16 @@ public class StartGameHost : MonoBehaviour
 
         OnStartSharedSpaceHost?.Invoke();
 
-        StartGameAr.StartNewGame();
 
         Debug.Log("Starting The AR Dedicated Server...");
         NetworkManager.Singleton.StartHost();
 
-        startGameButton.onClick.AddListener(startGameHost);
-    }
-
-    private void startGameHost()
-    {
-        // get the other players in the room to notify them that game is starting
-        NotifyClientsStartGame();
-
-        gameObject.SetActive(false);
-
+        startGameButton.onClick.AddListener(() => {
+            NotifyClientsStartGame();
+            
+            StartGameAr.StartNewGame();
+            gameObject.SetActive(false);
+        });
     }
 
     private async void NotifyClientsStartGame() {

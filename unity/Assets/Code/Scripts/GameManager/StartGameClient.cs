@@ -27,9 +27,9 @@ public class StartGameClient : MonoBehaviour
         // attempt to join the room in the go server 
         if (!await RoomManager.Instance.JoinRoom(roomId))
         {
-            invalidIdText.gameObject.SetActive(true);
+            invalidIdText.text = "Invalid Room ID";
             await Task.Delay(2000); // wait for 2 seconds
-            invalidIdText.gameObject.SetActive(false);
+            invalidIdText.text = "";
 
             return;
         }
