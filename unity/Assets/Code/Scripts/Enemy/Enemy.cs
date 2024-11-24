@@ -41,7 +41,7 @@ public class Enemy : NetworkBehaviour
     {
         maxHealth = 200f;
         UpdateHealthServerRpc(maxHealth);
-        canBeHit= true;
+        canBeHit = true;
 
         // health = maxHealth;
         //need to find player object
@@ -69,19 +69,39 @@ public class Enemy : NetworkBehaviour
         if (timer >= waitTime)
         {
 
-            // generate rand wait time between 4 and 6 sec to roar
-            int randInt = Random.Range(6, 8);
+            // generate rand wait time between 6 and 8 sec to roar or attack
+            int randTime = Random.Range(6, 9);
 
-            enemyAnimator.Play("Scream");
-            enemyAnimator.Play("Idle");
-            //play a scream sound
+            int randAttack = Random.Range(0, 3);
 
-            waitTime = (float)randInt;
+            if (randAttack == 0)
+            {
+                //roar attack
+                enemyAnimator.Play("Scream");
+                //play sound
+                canBeHit = false;
+                StartCoroutine(WaitAndPerformAction());
+                Debug.Log("roar attack");
+            }
+            else if (randAttack == 1)
+            {
+                //ground pound
+                //play jump animation
+                //play jump and impact sound
+                // fling rocks around
+                Debug.Log("ground pound");
+            }
+            else if (randAttack == 2)
+            {
+                //fire ball attack
+                //spin 360 and shoot fireballs around
+                Debug.Log("dragon fireball attack");
+            }
+
+            waitTime = (float)randTime;
 
             //reset timer
             timer = 0;
-
-            Debug.Log($"{waitTime} seconds have passed!");
         }
 
     }
