@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8294391373464646183}
   - component: {fileID: 3482497474728574059}
   - component: {fileID: -4753103825164160976}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: lightning
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,11 +100,11 @@ MeshCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!114 &-4753103825164160976
@@ -120,4 +120,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageAmount: 1
-  explosion: {fileID: 0}
