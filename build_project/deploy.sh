@@ -4,17 +4,17 @@ BRANCH_NAME="$1"
 git checkout "$BRANCH_NAME"
 git pull
 
-# Start up unity server
-cd unity/game_build/
-chmod +x game.x86_64
+# # Start up unity server
+# cd unity/game_build/
+# chmod +x game.x86_64
 
-# kill old server and start the new one 
-echo "Starting Unity Server..."
-sudo pkill -f game.x86_64
-nohup ./game.x86_64 -batchmode -nographics > /dev/null 2>&1 &
+# # kill old server and start the new one 
+# echo "Starting Unity Server..."
+# sudo pkill -f game.x86_64
+# nohup ./game.x86_64 -batchmode -nographics > /dev/null 2>&1 &
 
-# start up the go server
-cd ../../go_server
+# # start up the go server
+# cd ../../go_server
 
 sudo pkill -f main
 
