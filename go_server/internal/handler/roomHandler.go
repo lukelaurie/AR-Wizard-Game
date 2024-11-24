@@ -32,6 +32,29 @@ func CreateRoom(w http.ResponseWriter, r *http.Request) {
 	nextRoomNumber++
 }
 
+func GetUsersInRoom(w http.ResponseWriter, r *http.Request) {
+	username, ok := middleware.GetUsernameFromContext(r.Context())
+	if !ok {
+		http.Error(w, "Username not found in context", http.StatusInternalServerError)
+		return
+	}
+
+	roomNumber, ok := userRooms[username]
+	if !ok {
+		http.Error(w, "User not in a room", http.StatusNotFound)
+		return
+	}
+
+
+	curRoom, ok := rooms[roomNumber]
+	if !ok {
+		http.Error(w, "Room does not exist", http.StatusNotFound)
+		return
+	}
+
+	json.NewEncoder(w).Encode(curRoom)
+}
+
 func JoinRoom(w http.ResponseWriter, r *http.Request) {
 	username, ok := middleware.GetUsernameFromContext(r.Context())
 	if !ok {
