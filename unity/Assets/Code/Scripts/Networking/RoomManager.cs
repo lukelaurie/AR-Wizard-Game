@@ -29,7 +29,7 @@ public class RoomManager : MonoBehaviour
     public async Task<string> CreateRoom()
     {
         string url = $"{GlobalConfig.baseURL}/api/protected/create-room";
-        string cookieToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzIzMjExMDcsInVzZXJuYW1lIjoidXNlcjQifQ.Vh6BDKjrJ9dhAdvsUkaNRU6mZDEqXDJQ3ilmbvYXiek";
+        string cookieToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzI2Njg5NjMsInVzZXJuYW1lIjoidXNlcjMifQ.YPU4A7eJvdWX0dkDc3FGEgNrnT3MIZigHPnG6HkLN_k";
 
         using (UnityWebRequest request = new UnityWebRequest(url, "POST")) // using ensures removed after 
         {
@@ -65,7 +65,7 @@ public class RoomManager : MonoBehaviour
     public async Task<bool> JoinRoom(string roomId)
     {
         string url = $"{GlobalConfig.baseURL}/api/protected/join-room?roomNumber={roomId}";
-        string cookieToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzIzMjE5OTQsInVzZXJuYW1lIjoidXNlcjMifQ.s0zyOnT4T1q5592MKPxhEcwphazkSN8W1y1c0-MBCWQ";
+        string cookieToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzI2Njg5OTMsInVzZXJuYW1lIjoidXNlcjQifQ.FU4muhX8IyJMHuNfmGJ9gCV6eB6YrwgSaiERIOgIEzM";
 
         using (UnityWebRequest request = new UnityWebRequest(url, "GET")) // using ensures removed after 
         {
@@ -94,7 +94,7 @@ public class RoomManager : MonoBehaviour
     public async Task<string[]> GetPlayersInRoom()
     {
         string url = $"{GlobalConfig.baseURL}/api/protected/get-room";
-        string cookieToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzIzMjExMDcsInVzZXJuYW1lIjoidXNlcjQifQ.Vh6BDKjrJ9dhAdvsUkaNRU6mZDEqXDJQ3ilmbvYXiek";
+        string cookieToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzI2Njg5NjMsInVzZXJuYW1lIjoidXNlcjMifQ.YPU4A7eJvdWX0dkDc3FGEgNrnT3MIZigHPnG6HkLN_k";
 
         using (UnityWebRequest request = new UnityWebRequest(url, "GET")) // using ensures removed after 
         {
