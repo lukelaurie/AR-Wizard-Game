@@ -21,13 +21,25 @@ public class Lightning : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
+        Debug.Log("lightning hit something");
+        Transform collidedObjectTransform = collision.transform;
+
         if (collision.gameObject.tag != "Player")
         {
-            Debug.Log("lightning hit guy");
+            Debug.Log("lightning hit non-player");
 
-            GameObject colidedObject = collision.gameObject;
+            GameObject parentObject = collision.gameObject;
 
-            if (colidedObject.TryGetComponent<Enemy>(out Enemy enemyComponent))
+            if (collidedObjectTransform.parent == null)
+            {
+                Debug.Log("colided object parent is null");
+            }
+            else
+            {
+                parentObject = collidedObjectTransform.parent.gameObject;
+            }
+
+            if (parentObject.TryGetComponent<Enemy>(out Enemy enemyComponent))
             {
                 enemyComponent.TakeDamage(damageAmount);
                 Debug.Log($"lightning delt {damageAmount} damage to enemy");

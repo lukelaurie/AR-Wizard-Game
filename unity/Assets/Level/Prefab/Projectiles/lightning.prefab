@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8294391373464646183}
   - component: {fileID: 3482497474728574059}
   - component: {fileID: -4753103825164160976}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: lightning
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -119,5 +119,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95c4000b1dc40274eb406700c3b122b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageAmount: 1
-  explosion: {fileID: 0}
+  damageAmount: 10
