@@ -14,7 +14,7 @@ git pull
 # nohup ./game.x86_64 -batchmode -nographics > /dev/null 2>&1 &
 
 # # start up the go server
-# cd ../../go_server
+cd go_server
 
 sudo pkill -f main
 
