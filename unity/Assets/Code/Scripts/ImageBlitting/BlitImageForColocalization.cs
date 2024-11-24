@@ -18,8 +18,8 @@ public class BlitImageForColocalization : MonoBehaviour
     private void Start()
     {
         m_ARCameraBackground = FindObjectOfType<ARCameraBackground>();
-        StartGameAr.OnStartSharedSpaceHost += OnStartSharedSpace;
-        StartGameAr.OnJoinSharedSpaceClient += OnStartSharedSpace;
+        StartGameHost.OnStartSharedSpaceHost += OnStartSharedSpace;
+        StartGameClient.OnJoinSharedSpaceClient += OnStartSharedSpace;
     }
 
     void OnStartSharedSpace()
@@ -91,8 +91,8 @@ public class BlitImageForColocalization : MonoBehaviour
 
     public void OnDestroy()
     {
-        StartGameAr.OnStartSharedSpaceHost -= OnStartSharedSpace;
-        StartGameAr.OnJoinSharedSpaceClient -= OnStartSharedSpace;
+        StartGameHost.OnStartSharedSpaceHost -= OnStartSharedSpace;
+        StartGameClient.OnJoinSharedSpaceClient -= OnStartSharedSpace;
     }
 
     private void CopyRenderTextureTo2DTexture()

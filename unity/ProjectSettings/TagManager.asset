@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Dragon
   - Fireball
+  - JoinRoomUI
   layers:
   - Default
   - TransparentFX
