@@ -24,6 +24,7 @@ public class Enemy : NetworkBehaviour
 
     public Animator enemyAnimator;
 
+    private bool canPlayAnim;
     private bool canBeHit;
 
     /*[SerializeField] float moveSpeed = 5f;
@@ -41,6 +42,7 @@ public class Enemy : NetworkBehaviour
     {
         maxHealth = 200f;
         UpdateHealthServerRpc(maxHealth);
+        canPlayAnim = true;
         canBeHit = true;
 
         // health = maxHealth;
@@ -79,8 +81,8 @@ public class Enemy : NetworkBehaviour
                 //roar attack
                 enemyAnimator.Play("Scream");
                 //play sound
-                canBeHit = false;
-                StartCoroutine(WaitAndPerformAction());
+                canPlayAnim = false;
+                StartCoroutine(WaitAndPerformAction(3f));
                 Debug.Log("roar attack");
             }
             else if (randAttack == 1)
@@ -117,9 +119,9 @@ public class Enemy : NetworkBehaviour
 
     public void TakeDamage(float damageAmount)
     {
-        if (!canBeHit)
+        if(!canBeHit)
         {
-            Debug.Log("!canBeHit in Enemy.cs");
+            Debug.Log("Enemy can't be hit (dead)");
             return;
         }
         Debug.Log("Called TakeDamage in Enemy.cs");
@@ -130,18 +132,25 @@ public class Enemy : NetworkBehaviour
         if (randInt == 0)
         {
             Debug.Log("defended within Enemy.cs");
-            enemyAnimator.Play("Defend");
 
-            canBeHit = false;
-            StartCoroutine(WaitAndPerformAction());
+            if(canPlayAnim)
+            {
+                enemyAnimator.Play("Defend");
+                canPlayAnim = false;
+                StartCoroutine(WaitAndPerformAction(2f));
+            }
         }
         else
         {
             Debug.Log("took damage within Enemy.cs");
-            enemyAnimator.Play("Get Hit");
 
-            canBeHit = false;
-            StartCoroutine(WaitAndPerformAction());
+            if(canPlayAnim)
+            {
+                enemyAnimator.Play("Get Hit");
+
+                canPlayAnim = false;
+                StartCoroutine(WaitAndPerformAction(1.5f));
+            }
 
             UpdateHealthServerRpc(health.Value - damageAmount);
 
@@ -167,12 +176,12 @@ public class Enemy : NetworkBehaviour
         Debug.Log("Died after 3 seconds");
     }
 
-    private IEnumerator WaitAndPerformAction()
+    private IEnumerator WaitAndPerformAction(float seconds)
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(seconds);
 
         enemyAnimator.Play("Idle");
-        canBeHit = true;
+        canPlayAnim = true;
     }
 
     [ServerRpc(RequireOwnership = false)]

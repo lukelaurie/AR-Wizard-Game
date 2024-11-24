@@ -17,14 +17,25 @@ public class Fireball : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
+        Transform collidedObjectTransform = collision.transform;
+
         if (collision.gameObject.tag != "Player")
         {
             //add explosion particle
             Instantiate(explosion, collision.contacts[0].point, Quaternion.identity);
 
-            GameObject colidedObject = collision.gameObject;
+            GameObject parentObject = collision.gameObject;
 
-            if (colidedObject.TryGetComponent<Enemy>(out Enemy enemyComponent))
+            if (collidedObjectTransform.parent == null)
+            {
+                Debug.Log("colided object parent is null");
+            }
+            else
+            {
+                parentObject = collidedObjectTransform.parent.gameObject;
+            }
+
+            if (parentObject.TryGetComponent<Enemy>(out Enemy enemyComponent))
             {
                 enemyComponent.TakeDamage(damageAmount);
                 Debug.Log($"fireball delt {damageAmount} damage to enemy");
