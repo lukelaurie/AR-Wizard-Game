@@ -1277,9 +1277,9 @@ GameObject:
   - component: {fileID: 8842977709521623667}
   - component: {fileID: 1258427668300214771}
   - component: {fileID: 1244170508711991105}
-  - component: {fileID: 606233953193540891}
   - component: {fileID: -7193196944570016159}
   - component: {fileID: -8387306238779027811}
+  - component: {fileID: 99153508397456998}
   m_Layer: 6
   m_Name: PlayerNonAr
   m_TagString: Player
@@ -1317,7 +1317,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3788168258
+  GlobalObjectIdHash: 2847599674
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -1417,20 +1417,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraHolder: {fileID: 2685874167464360285}
   offset: {x: 0, y: 0, z: 0}
---- !u!114 &606233953193540891
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2806718501574609571}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e889e9ee69229d4e98e9588f6718cc0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  placementObject: {fileID: 6739088511435197133, guid: 2f8b4a6dbba08c24e8690a207e35a2da, type: 3}
-  mainCam: {fileID: 3812193401467533940}
 --- !u!114 &-7193196944570016159
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1468,6 +1454,20 @@ MonoBehaviour:
   lightningSpawnDist: 4
   camera: {fileID: 3812193401467533940}
   lightning: {fileID: 8297969081835673719, guid: 5b2066b37d9c9e94998ed02b0df55f8e, type: 3}
+--- !u!114 &99153508397456998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2806718501574609571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2729f40811bb9be48a68b1bff1488127, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  placementObject: {fileID: 6739088511435197133, guid: 2f8b4a6dbba08c24e8690a207e35a2da, type: 3}
+  mainCam: {fileID: 0}
 --- !u!1 &3964152609730271146
 GameObject:
   m_ObjectHideFlags: 0
