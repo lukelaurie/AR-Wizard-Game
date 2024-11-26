@@ -34,8 +34,7 @@ public class Login : MonoBehaviour
             return;
         }
 
-        // bool isLoggedIn = await AccountManager.Instance.LoginUser(username, password); 
-        bool isLoggedIn = true;
+        bool isLoggedIn = await AccountManager.Instance.LoginUser(username, password); 
 
         if (isLoggedIn)
         {
