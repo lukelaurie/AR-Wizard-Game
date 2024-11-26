@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using UnityEngine;
@@ -8,7 +9,7 @@ using UnityEngine.Networking;
 
 public class AccountManager : MonoBehaviour
 {
-    public static AccountManager Instance { get; private set;} // can only set/modify in this class
+    public static AccountManager Instance { get; private set; } // can only set/modify in this class
 
     void Awake()
     {
@@ -49,5 +50,32 @@ public class AccountManager : MonoBehaviour
         }
     }
 
+    public async Task<bool> RegisterUser(string username, string password)
+    {
+        string url = $"{GlobalConfig.baseURL}/api/register-user";
+
+        using UnityWebRequest request = new UnityWebRequest(url, "POST");
+        byte[] bodyRaw = Encoding.UTF8.GetBytes("{ \"username\": \"" + username + "\", \"password\": \"" + password + "\" }");
+        request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+
+        request.SetRequestHeader("Content-Type", "application/json");
+
+        // Send the web request 
+        UnityWebRequestAsyncOperation operation = request.SendWebRequest();
+        while (!operation.isDone)
+        {
+            await Task.Yield();
+        }
+
+        // check for a response of 200 
+        Debug.Log(request.error);
+        if (request.result != UnityWebRequest.Result.Success)
+        {
+            Debug.Log($"Error registering user: {username}");
+            return false;
+        }
+
+        return true;
+    }
 
 }
