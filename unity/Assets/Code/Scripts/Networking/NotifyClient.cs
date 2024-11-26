@@ -12,6 +12,7 @@ public class NotifyClient : NetworkBehaviour
             return;
 
         ToggleSpellBarOn();
+        EnableSpellShootingScript();
 
         // If they are the host allow them to click to place a boss object 
         if (IsHost)
@@ -38,6 +39,20 @@ public class NotifyClient : NetworkBehaviour
         }
 
         placeBoss.enabled = true;
+        return;
+    }
+
+    private void EnableSpellShootingScript()
+    {
+        PlayerShoot playerShoot = GetComponent<PlayerShoot>();
+
+        if (playerShoot == null)
+        {
+            Debug.Log("Unable to find boss script");
+            return;
+        }
+
+        playerShoot.enabled = true;
         return;
     }
 
