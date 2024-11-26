@@ -35,8 +35,6 @@ public class NotifyClient : NetworkBehaviour
 
     private void EnablePlacementScript()
     {
-        Debug.Log("Place boss enabled");
-
         PlaceCharacter placeBoss = GetComponent<PlaceCharacter>();
 
         if (placeBoss == null)

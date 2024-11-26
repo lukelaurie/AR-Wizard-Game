@@ -1942,6 +1942,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 618e1adb823a9ca44a766b3d6c20239c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tryAgain: {fileID: 9144441488549678063}
+  quit: {fileID: 8094115528984387414}
+  player: {fileID: 9110343311535083804}
 --- !u!1 &5248157653007314143
 GameObject:
   m_ObjectHideFlags: 0
@@ -3783,11 +3786,11 @@ GameObject:
   - component: {fileID: 4195708311500449749}
   - component: {fileID: 5568470661622741333}
   - component: {fileID: 4276111633128954287}
-  - component: {fileID: 1501555216025183453}
   - component: {fileID: 4962820327145714608}
   - component: {fileID: 1711796466434620760}
   - component: {fileID: -650263948700098578}
   - component: {fileID: 5929464542746153433}
+  - component: {fileID: 8518676934015167672}
   m_Layer: 6
   m_Name: PlayerAr
   m_TagString: Player
@@ -3863,20 +3866,6 @@ MonoBehaviour:
   InLocalSpace: 0
   Interpolate: 1
   SlerpPosition: 0
---- !u!114 &1501555216025183453
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9110343311535083804}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e889e9ee69229d4e98e9588f6718cc0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  placementObject: {fileID: 6739088511435197133, guid: 2f8b4a6dbba08c24e8690a207e35a2da, type: 3}
-  mainCam: {fileID: 0}
 --- !u!114 &4962820327145714608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3939,3 +3928,16 @@ MonoBehaviour:
   loseBackground: {fileID: 5134203701249196089}
   deathBackground: {fileID: 6517771370743164048}
   spellPanel: {fileID: 2035003244288083317}
+--- !u!114 &8518676934015167672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9110343311535083804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2729f40811bb9be48a68b1bff1488127, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  placementObject: {fileID: 6739088511435197133, guid: 2f8b4a6dbba08c24e8690a207e35a2da, type: 3}

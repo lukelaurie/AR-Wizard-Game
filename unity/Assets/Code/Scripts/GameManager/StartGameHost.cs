@@ -41,11 +41,6 @@ public class StartGameHost : MonoBehaviour
     private async void NotifyClientsStartGame() {
         string[] roomPlayers = await RoomManager.Instance.GetPlayersInRoom();
 
-        foreach (var player in roomPlayers)
-        {
-            Debug.Log(player);
-        }
-
         foreach (var client in NetworkManager.Singleton.ConnectedClientsList)
         {
             var clientNotifyObj = client.PlayerObject.GetComponent<NotifyClient>();

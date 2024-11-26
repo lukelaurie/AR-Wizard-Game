@@ -12,53 +12,48 @@ using UnityEngine.UI;
 
 public class StartGameAr : MonoBehaviour
 {
-    [SerializeField] private SharedSpaceManager sharedSpaceManager;
+    [SerializeField] private SharedSpaceManager sharedSpaceManager = null;
     [SerializeField] private Texture2D targetImage;
     [SerializeField] private float targetImageSize;
 
     [SerializeField] private Button joinServerButton;
     [SerializeField] private Button startServerButton;
 
-    // the screen to toggle between
-    [SerializeField] private GameObject initialScreen;
-    [SerializeField] private GameObject hostScreen;
-    [SerializeField] private GameObject joinScreen;
+    
 
     public static event Action OnStartGame;
     public static event Action OnStartSharedSpace;
 
     private bool isHost;
+
+    private bool isRoomCreated;
     private static string roomId = "";
 
     private void Start()
     {
-        NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnectedCallback;
         DontDestroyOnLoad(gameObject);
+
+        NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnectedCallback;
 
         SetRandomUserId();
 
-        // check if running on the server 
-        // if (Application.isBatchMode)
-        // {
-        //     StartServer();
-        //     return;
-        // }
-
-        joinServerButton.onClick.AddListener(toggleJoinScreen);
-        startServerButton.onClick.AddListener(toggleHostScreen);
+        joinServerButton.onClick.AddListener(SwapScreens.Instance.ToggleJoinScreen);
+        startServerButton.onClick.AddListener(SwapScreens.Instance.ToggleHostScreen);
 
         BlitImageForColocalization.OnTextureRendered += BlitImageForColocalizationOnTextureRender;
     }
 
+    private void OnDestroy()
+    {
+        // NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnectedCallback;
+        BlitImageForColocalization.OnTextureRendered -= BlitImageForColocalizationOnTextureRender;
+    }
+
     private void BlitImageForColocalizationOnTextureRender(Texture2D texture)
     {
-        // when the user joins a game the image gets pushed into the texture so 
-        // we can now set that texture and start up our room
         targetImage = texture;
         
-        Debug.Log("Room Id Is: " + roomId);
-
-        const int MAX_AMOUNT_CLIENTS_ROOM = 32;
+        const int MAX_AMOUNT_CLIENTS_ROOM = 34;
 
         OnStartSharedSpace?.Invoke(); // show the image & retake button
 
@@ -97,20 +92,6 @@ public class StartGameAr : MonoBehaviour
     private void OnClientConnectedCallback(ulong clientId)
     {
         Debug.Log($"Client connected: {clientId}");
-    }
-
-    private void toggleHostScreen()
-    {
-        initialScreen.SetActive(false);
-        joinScreen.SetActive(false);
-        hostScreen.SetActive(true);
-    }
-
-    private void toggleJoinScreen()
-    {
-        initialScreen.SetActive(false);
-        hostScreen.SetActive(false);
-        joinScreen.SetActive(true);
     }
 
     public static void SetRoomId(string newRoomId)

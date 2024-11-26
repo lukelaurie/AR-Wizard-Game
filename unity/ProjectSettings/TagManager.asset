@@ -9,6 +9,7 @@ TagManager:
   - JoinRoomUI
   - InitiateSpellUI
   - InitiateSpellUi
+  - SharedSpace
   layers:
   - Default
   - TransparentFX

@@ -20,6 +20,7 @@ public class BlitImageForColocalization : MonoBehaviour
         m_ARCameraBackground = FindObjectOfType<ARCameraBackground>();
         StartGameHost.OnStartSharedSpaceHost += OnStartSharedSpace;
         StartGameClient.OnJoinSharedSpaceClient += OnStartSharedSpace;
+        RetakeImageLogic.OnRetakePicture += OnStartSharedSpace;
     }
 
     void OnStartSharedSpace()
