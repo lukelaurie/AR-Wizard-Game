@@ -9,7 +9,6 @@ public class StartGameNonAr : NetworkBehaviour
     [SerializeField] private Button joinServerButton;
     [SerializeField] private Button startServerButton;
     [SerializeField] private Canvas createGameCanvas;
-    [SerializeField] private Button joinEC2Button;
     [SerializeField] private Camera startCamera;
 
     void Start()
@@ -31,10 +30,6 @@ public class StartGameNonAr : NetworkBehaviour
         startServerButton.onClick.AddListener(() =>
         {
             NetworkManager.Singleton.StartHost();
-        });
-
-        joinEC2Button.onClick.AddListener(() => {
-            JoinServer("18.117.251.172", 7777);
         });
     }
 

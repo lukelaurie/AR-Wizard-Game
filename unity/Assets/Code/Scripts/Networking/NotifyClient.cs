@@ -3,11 +3,15 @@ using UnityEngine;
 
 public class NotifyClient : NetworkBehaviour
 {
+    [SerializeField] private GameObject initiateSpellUi;
+    
     [ClientRpc]
     public void JoinGameClientRpc()
     {
         if (!IsOwner)
             return;
+
+        initiateSpellUi.SetActive(true);
 
         // If they are the host allow them to click to place a boss object 
         if (IsHost)
@@ -31,6 +35,8 @@ public class NotifyClient : NetworkBehaviour
 
     private void EnablePlacementScript()
     {
+        Debug.Log("Place boss enabled");
+
         PlaceCharacter placeBoss = GetComponent<PlaceCharacter>();
 
         if (placeBoss == null)

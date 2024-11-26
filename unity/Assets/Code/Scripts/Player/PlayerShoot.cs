@@ -23,12 +23,17 @@ public class PlayerShoot : MonoBehaviour
 
     void Start()
     {
+        if (camera == null)
+        {
+            camera = GameObject.FindObjectOfType<Camera>();
+        }
         fireButton.onClick.AddListener(ShootFireball);
         lightningButton.onClick.AddListener(ShootLightning);
     }
 
     void Update()
     {
+
         fireballTimer += Time.deltaTime;
 
         //must wait a second between shooting

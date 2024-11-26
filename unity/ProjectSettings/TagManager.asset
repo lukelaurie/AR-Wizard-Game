@@ -7,6 +7,8 @@ TagManager:
   - Dragon
   - Fireball
   - JoinRoomUI
+  - InitiateSpellUI
+  - InitiateSpellUi
   layers:
   - Default
   - TransparentFX

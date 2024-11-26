@@ -50,6 +50,7 @@ public class StartGameHost : MonoBehaviour
         {
             var clientNotifyObj = client.PlayerObject.GetComponent<NotifyClient>();
             var clientData = client.PlayerObject.GetComponent<PlayerData>();
+
             if (clientNotifyObj != null && Array.Exists(roomPlayers, player => player == clientData.username))
             {
                 clientNotifyObj.JoinGameClientRpc();

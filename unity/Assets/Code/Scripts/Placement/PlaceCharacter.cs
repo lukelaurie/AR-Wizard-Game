@@ -10,7 +10,7 @@ public class PlaceCharacter : NetworkBehaviour
     [SerializeField] private GameObject placementObject;
     
     private bool isPlaced = false;
-    [SerializeField] private Camera mainCam;
+    private Camera mainCam;
 
     public static event Action characterPlaced;
 
