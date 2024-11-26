@@ -19,8 +19,6 @@ public class StartGameAr : MonoBehaviour
     [SerializeField] private Button joinServerButton;
     [SerializeField] private Button startServerButton;
 
-    
-
     public static event Action OnStartGame;
     public static event Action OnStartSharedSpace;
 

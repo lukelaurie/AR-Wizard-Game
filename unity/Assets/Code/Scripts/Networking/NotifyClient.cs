@@ -4,14 +4,14 @@ using UnityEngine;
 public class NotifyClient : NetworkBehaviour
 {
     [SerializeField] private GameObject initiateSpellUi;
-    
+
     [ClientRpc]
     public void JoinGameClientRpc()
     {
         if (!IsOwner)
             return;
 
-        initiateSpellUi.SetActive(true);
+        ToggleSpellBarOn();
 
         // If they are the host allow them to click to place a boss object 
         if (IsHost)
@@ -22,14 +22,8 @@ public class NotifyClient : NetworkBehaviour
 
         // try to get the Game object from the scene 
         GameObject joinRoomUI = GameObject.FindWithTag("JoinRoomUI");
-
-        if (joinRoomUI == null)
-        {
-            Debug.Log("Join room UI was not found");
-            return;
-        }
-
         joinRoomUI.SetActive(false);
+
         StartGameAr.StartNewGame();
     }
 
@@ -45,5 +39,19 @@ public class NotifyClient : NetworkBehaviour
 
         placeBoss.enabled = true;
         return;
+    }
+
+    private void ToggleSpellBarOn()
+    {
+        GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>(true);
+        foreach (GameObject obj in allObjects)
+        {
+            Debug.Log(obj.tag);
+            if (obj.CompareTag("InitiateSpellUi"))
+            {
+                Debug.Log("here");
+                obj.SetActive(true);
+            }
+        }
     }
 }

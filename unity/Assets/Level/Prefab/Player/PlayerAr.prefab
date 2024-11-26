@@ -1944,7 +1944,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tryAgain: {fileID: 9144441488549678063}
   quit: {fileID: 8094115528984387414}
-  player: {fileID: 9110343311535083804}
 --- !u!1 &5248157653007314143
 GameObject:
   m_ObjectHideFlags: 0
@@ -1963,7 +1962,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3782489088847262863
 RectTransform:
   m_ObjectHideFlags: 0
