@@ -88,7 +88,8 @@ public class PlaceCharacter : NetworkBehaviour
             if (hitObject.tag != "Dragon" && hitObject.tag != "Fireball")
             {
                 // calculate rotation of the object relative to object location
-                Quaternion rotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
+                Quaternion rotation = Quaternion.Euler(0, 0, 0);
+                
                 SpawnPlayerServerRpc(hit.point, rotation, NetworkManager.Singleton.LocalClientId);
             }
         }
@@ -105,5 +106,10 @@ public class PlaceCharacter : NetworkBehaviour
         characterNetworkObject.SpawnWithOwnership(callerID);
 
         isPlaced = true;
+    }
+
+    public void ResetIsPlaced()
+    {
+        isPlaced = false;
     }
 }
