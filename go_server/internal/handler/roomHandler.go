@@ -113,13 +113,17 @@ func EndGame(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	deleteRoom(roomNumber, curRoom)
+
 	if !reqBody.WinStatus {
+		json.NewEncoder(w).Encode("game ended")
 		return
 	}
 
 	rewardMap := map[string]int{}
 
 	for _, player := range curRoom {
+		delete(userRooms, player)
 		// get the reward of the player for defeating the boss
 		playerCoins, err := game.GetReward(reqBody.BossName, reqBody.Level)
 		if err != nil {
@@ -134,13 +138,19 @@ func EndGame(w http.ResponseWriter, r *http.Request) {
 		}
 
 		rewardMap[player] = playerCoins
-		delete(userRooms, player)
 	}
+
+	
+	json.NewEncoder(w).Encode(rewardMap)
+}
+
+func deleteRoom(roomNumber int, curRoom []string) {
+	for _, player := range curRoom {
+		delete(userRooms, player)
+	} 
 
 	delete(rooms, roomNumber)
 	delete(activeRooms, roomNumber)
-
-	json.NewEncoder(w).Encode(rewardMap)
 }
 
 func StartGame(w http.ResponseWriter, r *http.Request) {

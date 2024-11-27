@@ -35,10 +35,10 @@ public class Login : MonoBehaviour
 
         // check if the user is already logged in 
         string username = await AccountManager.Instance.IsLoggedIn();
-        
+
         if (username != null)
         {
-            var clientData = GameObject.FindWithTag("playerInfo").GetComponent<PlayerData>();
+            var clientData = GameObject.FindWithTag("GameInfo").GetComponent<PlayerData>();
             clientData.SetUsername(username);
 
             SwapMainPage();
@@ -61,7 +61,7 @@ public class Login : MonoBehaviour
 
         if (isLoggedIn)
         {
-            var clientData = GameObject.FindWithTag("playerInfo").GetComponent<PlayerData>();
+            var clientData = GameObject.FindWithTag("GameInfo").GetComponent<PlayerData>();
             clientData.SetUsername(username);
 
             SwapMainPage();
@@ -73,7 +73,7 @@ public class Login : MonoBehaviour
             invalidLoginText.text = "";
         }
     }
-    
+
     private void SwapRegisterPage()
     {
         registerScreen.SetActive(true);

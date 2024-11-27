@@ -56,23 +56,23 @@ public class Register : MonoBehaviour
         }
 
 
-        bool isLoggedIn = await AccountManager.Instance.LoginUser(username, password); 
+        bool isLoggedIn = await AccountManager.Instance.LoginUser(username, password);
 
         if (isLoggedIn)
         {
-            var clientData = GameObject.FindWithTag("playerInfo").GetComponent<PlayerData>();
+            var clientData = GameObject.FindWithTag("GameInfo").GetComponent<PlayerData>();
             clientData.SetUsername(username);
-             
+
             startScreens.SetActive(true);
             mainMenu.SetActive(true);
             gameStateScreens.SetActive(true);
 
             gameObject.SetActive(false);
-        }   
+        }
         else
         {
             SwapLoginPage();
-        }     
-    
+        }
+
     }
 }

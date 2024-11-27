@@ -46,7 +46,7 @@ public class NotifyClient : NetworkBehaviour
             return;
         ToggleGameObjectWithTag(false, "InitiateSpellUi");
         ToggleGameObjectWithTag(true, "WinBackground");
-        var clientData = GameObject.FindWithTag("playerInfo").GetComponent<PlayerData>();
+        var clientData = GameObject.FindWithTag("GameInfo").GetComponent<PlayerData>();
 
         Dictionary<string, int> rewards = JsonConvert.DeserializeObject<Dictionary<string, int>>(rewardsDictJson);
 
