@@ -38,6 +38,8 @@ public class StartGameAr : MonoBehaviour
         startServerButton.onClick.AddListener(SwapScreens.Instance.ToggleHostScreen);
 
         BlitImageForColocalization.OnTextureRendered += BlitImageForColocalizationOnTextureRender;
+
+        NetworkManager.Singleton.OnClientDisconnectCallback += OnDisconnectedFromHost;
     }
 
     private void OnDestroy()
@@ -95,5 +97,21 @@ public class StartGameAr : MonoBehaviour
     public static void StartNewGame()
     {
         OnStartGame?.Invoke();
+    }
+
+    private void OnDisconnectedFromHost(ulong clientId)
+    {
+        if (NetworkManager.Singleton.LocalClientId == clientId)
+        {
+            try
+            {
+                SwapScreens.Instance.QuitGame();
+            }
+            catch
+            {
+                Debug.Log("Look! No error is thrown because it was caught and this printed instead!!!!");
+            }
+
+        }
     }
 }

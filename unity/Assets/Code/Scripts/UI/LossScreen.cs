@@ -11,18 +11,27 @@ public class LossScreen : NetworkBehaviour
     [SerializeField] private Button tryAgain;
     [SerializeField] private Button quit;
 
+    private PlayerData playerData;
+
     // Start is called before the first frame update
     async void Start()
     {
-
+        playerData = GameObject.FindWithTag("GameInfo").GetComponent<PlayerData>();
         tryAgain.onClick.AddListener(TryAgain);
         quit.onClick.AddListener(EndGame);
     }
 
     private async void EndGame()
     {
-        BossData bossData = GameObject.FindWithTag("GameInfo").GetComponent<BossData>();
-        await RoomManager.Instance.EndGame("hydra", false, 1);
+        if (playerData.IsPlayerHost())
+        {
+            BossData bossData = GameObject.FindWithTag("GameInfo").GetComponent<BossData>();
+            await RoomManager.Instance.EndGame("hydra", false, 1);
+        }
+        else
+        {
+            RoomManager.Instance.LeaveGame();
+        }
         SwapScreens.Instance.QuitGame();
     }
 
@@ -38,7 +47,7 @@ public class LossScreen : NetworkBehaviour
             {
                 Destroy(dragon);
             }
-            
+
             // add the logic to restore player hp and remove boss object...
 
             SwapScreens.Instance.ToggleHostScreen();

@@ -5,30 +5,23 @@ using UnityEngine;
 
 public class PlayerGameEvents : NetworkBehaviour
 {
-    private AllClientsInvoker invoker;
-
-    void Start()
-    {
-        var gameLogic = GameObject.FindWithTag("GameLogic");
-        invoker = gameLogic.GetComponent<AllClientsInvoker>();
-    }
 
     async void Update()
     {
         if (Input.GetKeyUp(KeyCode.A) && GameObject.FindWithTag("GameInfo").GetComponent<PlayerData>().IsPlayerHost())
         {
-            invoker.InvokePartyLoseGameAllClients();
+            AllClientsInvoker.Instance.InvokePartyLoseGameAllClients();
         }
 
         if (Input.GetKeyUp(KeyCode.B) && GameObject.FindWithTag("GameInfo").GetComponent<PlayerData>().IsPlayerHost())
         {
-            invoker.InvokePlayerDieAllClients();
+            AllClientsInvoker.Instance.InvokePlayerDieAllClients();
         }
 
         if (Input.GetKeyUp(KeyCode.C) && GameObject.FindWithTag("GameInfo").GetComponent<PlayerData>().IsPlayerHost())
         {
 
-            invoker.InvokePartyWinGameAllClients();
+            AllClientsInvoker.Instance.InvokePartyWinGameAllClients();
         }
     }
 }

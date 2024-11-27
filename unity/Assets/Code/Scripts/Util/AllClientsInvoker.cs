@@ -5,6 +5,21 @@ using System.Threading.Tasks;
 
 public class AllClientsInvoker : MonoBehaviour
 {
+    public static AllClientsInvoker Instance { get; private set; } // can only set/modify in this class
+
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     public async void InvokePartyLoseGameAllClients()
     {
         string[] roomPlayers = await RoomManager.Instance.GetPlayersInRoom();

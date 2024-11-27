@@ -57,10 +57,9 @@ public class StartGameHost : MonoBehaviour
 
     private async void StartGame()
     {
-        AllClientsInvoker invoker = GameObject.FindWithTag("GameLogic").GetComponent<AllClientsInvoker>();
         BossData bossData = GameObject.FindWithTag("GameInfo").GetComponent<BossData>();
 
-        invoker.InvokeJoinGameAllClients();
+        AllClientsInvoker.Instance.InvokeJoinGameAllClients();
 
         StartGameAr.StartNewGame();
 

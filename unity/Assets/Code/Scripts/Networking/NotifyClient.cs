@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using Unity.Netcode;
 using Unity.XR.CoreUtils;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class NotifyClient : NetworkBehaviour
 {
@@ -23,10 +24,16 @@ public class NotifyClient : NetworkBehaviour
             return;
         }
 
-        // try to get the Game object from the scene 
-        GameObject joinRoomUI = GameObject.FindWithTag("JoinRoomUI");
-        joinRoomUI.SetActive(false);
-
+        // try to get the Game object from the scene
+        try
+        {
+            GameObject joinRoomUI = GameObject.FindWithTag("JoinRoomUI");
+            joinRoomUI.SetActive(false);
+        }
+        catch
+        {
+            Debug.Log("Look! No error is thrown because it was caught and this printed instead!!!!");
+        }
         StartGameAr.StartNewGame();
     }
 
@@ -36,7 +43,22 @@ public class NotifyClient : NetworkBehaviour
         if (!IsOwner)
             return;
         ToggleGameObjectWithTag(false, "InitiateSpellUi");
-        ToggleGameObjectWithTag(true, "LoseBackground");
+
+        var loseBackground = FindGameObjectWithTag("LoseBackground");
+        loseBackground.SetActive(true);
+
+        TMPro.TMP_Text childText = loseBackground.transform.GetChild(1).GetComponent<TMPro.TMP_Text>();
+        Transform tryAgainButton = loseBackground.transform.Find("TryAgain");
+        if (IsHost)
+        {
+            childText.text = "Try Again...";
+            tryAgainButton.gameObject.SetActive(true);
+        }
+        else
+        {
+            childText.text = "Waiting For Host...";
+            tryAgainButton.gameObject.SetActive(false);
+        }
     }
 
     [ClientRpc]
@@ -97,15 +119,21 @@ public class NotifyClient : NetworkBehaviour
 
     private void ToggleGameObjectWithTag(bool on, string tag)
     {
+        var obj = FindGameObjectWithTag(tag);
+        obj.SetActive(on);
+    }
+
+    private GameObject FindGameObjectWithTag(string tag)
+    {
         GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>(true);
         foreach (GameObject obj in allObjects)
         {
             if (obj.CompareTag(tag))
             {
-                obj.SetActive(on);
+                return obj;
             }
         }
+        return null;
     }
-
 
 }

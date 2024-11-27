@@ -212,4 +212,19 @@ public class RoomManager : MonoBehaviour
         return request.downloadHandler.text;
 
     }
+
+    public void LeaveGame()
+    {
+        string url = $"{GlobalConfig.baseURL}/api/protected/leave-game";
+
+        using (UnityWebRequest request = new UnityWebRequest(url, "GET")) // using ensures removed after 
+        {
+            request.SetRequestHeader("Content-Type", "application/json");
+
+            // allows the response to be stored
+
+            // Send the web request 
+            UnityWebRequestAsyncOperation operation = request.SendWebRequest();
+        }
+    }
 }
