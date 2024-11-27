@@ -17,6 +17,7 @@ import (
 var nextRoomNumber = 1000
 var rooms = map[int][]string{} //map room number to slices of usernames
 var userRooms = map[string]int{} //map each player to the room they are currently in
+var activeRooms = make(map[int]bool) // a set to keep track of the current active rooms
 
 func CreateRoom(w http.ResponseWriter, r *http.Request) {
 	username, ok := middleware.GetUsernameFromContext(r.Context())
@@ -113,10 +114,11 @@ func EndGame(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	
 	if !reqBody.WinStatus {
 		return
 	}
-
+	
 	for _, player := range curRoom {
 		// get the reward of the player for defeating the boss
 		playerCoins, err := game.GetReward(reqBody.BossName, reqBody.Level)
@@ -124,13 +126,63 @@ func EndGame(w http.ResponseWriter, r *http.Request) {
 			utils.LogAndAddServerError(err, w)
 			return
 		}
-
+		
 		err = database.UpdateUserCoins(player, playerCoins)
 		if err != nil {
 			utils.LogAndAddServerError(err, w)
 			return
 		}
+
+		delete(userRooms, player)
 	}
 
+	delete(rooms, roomNumber)
+	delete(activeRooms, roomNumber)
+
 	json.NewEncoder(w).Encode("game has ended")
+}
+
+func StartGame(w http.ResponseWriter, r *http.Request) {
+	username, ok := middleware.GetUsernameFromContext(r.Context())
+	if !ok {
+		http.Error(w, "Username not found in context", http.StatusInternalServerError)
+		return
+	}
+
+	roomNumber, ok := userRooms[username]
+	if !ok {
+		http.Error(w, "User not in a room", http.StatusNotFound)
+		return
+	}
+
+	_, ok = activeRooms[roomNumber]
+	if !ok {
+		activeRooms[roomNumber] = true;
+		json.NewEncoder(w).Encode("game has started")
+		return
+	}
+
+	json.NewEncoder(w).Encode("game already started")
+}
+
+func IsGameStarted(w http.ResponseWriter, r *http.Request) {
+	username, ok := middleware.GetUsernameFromContext(r.Context())
+	if !ok {
+		http.Error(w, "Username not found in context", http.StatusInternalServerError)
+		return
+	}
+
+	roomNumber, ok := userRooms[username]
+	if !ok {
+		http.Error(w, "User not in a room", http.StatusNotFound)
+		return
+	}
+
+	_, ok = activeRooms[roomNumber]
+	if !ok {
+		http.Error(w, "game not started", http.StatusNotFound)
+		return
+	}
+
+	json.NewEncoder(w).Encode("game has started")
 }
