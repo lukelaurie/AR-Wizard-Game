@@ -197,3 +197,52 @@ func IsGameStarted(w http.ResponseWriter, r *http.Request) {
 
 	json.NewEncoder(w).Encode("game has started")
 }
+
+func LeaveGame(w http.ResponseWriter, r *http.Request) {
+	username, ok := middleware.GetUsernameFromContext(r.Context())
+	if !ok {
+		http.Error(w, "Username not found in context", http.StatusInternalServerError)
+		return
+	}
+
+	roomNumber, ok := userRooms[username]
+	if !ok {
+		http.Error(w, "The player is not yet a part of a room", http.StatusNotFound)
+		return
+	}
+
+	// check if user already has left the room 
+	if !isUserInGame(rooms[roomNumber], username) {
+		http.Error(w, "user does not exist in game", http.StatusNotFound)
+		return
+	}
+
+	rooms[roomNumber] = removeUser(rooms[roomNumber], username)
+
+	delete(userRooms, username)
+	json.NewEncoder(w).Encode("user has left game")
+}
+
+func isUserInGame(users []string, checkUser string) bool {
+	for _, user := range users {
+		if user == checkUser {
+			return true
+		}
+	}
+	return false
+}
+
+func removeUser(users []string, deleteUser string) []string {
+	retval := make([]string, len(users)-1)
+	
+	i := 0
+	for _, user := range users {
+		if user == deleteUser {
+			continue
+		}
+		retval[i] = user 
+		i++
+	}
+
+	return retval
+}
