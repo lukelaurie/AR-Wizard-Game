@@ -10,6 +10,8 @@ TagManager:
   - InitiateSpellUI
   - InitiateSpellUi
   - SharedSpace
+  - playerInfo
+  - GameLogic
   layers:
   - Default
   - TransparentFX

@@ -24,6 +24,36 @@ public class AccountManager : MonoBehaviour
         }
     }
 
+    public async Task<string> IsLoggedIn()
+    {
+        string url = $"{GlobalConfig.baseURL}/api/protected/is-logged-in";
+
+        using (UnityWebRequest request = new UnityWebRequest(url, "GET")) // using ensures removed after 
+        {
+            request.SetRequestHeader("Content-Type", "application/json");
+
+            request.downloadHandler = new DownloadHandlerBuffer();
+
+            // Send the web request 
+            UnityWebRequestAsyncOperation operation = request.SendWebRequest();
+            while (!operation.isDone)
+            {
+                await Task.Yield();
+            }
+
+            // check for a response of 200 
+            if (request.result != UnityWebRequest.Result.Success)
+            {
+                return null;
+            }
+
+            string response = request.downloadHandler.text.Trim();
+            response = response.Trim('"');
+
+            return response;
+        }
+    }
+
     public async Task<bool> LoginUser(string username, string password)
     {
         string url = $"{GlobalConfig.baseURL}/api/login?username={username}&password={password}";

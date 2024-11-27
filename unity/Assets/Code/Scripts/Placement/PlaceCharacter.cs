@@ -105,7 +105,5 @@ public class PlaceCharacter : NetworkBehaviour
         characterNetworkObject.SpawnWithOwnership(callerID);
 
         isPlaced = true;
-
-        // AllPlayerDataManager.Instance.AddPlacedPlayer(callerID);
     }
 }

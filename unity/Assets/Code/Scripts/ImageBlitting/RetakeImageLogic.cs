@@ -10,10 +10,6 @@ public class RetakeImageLogic : MonoBehaviour
 
     private void Start()
     {
-        retakeImageButton.onClick.AddListener(QuitGameToRetakeImage);
-    }
-
-    private void QuitGameToRetakeImage() {
-        SwapScreens.Instance.QuitGame();
+        retakeImageButton.onClick.AddListener(SwapScreens.Instance.QuitGame);
     }
 }

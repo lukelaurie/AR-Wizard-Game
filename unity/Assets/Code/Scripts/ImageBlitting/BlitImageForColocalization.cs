@@ -83,9 +83,6 @@ public class BlitImageForColocalization : MonoBehaviour
             m_RenderTexture.height = newHeight;
             m_RenderTexture.depth = 24;
 
-            Debug.Log("Changing Render Texture with to " + m_RenderTexture.width + " and height to " + m_RenderTexture.height);
-
-
             m_RenderTexture.Create();
         }
     }

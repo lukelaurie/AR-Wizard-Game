@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 5568470661622741333}
   - component: {fileID: 4276111633128954287}
   - component: {fileID: 4962820327145714608}
-  - component: {fileID: 1711796466434620760}
   m_Layer: 6
   m_Name: PlayerAr
   m_TagString: Player
@@ -100,16 +99,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initiateSpellUi: {fileID: 0}
---- !u!114 &1711796466434620760
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9110343311535083804}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b787ca7f41e0e04eaa90efde0e6a8ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  username: user

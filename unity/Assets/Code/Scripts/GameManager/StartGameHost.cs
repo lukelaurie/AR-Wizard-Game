@@ -27,26 +27,54 @@ public class StartGameHost : MonoBehaviour
         OnStartSharedSpaceHost?.Invoke();
 
 
-        Debug.Log("Starting The AR Dedicated Server...");
         NetworkManager.Singleton.StartHost();
+        Debug.Log("Starting The AR Dedicated Server...");
 
-        startGameButton.onClick.AddListener(() => {
-            NotifyClientsStartGame();
-            
-            StartGameAr.StartNewGame();
-            gameObject.SetActive(false);
-        });
+        var clientData = GameObject.FindWithTag("playerInfo").GetComponent<PlayerData>();
+        clientData.SetIsPlayerHost(true);
+
+        startGameButton.onClick.AddListener(StartGame);
+        
+        NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
+
     }
 
-    private async void NotifyClientsStartGame() {
+    // once connected join the room if it has already started 
+    private async void OnClientConnected(ulong clientId)
+    {
+        bool isGameStarted = await RoomManager.Instance.IsGameStarted();
+
+        if (!isGameStarted)
+        {
+            return;
+        }
+
+        var playerPrefab = NetworkManager.Singleton.ConnectedClients[clientId].PlayerObject;
+        var clientNotifyObj = playerPrefab.GetComponent<NotifyClient>(); 
+        clientNotifyObj.JoinGameClientRpc();
+    }
+
+    private async void StartGame()
+    {
+        NotifyClientsStartGame();
+
+        StartGameAr.StartNewGame();
+        // have the server manage the game being started 
+        await RoomManager.Instance.StartGameInRoom();
+        gameObject.SetActive(false);
+    }
+
+    private async void NotifyClientsStartGame()
+    {
         string[] roomPlayers = await RoomManager.Instance.GetPlayersInRoom();
 
         foreach (var client in NetworkManager.Singleton.ConnectedClientsList)
         {
             var clientNotifyObj = client.PlayerObject.GetComponent<NotifyClient>();
-            var clientData = client.PlayerObject.GetComponent<PlayerData>();
+            var clientData = GameObject.FindWithTag("playerInfo").GetComponent<PlayerData>();
+            Debug.Log(clientData.GetUsername());
 
-            if (clientNotifyObj != null && Array.Exists(roomPlayers, player => player == clientData.username))
+            if (clientNotifyObj != null && Array.Exists(roomPlayers, player => player == clientData.GetUsername()))
             {
                 clientNotifyObj.JoinGameClientRpc();
             }

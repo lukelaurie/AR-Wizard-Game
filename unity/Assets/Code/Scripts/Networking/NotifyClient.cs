@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class NotifyClient : NetworkBehaviour
 {
-    [SerializeField] private GameObject initiateSpellUi;
-
     [ClientRpc]
     public void JoinGameClientRpc()
     {
@@ -30,7 +28,7 @@ public class NotifyClient : NetworkBehaviour
 
     private void EnablePlacementScript()
     {
-        PlaceCharacter placeBoss = GetComponent<PlaceCharacter>();
+        var placeBoss = GameObject.FindWithTag("GameLogic").GetComponent<PlaceCharacter>();
 
         if (placeBoss == null)
         {
@@ -44,11 +42,11 @@ public class NotifyClient : NetworkBehaviour
 
     private void EnableSpellShootingScript()
     {
-        PlayerShoot playerShoot = GetComponent<PlayerShoot>();
+        var playerShoot = GameObject.FindWithTag("GameLogic").GetComponent<PlayerShoot>();
 
         if (playerShoot == null)
         {
-            Debug.Log("Unable to find boss script");
+            Debug.Log("Unable to find shoot script");
             return;
         }
 
@@ -61,10 +59,8 @@ public class NotifyClient : NetworkBehaviour
         GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>(true);
         foreach (GameObject obj in allObjects)
         {
-            Debug.Log(obj.tag);
             if (obj.CompareTag("InitiateSpellUi"))
             {
-                Debug.Log("here");
                 obj.SetActive(true);
             }
         }

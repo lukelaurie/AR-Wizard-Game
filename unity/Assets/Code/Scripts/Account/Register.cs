@@ -17,10 +17,19 @@ public class Register : MonoBehaviour
     [SerializeField] private GameObject mainMenu;
     [SerializeField] private GameObject gameStateScreens;
 
+    [SerializeField] private GameObject loginScreen;
+
     // Start is called before the first frame update
     void Start()
     {
         crateAccountButton.onClick.AddListener(RegisterUser);
+        backToLoginButton.onClick.AddListener(SwapLoginPage);
+    }
+
+    private void SwapLoginPage()
+    {
+        loginScreen.SetActive(true);
+        gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -35,23 +44,35 @@ public class Register : MonoBehaviour
             return;
         }
 
-        bool isLoggedIn = await AccountManager.Instance.RegisterUser(username, password);
+        bool isRegisteredIn = await AccountManager.Instance.RegisterUser(username, password);
+
+        if (!isRegisteredIn)
+        {
+            errorText.text = "An error occured while creating account";
+            await Task.Delay(2000); // wait for 2 seconds
+            errorText.text = "";
+
+            return;
+        }
+
+
+        bool isLoggedIn = await AccountManager.Instance.LoginUser(username, password); 
 
         if (isLoggedIn)
         {
-            // PlayerData.username = 
-
+            var clientData = GameObject.FindWithTag("playerInfo").GetComponent<PlayerData>();
+            clientData.SetUsername(username);
+             
             startScreens.SetActive(true);
             mainMenu.SetActive(true);
             gameStateScreens.SetActive(true);
 
             gameObject.SetActive(false);
-        }
+        }   
         else
         {
-            errorText.text = "An error occured while creating account";
-            await Task.Delay(2000); // wait for 2 seconds
-            errorText.text = "";
-        }
+            SwapLoginPage();
+        }     
+    
     }
 }

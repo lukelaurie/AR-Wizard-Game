@@ -21,9 +21,12 @@ public class LossScreen : NetworkBehaviour
 
     private void TryAgain()
     {
-        Debug.Log(IsHost);
-        if (IsHost)
+        var clientData = GameObject.FindWithTag("playerInfo").GetComponent<PlayerData>();
+
+        if (clientData.IsPlayerHost())
         {
+            // add the logic to restore player hp and remove boss object...
+
             SwapScreens.Instance.ToggleHostScreen();
         }
         else

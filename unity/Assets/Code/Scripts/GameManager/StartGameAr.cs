@@ -31,7 +31,6 @@ public class StartGameAr : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
 
-        NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnectedCallback;
 
         SetRandomUserId();
 
@@ -50,7 +49,7 @@ public class StartGameAr : MonoBehaviour
     private void BlitImageForColocalizationOnTextureRender(Texture2D texture)
     {
         targetImage = texture;
-        
+
         const int MAX_AMOUNT_CLIENTS_ROOM = 34;
 
         OnStartSharedSpace?.Invoke(); // show the image & retake button
@@ -86,10 +85,6 @@ public class StartGameAr : MonoBehaviour
         System.Random random = new System.Random();
         int randomNumber = random.Next();
         PrivacyData.SetUserId(randomNumber.ToString());
-    }
-    private void OnClientConnectedCallback(ulong clientId)
-    {
-        Debug.Log($"Client connected: {clientId}");
     }
 
     public static void SetRoomId(string newRoomId)
