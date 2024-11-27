@@ -12,6 +12,9 @@ TagManager:
   - SharedSpace
   - playerInfo
   - GameLogic
+  - LoseBackground
+  - DeathBackground
+  - WinBackground
   layers:
   - Default
   - TransparentFX

@@ -1,47 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
+using Unity.Netcode;
 using UnityEngine;
 
-public class PlayerGameEvents : MonoBehaviour
+public class PlayerGameEvents : NetworkBehaviour
 {
-    [SerializeField] private GameObject winBackground;
-    [SerializeField] private GameObject loseBackground;
-    [SerializeField] private GameObject deathBackground;
-    [SerializeField] private GameObject spellPanel;
-
     void Update()
     {
-        if (Input.GetKey(KeyCode.A)) 
+        if (Input.GetKey(KeyCode.A) && GameObject.FindWithTag("playerInfo").GetComponent<PlayerData>().IsPlayerHost())
         {
-            partyLoseGame();
+            var invoker = GameObject.FindWithTag("GameLogic").GetComponent<AllClientsInvoker>();
+            invoker.InvokeAllClients("PartyLoseGameClientRpc");
         }
-        
-        if (Input.GetKey(KeyCode.B)) 
-        {
-            playerDie();
-        }
-        
-        if (Input.GetKey(KeyCode.C)) 
-        {
-            partyWinGame();
-        }
-    }
 
-    private void partyLoseGame()
-    {
-        spellPanel.SetActive(false);
-        loseBackground.SetActive(true);
-    }
-    
-    private void playerDie()
-    {
-        spellPanel.SetActive(false);
-        deathBackground.SetActive(true);
-    }
-    
-    private void partyWinGame()
-    {
-        spellPanel.SetActive(false);
-        winBackground.SetActive(true);
+        if (Input.GetKey(KeyCode.B) && GameObject.FindWithTag("playerInfo").GetComponent<PlayerData>().IsPlayerHost())
+        {
+            var invoker = GameObject.FindWithTag("GameLogic").GetComponent<AllClientsInvoker>();
+            invoker.InvokeAllClients("PlayerDieClientRpc");
+        }
+
+        if (Input.GetKey(KeyCode.C) && GameObject.FindWithTag("playerInfo").GetComponent<PlayerData>().IsPlayerHost())
+        {
+            var invoker = GameObject.FindWithTag("GameLogic").GetComponent<AllClientsInvoker>();
+            invoker.InvokeAllClients("PartyWinGameClientRpc");
+        }
     }
 }

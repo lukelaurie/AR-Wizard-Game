@@ -1,3 +1,4 @@
+using System;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -9,7 +10,7 @@ public class NotifyClient : NetworkBehaviour
         if (!IsOwner)
             return;
 
-        ToggleSpellBarOn();
+        ToggleGameObjectWithTag(true, "InitiateSpellUi");
         EnableSpellShootingScript();
 
         // If they are the host allow them to click to place a boss object 
@@ -24,6 +25,27 @@ public class NotifyClient : NetworkBehaviour
         joinRoomUI.SetActive(false);
 
         StartGameAr.StartNewGame();
+    }
+
+    [ClientRpc]
+    public void PartyLoseGameClientRpc()
+    {
+        ToggleGameObjectWithTag(false, "InitiateSpellUi");
+        ToggleGameObjectWithTag(true, "LoseBackground");
+    }
+
+    [ClientRpc]
+    public void PartyWinGameClientRpc()
+    {
+        ToggleGameObjectWithTag(false, "InitiateSpellUi");
+        ToggleGameObjectWithTag(true, "WinBackground");
+    }
+
+    [ClientRpc]
+    public void PlayerDieClientRpc()
+    {
+        ToggleGameObjectWithTag(false, "InitiateSpellUi");
+        ToggleGameObjectWithTag(true, "DeathBackground");
     }
 
     private void EnablePlacementScript()
@@ -54,15 +76,17 @@ public class NotifyClient : NetworkBehaviour
         return;
     }
 
-    private void ToggleSpellBarOn()
+    private void ToggleGameObjectWithTag(bool on, string tag)
     {
         GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>(true);
         foreach (GameObject obj in allObjects)
         {
-            if (obj.CompareTag("InitiateSpellUi"))
+            if (obj.CompareTag(tag))
             {
-                obj.SetActive(true);
+                obj.SetActive(on);
             }
         }
     }
+
+
 }

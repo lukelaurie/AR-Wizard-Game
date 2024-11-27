@@ -13767,6 +13767,7 @@ GameObject:
   - component: {fileID: 1766984765}
   - component: {fileID: 1766984767}
   - component: {fileID: 1766984766}
+  - component: {fileID: 1766984768}
   m_Layer: 0
   m_Name: GameLogic
   m_TagString: GameLogic
@@ -13822,6 +13823,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   placementObject: {fileID: 6739088511435197133, guid: 2f8b4a6dbba08c24e8690a207e35a2da, type: 3}
+--- !u!114 &1766984768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1766984764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f60e304c9273a447589b385af4ec144f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1782947370
 GameObject:
   m_ObjectHideFlags: 0
@@ -14557,10 +14570,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79bb371d6600343449a81d70ec516a44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  winBackground: {fileID: 1868073476}
-  loseBackground: {fileID: 1999613777}
-  deathBackground: {fileID: 2118196758}
-  spellPanel: {fileID: 65866028}
 --- !u!1 &1835391781
 GameObject:
   m_ObjectHideFlags: 0
@@ -15449,7 +15458,7 @@ GameObject:
   - component: {fileID: 1868073478}
   m_Layer: 5
   m_Name: Win Background
-  m_TagString: Untagged
+  m_TagString: WinBackground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15490,6 +15499,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f34d80f01d008024492ff51f9ed6dc8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  continueButton: {fileID: 1529414054}
 --- !u!114 &1868073479
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16563,7 +16573,7 @@ GameObject:
   - component: {fileID: 1999613779}
   m_Layer: 5
   m_Name: Lose Background
-  m_TagString: Untagged
+  m_TagString: LoseBackground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17387,7 +17397,7 @@ GameObject:
   - component: {fileID: 2118196760}
   m_Layer: 5
   m_Name: Death Background
-  m_TagString: Untagged
+  m_TagString: DeathBackground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

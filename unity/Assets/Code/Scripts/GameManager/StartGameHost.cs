@@ -34,7 +34,7 @@ public class StartGameHost : MonoBehaviour
         clientData.SetIsPlayerHost(true);
 
         startGameButton.onClick.AddListener(StartGame);
-        
+
         NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
 
     }
@@ -50,13 +50,14 @@ public class StartGameHost : MonoBehaviour
         }
 
         var playerPrefab = NetworkManager.Singleton.ConnectedClients[clientId].PlayerObject;
-        var clientNotifyObj = playerPrefab.GetComponent<NotifyClient>(); 
+        var clientNotifyObj = playerPrefab.GetComponent<NotifyClient>();
         clientNotifyObj.JoinGameClientRpc();
     }
 
     private async void StartGame()
     {
-        NotifyClientsStartGame();
+        var invoker = GameObject.FindWithTag("GameLogic").GetComponent<AllClientsInvoker>();
+        invoker.InvokeAllClients("JoinGameClientRpc");
 
         StartGameAr.StartNewGame();
         // have the server manage the game being started 
@@ -64,20 +65,5 @@ public class StartGameHost : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    private async void NotifyClientsStartGame()
-    {
-        string[] roomPlayers = await RoomManager.Instance.GetPlayersInRoom();
 
-        foreach (var client in NetworkManager.Singleton.ConnectedClientsList)
-        {
-            var clientNotifyObj = client.PlayerObject.GetComponent<NotifyClient>();
-            var clientData = GameObject.FindWithTag("playerInfo").GetComponent<PlayerData>();
-            Debug.Log(clientData.GetUsername());
-
-            if (clientNotifyObj != null && Array.Exists(roomPlayers, player => player == clientData.GetUsername()))
-            {
-                clientNotifyObj.JoinGameClientRpc();
-            }
-        }
-    }
 }
