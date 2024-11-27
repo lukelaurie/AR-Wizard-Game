@@ -57,13 +57,11 @@ public class StartGameHost : MonoBehaviour
     private async void StartGame()
     {
         var invoker = GameObject.FindWithTag("GameLogic").GetComponent<AllClientsInvoker>();
-        invoker.InvokeAllClients("JoinGameClientRpc");
+        invoker.InvokeJoinGameAllClients();
 
         StartGameAr.StartNewGame();
         // have the server manage the game being started 
         await RoomManager.Instance.StartGameInRoom();
         gameObject.SetActive(false);
     }
-
-
 }

@@ -1,27 +1,34 @@
 using System;
 using Unity.Netcode;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerGameEvents : NetworkBehaviour
 {
-    void Update()
+    private AllClientsInvoker invoker;
+
+    void Start()
     {
-        if (Input.GetKey(KeyCode.A) && GameObject.FindWithTag("playerInfo").GetComponent<PlayerData>().IsPlayerHost())
+        var gameLogic = GameObject.FindWithTag("GameLogic");
+        invoker = gameLogic.GetComponent<AllClientsInvoker>();
+    }
+
+    async void Update()
+    {
+        if (Input.GetKeyUp(KeyCode.A) && GameObject.FindWithTag("playerInfo").GetComponent<PlayerData>().IsPlayerHost())
         {
-            var invoker = GameObject.FindWithTag("GameLogic").GetComponent<AllClientsInvoker>();
-            invoker.InvokeAllClients("PartyLoseGameClientRpc");
+            invoker.InvokePartyLoseGameAllClients();
         }
 
-        if (Input.GetKey(KeyCode.B) && GameObject.FindWithTag("playerInfo").GetComponent<PlayerData>().IsPlayerHost())
+        if (Input.GetKeyUp(KeyCode.B) && GameObject.FindWithTag("playerInfo").GetComponent<PlayerData>().IsPlayerHost())
         {
-            var invoker = GameObject.FindWithTag("GameLogic").GetComponent<AllClientsInvoker>();
-            invoker.InvokeAllClients("PlayerDieClientRpc");
+            invoker.InvokePlayerDieAllClients();
         }
 
-        if (Input.GetKey(KeyCode.C) && GameObject.FindWithTag("playerInfo").GetComponent<PlayerData>().IsPlayerHost())
+        if (Input.GetKeyUp(KeyCode.C) && GameObject.FindWithTag("playerInfo").GetComponent<PlayerData>().IsPlayerHost())
         {
-            var invoker = GameObject.FindWithTag("GameLogic").GetComponent<AllClientsInvoker>();
-            invoker.InvokeAllClients("PartyWinGameClientRpc");
+
+            invoker.InvokePartyWinGameAllClients();
         }
     }
 }

@@ -1,5 +1,8 @@
 using System;
+using System.Collections.Generic;
+using Newtonsoft.Json;
 using Unity.Netcode;
+using Unity.XR.CoreUtils;
 using UnityEngine;
 
 public class NotifyClient : NetworkBehaviour
@@ -30,20 +33,36 @@ public class NotifyClient : NetworkBehaviour
     [ClientRpc]
     public void PartyLoseGameClientRpc()
     {
+        if (!IsOwner)
+            return;
         ToggleGameObjectWithTag(false, "InitiateSpellUi");
         ToggleGameObjectWithTag(true, "LoseBackground");
     }
 
     [ClientRpc]
-    public void PartyWinGameClientRpc()
+    public void PartyWinGameClientRpc(string rewardsDictJson)
     {
+        if (!IsOwner)
+            return;
         ToggleGameObjectWithTag(false, "InitiateSpellUi");
         ToggleGameObjectWithTag(true, "WinBackground");
+        var clientData = GameObject.FindWithTag("playerInfo").GetComponent<PlayerData>();
+
+        Dictionary<string, int> rewards = JsonConvert.DeserializeObject<Dictionary<string, int>>(rewardsDictJson);
+
+        var reward = rewards[clientData.GetUsername()];
+        Debug.Log($"Rewards: ");
+        Debug.Log($"My reward {reward}");
+        GameObject winBackground = GameObject.FindWithTag("WinBackground");
+        TMPro.TMP_Text childText = winBackground.transform.GetChild(3).GetComponent<TMPro.TMP_Text>(); //TODO get of the name not the index
+        childText.text = reward.ToString();
     }
 
     [ClientRpc]
     public void PlayerDieClientRpc()
     {
+        if (!IsOwner)
+            return;
         ToggleGameObjectWithTag(false, "InitiateSpellUi");
         ToggleGameObjectWithTag(true, "DeathBackground");
     }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using UnityEngine;
@@ -10,7 +11,7 @@ public class RoomManager : MonoBehaviour
 {
 
     // ensure that this is a singleton object 
-    public static RoomManager Instance { get; private set;} // can only set/modify in this class
+    public static RoomManager Instance { get; private set; } // can only set/modify in this class
 
     void Awake()
     {
@@ -108,17 +109,16 @@ public class RoomManager : MonoBehaviour
             // check for a response of 200 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"Error creating room: {request.error}");
+                Debug.LogError($"Error getting players in room: {request.error}");
                 return null;
             }
 
             string response = request.downloadHandler.text.Trim();
-            Debug.Log($"Players in room: {response}");
 
             // try to deserialize the object into a list of strings
-            try 
+            try
             {
-                string[] players = JsonConvert.DeserializeObject<string[]>(response); 
+                string[] players = JsonConvert.DeserializeObject<string[]>(response);
                 return players;
             }
             catch (JsonException ex)
@@ -153,11 +153,11 @@ public class RoomManager : MonoBehaviour
                 Debug.LogError($"Error starting room: {request.error}");
                 return false;
             }
-           return true; 
+            return true;
 
         }
     }
-    
+
     public async Task<bool> IsGameStarted()
     {
         string url = $"{GlobalConfig.baseURL}/api/protected/is-game-started";
@@ -184,5 +184,32 @@ public class RoomManager : MonoBehaviour
 
             return true;
         }
+    }
+
+    public async Task<string> EndGame(string bossName, bool winStatus, int level)
+    {
+        string url = $"{GlobalConfig.baseURL}/api/protected/end-game";
+
+        using UnityWebRequest request = new UnityWebRequest(url, "POST");
+        byte[] bodyRaw = Encoding.UTF8.GetBytes("{ \"bossName\": \"" + bossName + "\", \"winStatus\": " + winStatus.ToString().ToLower() + ", \"level\": " + level + " }");
+        request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+        request.downloadHandler = new DownloadHandlerBuffer();
+        request.SetRequestHeader("Content-Type", "application/json");
+
+        // Send the web request 
+        UnityWebRequestAsyncOperation operation = request.SendWebRequest();
+        while (!operation.isDone)
+        {
+            await Task.Yield();
+        }
+
+        // check for a response of 200 
+        if (request.result != UnityWebRequest.Result.Success)
+        {
+            Debug.LogError($"Error ending game, status code: {request.result}");
+            return null;
+        }
+        return request.downloadHandler.text;
+
     }
 }

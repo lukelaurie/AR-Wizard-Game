@@ -15,8 +15,8 @@ import (
 )
 
 var nextRoomNumber = 1000
-var rooms = map[int][]string{} //map room number to slices of usernames
-var userRooms = map[string]int{} //map each player to the room they are currently in
+var rooms = map[int][]string{}       //map room number to slices of usernames
+var userRooms = map[string]int{}     //map each player to the room they are currently in
 var activeRooms = make(map[int]bool) // a set to keep track of the current active rooms
 
 func CreateRoom(w http.ResponseWriter, r *http.Request) {
@@ -45,7 +45,6 @@ func GetUsersInRoom(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "User not in a room", http.StatusNotFound)
 		return
 	}
-
 
 	curRoom, ok := rooms[roomNumber]
 	if !ok {
@@ -101,7 +100,7 @@ func EndGame(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// determine the room number the host is a part of 
+	// determine the room number the host is a part of
 	roomNumber, ok := userRooms[username]
 	if !ok {
 		http.Error(w, "The player is not yet a part of a room", http.StatusNotFound)
@@ -114,11 +113,12 @@ func EndGame(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	
 	if !reqBody.WinStatus {
 		return
 	}
-	
+
+	rewardMap := map[string]int{}
+
 	for _, player := range curRoom {
 		// get the reward of the player for defeating the boss
 		playerCoins, err := game.GetReward(reqBody.BossName, reqBody.Level)
@@ -126,20 +126,21 @@ func EndGame(w http.ResponseWriter, r *http.Request) {
 			utils.LogAndAddServerError(err, w)
 			return
 		}
-		
+
 		err = database.UpdateUserCoins(player, playerCoins)
 		if err != nil {
 			utils.LogAndAddServerError(err, w)
 			return
 		}
 
+		rewardMap[player] = playerCoins
 		delete(userRooms, player)
 	}
 
 	delete(rooms, roomNumber)
 	delete(activeRooms, roomNumber)
 
-	json.NewEncoder(w).Encode("game has ended")
+	json.NewEncoder(w).Encode(rewardMap)
 }
 
 func StartGame(w http.ResponseWriter, r *http.Request) {
@@ -157,7 +158,7 @@ func StartGame(w http.ResponseWriter, r *http.Request) {
 
 	_, ok = activeRooms[roomNumber]
 	if !ok {
-		activeRooms[roomNumber] = true;
+		activeRooms[roomNumber] = true
 		json.NewEncoder(w).Encode("game has started")
 		return
 	}
