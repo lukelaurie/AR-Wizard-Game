@@ -23,5 +23,16 @@ public class PlayerGameEvents : NetworkBehaviour
 
             AllClientsInvoker.Instance.InvokePartyWinGameAllClients();
         }
+
+        if (Input.GetKeyUp(KeyCode.K))
+        {
+            var clientData = GameObject.FindWithTag("GameInfo").GetComponent<PlayerData>();
+            clientData.PlayerTakeDamage(25);
+        }
+        if (Input.GetKeyUp(KeyCode.H))
+        {
+            var clientData = GameObject.FindWithTag("GameInfo").GetComponent<PlayerData>();
+            clientData.HealPlayer(25);
+        }
     }
 }

@@ -1,9 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerData : MonoBehaviour
 {
+    public event Action<int> OnPlayerTakeDamage;
+    public event Action<int> OnPlayerHealed;
+
     private string username;
     private int coinTotal;
     private bool isPlayerHost;
@@ -44,8 +48,18 @@ public class PlayerData : MonoBehaviour
         isPlayerHost = isHost;
     }
 
-    public void ChangePlayerHealth(int healthChangeAmt)
+    public void PlayerTakeDamage(int damageAmt)
     {
-        health += healthChangeAmt;
+        health -= damageAmt;
+        Debug.Log(1);
+        OnPlayerTakeDamage?.Invoke(health);
+    }
+
+    public void HealPlayer(int healingAmt)
+    {
+        health += healingAmt;
+        Debug.Log(2);
+
+        OnPlayerHealed?.Invoke(health);
     }
 }
