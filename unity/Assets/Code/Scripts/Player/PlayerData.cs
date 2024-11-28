@@ -7,6 +7,7 @@ public class PlayerData : MonoBehaviour
     private string username;
     private int coinTotal;
     private bool isPlayerHost;
+    [SerializeField] private int health;
 
     public string GetUsername()
     {
@@ -23,6 +24,11 @@ public class PlayerData : MonoBehaviour
         return isPlayerHost;
     }
 
+    public int GetHealth()
+    {
+        return health;
+    }
+
     public void SetUsername(string newUsername)
     {
         username = newUsername;
@@ -36,5 +42,10 @@ public class PlayerData : MonoBehaviour
     public void SetIsPlayerHost(bool isHost)
     {
         isPlayerHost = isHost;
+    }
+
+    public void ChangePlayerHealth(int healthChangeAmt)
+    {
+        health += healthChangeAmt;
     }
 }
