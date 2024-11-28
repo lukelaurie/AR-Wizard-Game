@@ -3783,11 +3783,11 @@ GameObject:
   - component: {fileID: 4195708311500449749}
   - component: {fileID: 5568470661622741333}
   - component: {fileID: 4276111633128954287}
-  - component: {fileID: 1501555216025183453}
   - component: {fileID: 4962820327145714608}
   - component: {fileID: 1711796466434620760}
   - component: {fileID: -650263948700098578}
   - component: {fileID: 5929464542746153433}
+  - component: {fileID: 2618260941943146919}
   m_Layer: 6
   m_Name: PlayerAr
   m_TagString: Player
@@ -3823,7 +3823,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3159476225
+  GlobalObjectIdHash: 3845141843
   InScenePlacedSourceGlobalObjectIdHash: 945624831
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -3863,20 +3863,6 @@ MonoBehaviour:
   InLocalSpace: 0
   Interpolate: 1
   SlerpPosition: 0
---- !u!114 &1501555216025183453
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9110343311535083804}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e889e9ee69229d4e98e9588f6718cc0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  placementObject: {fileID: 6739088511435197133, guid: 2f8b4a6dbba08c24e8690a207e35a2da, type: 3}
-  mainCam: {fileID: 0}
 --- !u!114 &4962820327145714608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3939,3 +3925,17 @@ MonoBehaviour:
   loseBackground: {fileID: 5134203701249196089}
   deathBackground: {fileID: 6517771370743164048}
   spellPanel: {fileID: 2035003244288083317}
+--- !u!114 &2618260941943146919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9110343311535083804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a85c0f7bdd31c1442b960ed5306e4056, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 0
+  takeDamageSound: {fileID: 8300000, guid: b49720e4fef1f2443b21a52ade62c11c, type: 3}

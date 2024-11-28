@@ -2037,7 +2037,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 727606100
+  GlobalObjectIdHash: 1817382091
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -2060,6 +2060,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBar: {fileID: 0}
   enemyAnimator: {fileID: 6813466037561763581}
+  takeDamageSound: {fileID: 8300000, guid: 836d09a504839b84288a253c53f1faa7, type: 3}
+  deathSound: {fileID: 8300000, guid: 12a7a02e72aafd04788e95d00e6f921b, type: 3}
+  roarSound: {fileID: 8300000, guid: 1871d8ac0b3aa2449a630d9466e2e103, type: 3}
+  jumpSound: {fileID: 8300000, guid: 4751dbf0fcd92584faf078342759527b, type: 3}
+  defendSound: {fileID: 8300000, guid: 79524660346f52847a00041750e2ff68, type: 3}
+  rockAttackSound: {fileID: 8300000, guid: b53e0bbb22d099b48a8d61dfe411963c, type: 3}
+  fireball: {fileID: 8634321614551258705, guid: d6cd1333671fc964b95053165f336027, type: 3}
+  rock: {fileID: 2498187935734536976, guid: db7022bfc92160d4ea97fb494037b470, type: 3}
 --- !u!1 &6750535430045099800
 GameObject:
   m_ObjectHideFlags: 0
