@@ -19,7 +19,7 @@ public class Fireball : MonoBehaviour
     {
         Transform collidedObjectTransform = collision.transform;
 
-        if (collision.gameObject.tag != "Player")
+        if (true)//(collision.gameObject.tag != "Player")
         {
             //add explosion particle
             Instantiate(explosion, collision.contacts[0].point, Quaternion.identity);
@@ -39,6 +39,12 @@ public class Fireball : MonoBehaviour
             {
                 enemyComponent.TakeDamage(damageAmount);
                 Debug.Log($"fireball delt {damageAmount} damage to enemy");
+            }
+
+            if(collision.gameObject.TryGetComponent<PlayerScript>(out PlayerScript playerComponent))
+            {
+                playerComponent.TakeDamage(damageAmount);
+                Debug.Log($"fireball delt {damageAmount} damage to player");
             }
 
             Debug.Log("fireball destroyed");
