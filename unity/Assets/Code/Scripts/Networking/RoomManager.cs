@@ -68,6 +68,7 @@ public class RoomManager : MonoBehaviour
         using (UnityWebRequest request = new UnityWebRequest(url, "GET")) // using ensures removed after 
         {
             request.SetRequestHeader("Content-Type", "application/json");
+            request.downloadHandler = new DownloadHandlerBuffer();
 
             // Send the web request 
             UnityWebRequestAsyncOperation operation = request.SendWebRequest();
@@ -79,7 +80,7 @@ public class RoomManager : MonoBehaviour
             // check for a response of 200 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"Error joining room: {request.error}");
+                Debug.LogError($"Error joining room: {request.downloadHandler.text}");
                 return false;
             }
 
@@ -213,7 +214,7 @@ public class RoomManager : MonoBehaviour
 
     }
 
-    public void LeaveGame()
+    public async Task<bool> LeaveGame()
     {
         string url = $"{GlobalConfig.baseURL}/api/protected/leave-game";
 
@@ -225,6 +226,20 @@ public class RoomManager : MonoBehaviour
 
             // Send the web request 
             UnityWebRequestAsyncOperation operation = request.SendWebRequest();
+
+            while (!operation.isDone)
+            {
+                await Task.Yield();
+            }
+
+            // check for a response of 200 
+            if (request.result != UnityWebRequest.Result.Success)
+            {
+                Debug.LogError($"Error deleting the user from the game");
+                return false;
+            }
+
+            return true;
         }
     }
 }

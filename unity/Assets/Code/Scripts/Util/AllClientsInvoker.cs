@@ -69,6 +69,16 @@ public class AllClientsInvoker : MonoBehaviour
         }
     }
 
+    public void InvokePlayerRestartAllClients()
+    {
+        foreach (var client in NetworkManager.Singleton.ConnectedClientsList)
+        {
+            var clientNotifyObj = client.PlayerObject.GetComponent<NotifyClient>();
+
+            clientNotifyObj.PlayerRestartGameClientRpc();
+        }
+    }
+
     private async Task<string> EndPlayerGames()
     {
         BossData bossData = GameObject.FindWithTag("GameInfo").GetComponent<BossData>();

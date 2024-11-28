@@ -1055,7 +1055,7 @@ GameObject:
   - component: {fileID: 207719527}
   m_Layer: 5
   m_Name: Register Screen
-  m_TagString: JoinRoomUI
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4776,7 +4776,7 @@ GameObject:
   - component: {fileID: 644369200}
   m_Layer: 5
   m_Name: Login Screen
-  m_TagString: JoinRoomUI
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

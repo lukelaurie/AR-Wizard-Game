@@ -89,6 +89,16 @@ public class NotifyClient : NetworkBehaviour
         ToggleGameObjectWithTag(true, "DeathBackground");
     }
 
+    [ClientRpc]
+    public void PlayerRestartGameClientRpc()
+    {
+        if (!IsOwner || IsHost)
+            return;
+
+        ToggleGameObjectWithTag(false, "LoseBackground");
+        ToggleGameObjectWithTag(true, "JoinRoomUI");
+    }
+
     private void EnablePlacementScript()
     {
         var placeBoss = GameObject.FindWithTag("GameLogic").GetComponent<PlaceCharacter>();

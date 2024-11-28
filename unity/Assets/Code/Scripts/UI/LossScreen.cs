@@ -10,6 +10,7 @@ public class LossScreen : NetworkBehaviour
 {
     [SerializeField] private Button tryAgain;
     [SerializeField] private Button quit;
+    private PlaceCharacter placeBoss;
 
     private PlayerData playerData;
 
@@ -17,6 +18,8 @@ public class LossScreen : NetworkBehaviour
     async void Start()
     {
         playerData = GameObject.FindWithTag("GameInfo").GetComponent<PlayerData>();
+        placeBoss = GameObject.FindWithTag("GameLogic").GetComponent<PlaceCharacter>();
+
         tryAgain.onClick.AddListener(TryAgain);
         quit.onClick.AddListener(EndGame);
     }
@@ -30,17 +33,19 @@ public class LossScreen : NetworkBehaviour
         }
         else
         {
-            RoomManager.Instance.LeaveGame();
-        }
+            await RoomManager.Instance.LeaveGame();
+    }
         SwapScreens.Instance.QuitGame();
     }
 
     private void TryAgain()
     {
-        var clientData = GameObject.FindWithTag("GameInfo").GetComponent<PlayerData>();
+        placeBoss.ResetIsPlaced();
 
-        if (clientData.IsPlayerHost())
+        if (playerData.IsPlayerHost())
         {
+            AllClientsInvoker.Instance.InvokePlayerRestartAllClients();
+
             // destroy the dragon that survived 
             GameObject dragon = GameObject.FindWithTag("Dragon");
             if (dragon != null)
@@ -51,10 +56,7 @@ public class LossScreen : NetworkBehaviour
             // add the logic to restore player hp and remove boss object...
 
             SwapScreens.Instance.ToggleHostScreen();
-        }
-        else
-        {
-            SwapScreens.Instance.ToggleJoinScreen();
+            placeBoss.enabled = false;
         }
 
         gameObject.SetActive(false);
