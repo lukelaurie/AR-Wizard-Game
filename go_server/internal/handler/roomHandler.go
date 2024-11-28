@@ -15,9 +15,8 @@ import (
 )
 
 var nextRoomNumber = 1000
-var rooms = map[int][]string{}       //map room number to slices of usernames
-var userRooms = map[string]int{}     //map each player to the room they are currently in
-var activeRooms = make(map[int]bool) // a set to keep track of the current active rooms
+var rooms = map[int][]string{} //map room number to slices of usernames
+var userRooms = map[string]int{} //map each player to the room they are currently in
 
 func CreateRoom(w http.ResponseWriter, r *http.Request) {
 	username, ok := middleware.GetUsernameFromContext(r.Context())
@@ -45,6 +44,7 @@ func GetUsersInRoom(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "User not in a room", http.StatusNotFound)
 		return
 	}
+
 
 	curRoom, ok := rooms[roomNumber]
 	if !ok {
@@ -100,7 +100,7 @@ func EndGame(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// determine the room number the host is a part of
+	// determine the room number the host is a part of 
 	roomNumber, ok := userRooms[username]
 	if !ok {
 		http.Error(w, "The player is not yet a part of a room", http.StatusNotFound)
@@ -113,17 +113,11 @@ func EndGame(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	deleteRoom(roomNumber, curRoom)
-
 	if !reqBody.WinStatus {
-		json.NewEncoder(w).Encode("game ended")
 		return
 	}
 
-	rewardMap := map[string]int{}
-
 	for _, player := range curRoom {
-		delete(userRooms, player)
 		// get the reward of the player for defeating the boss
 		playerCoins, err := game.GetReward(reqBody.BossName, reqBody.Level)
 		if err != nil {
@@ -136,113 +130,7 @@ func EndGame(w http.ResponseWriter, r *http.Request) {
 			utils.LogAndAddServerError(err, w)
 			return
 		}
-
-		rewardMap[player] = playerCoins
 	}
 
-	
-	json.NewEncoder(w).Encode(rewardMap)
-}
-
-func deleteRoom(roomNumber int, curRoom []string) {
-	for _, player := range curRoom {
-		delete(userRooms, player)
-	} 
-
-	delete(rooms, roomNumber)
-	delete(activeRooms, roomNumber)
-}
-
-func StartGame(w http.ResponseWriter, r *http.Request) {
-	username, ok := middleware.GetUsernameFromContext(r.Context())
-	if !ok {
-		http.Error(w, "Username not found in context", http.StatusInternalServerError)
-		return
-	}
-
-	roomNumber, ok := userRooms[username]
-	if !ok {
-		http.Error(w, "User not in a room", http.StatusNotFound)
-		return
-	}
-
-	_, ok = activeRooms[roomNumber]
-	if !ok {
-		activeRooms[roomNumber] = true
-		json.NewEncoder(w).Encode("game has started")
-		return
-	}
-
-	json.NewEncoder(w).Encode("game already started")
-}
-
-func IsGameStarted(w http.ResponseWriter, r *http.Request) {
-	username, ok := middleware.GetUsernameFromContext(r.Context())
-	if !ok {
-		http.Error(w, "Username not found in context", http.StatusInternalServerError)
-		return
-	}
-
-	roomNumber, ok := userRooms[username]
-	if !ok {
-		http.Error(w, "User not in a room", http.StatusNotFound)
-		return
-	}
-
-	_, ok = activeRooms[roomNumber]
-	if !ok {
-		http.Error(w, "game not started", http.StatusNotFound)
-		return
-	}
-
-	json.NewEncoder(w).Encode("game has started")
-}
-
-func LeaveGame(w http.ResponseWriter, r *http.Request) {
-	username, ok := middleware.GetUsernameFromContext(r.Context())
-	if !ok {
-		http.Error(w, "Username not found in context", http.StatusInternalServerError)
-		return
-	}
-
-	roomNumber, ok := userRooms[username]
-	if !ok {
-		http.Error(w, "The player is not yet a part of a room", http.StatusNotFound)
-		return
-	}
-
-	// check if user already has left the room 
-	if !isUserInGame(rooms[roomNumber], username) {
-		http.Error(w, "user does not exist in game", http.StatusNotFound)
-		return
-	}
-
-	rooms[roomNumber] = removeUser(rooms[roomNumber], username)
-
-	delete(userRooms, username)
-	json.NewEncoder(w).Encode("user has left game")
-}
-
-func isUserInGame(users []string, checkUser string) bool {
-	for _, user := range users {
-		if user == checkUser {
-			return true
-		}
-	}
-	return false
-}
-
-func removeUser(users []string, deleteUser string) []string {
-	retval := make([]string, len(users)-1)
-	
-	i := 0
-	for _, user := range users {
-		if user == deleteUser {
-			continue
-		}
-		retval[i] = user 
-		i++
-	}
-
-	return retval
+	json.NewEncoder(w).Encode("game has ended")
 }

@@ -25,10 +25,6 @@ func InitializeRoutes() *mux.Router {
 	protectedRouter.HandleFunc("/get-coins", handler.GetCoins).Methods("GET")
 	protectedRouter.HandleFunc("/get-spells", handler.GetSpells).Methods("GET")
 	protectedRouter.HandleFunc("/get-room", handler.GetUsersInRoom).Methods("GET")
-	protectedRouter.HandleFunc("/is-logged-in", handler.IsLoggedIn).Methods("GET")
-	protectedRouter.HandleFunc("/start-game", handler.StartGame).Methods("GET")
-	protectedRouter.HandleFunc("/leave-game", handler.LeaveGame).Methods("GET")
-	protectedRouter.HandleFunc("/is-game-started", handler.IsGameStarted).Methods("GET")
 	
 	protectedRouter.HandleFunc("/create-room", handler.CreateRoom).Methods("POST")
 	protectedRouter.HandleFunc("/purchase-spell", handler.PurchaseSpell).Methods("POST")

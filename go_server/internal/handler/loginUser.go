@@ -8,7 +8,6 @@ import (
 
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/lukelaurie/AR-Wizard-Game/go_server/internal/database"
-	"github.com/lukelaurie/AR-Wizard-Game/go_server/internal/middleware"
 	"github.com/lukelaurie/AR-Wizard-Game/go_server/internal/utils"
 )
 
@@ -61,14 +60,4 @@ func LoginUser(w http.ResponseWriter, r *http.Request) {
 	})
 
 	json.NewEncoder(w).Encode("login successful")
-}
-
-func IsLoggedIn(w http.ResponseWriter, r *http.Request) {
-	username, ok := middleware.GetUsernameFromContext(r.Context())
-	if !ok {
-		http.Error(w, "Username not found in context", http.StatusInternalServerError)
-		return
-	}
-
-	json.NewEncoder(w).Encode(username)
 }
