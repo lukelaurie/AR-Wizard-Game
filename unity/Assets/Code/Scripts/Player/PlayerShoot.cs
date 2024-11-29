@@ -55,7 +55,8 @@ public class PlayerShoot : MonoBehaviour
 
     void ShootFireball()
     {
-        Vector3 spawnPos = camera.transform.position - camera.transform.forward * 5;
+        // Vector3 spawnPos = camera.transform.position - camera.transform.forward * 5;
+        Vector3 spawnPos = camera.transform.position;
         Vector3 fireballDirection = camera.transform.forward;
 
         GameObject projectile = Instantiate(fireball, spawnPos, Quaternion.LookRotation(fireballDirection));
