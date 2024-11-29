@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class SpellStore : MonoBehaviour
 {
-    private int[] spells = { 1, 1, 1, 0 }; // List of player's unlocked spells e.g. [1,0,1,0]
+    private int[] spells = { 1, 0, 0, 0 }; // List of player's unlocked spells e.g. [1,0,1,0]
     public Button fireball;
     public Button lightning;
     public GameObject l_Lock;

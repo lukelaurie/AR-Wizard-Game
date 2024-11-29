@@ -30,6 +30,7 @@ func RegisterUser(w http.ResponseWriter, r *http.Request) {
 	// execute the query in the database
 	wasErr := database.RegisterUser(reqBody.Username, password, w)
 	if wasErr {
+		//TODO send back an actual response
 		return
 	}
 
