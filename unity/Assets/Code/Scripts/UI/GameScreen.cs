@@ -35,17 +35,17 @@ public class GameScreen : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-#if UNITY_EDITOR
-        if (Input.GetMouseButtonDown(0))
-        {
-            placeCharacter.HandlePlaceObjectUnity();
-        }
-#endif
-#if UNITY_IOS || UNITY_ANDROID
-        if (Input.touchCount > 0 && Input.touchCount < 2 &&
-            Input.GetTouch(0).phase == TouchPhase.Began) {
-            placeCharacter.HandlePlaceObjectIOS();
-        }
-#endif
+// #if UNITY_EDITOR
+//         if (Input.GetMouseButtonDown(0))
+//         {
+//             placeCharacter.HandlePlaceObjectUnity();
+//         }
+// #endif
+// #if UNITY_IOS || UNITY_ANDROID
+//         if (Input.touchCount > 0 && Input.touchCount < 2 &&
+//             Input.GetTouch(0).phase == TouchPhase.Began) {
+//             placeCharacter.HandlePlaceObjectIOS();
+//         }
+// #endif
     }
 }
