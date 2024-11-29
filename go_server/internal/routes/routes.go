@@ -29,12 +29,12 @@ func InitializeRoutes() *mux.Router {
 	protectedRouter.HandleFunc("/start-game", handler.StartGame).Methods("GET")
 	protectedRouter.HandleFunc("/leave-game", handler.LeaveGame).Methods("GET")
 	protectedRouter.HandleFunc("/is-game-started", handler.IsGameStarted).Methods("GET")
-	
+
 	protectedRouter.HandleFunc("/create-room", handler.CreateRoom).Methods("POST")
 	protectedRouter.HandleFunc("/purchase-spell", handler.PurchaseSpell).Methods("POST")
 	protectedRouter.HandleFunc("/end-game", handler.EndGame).Methods("POST")
 
 	protectedRouter.HandleFunc("/upgrade-spell", handler.UpgradeSpell).Methods("PUT")
-	
+
 	return router
 }
