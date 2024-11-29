@@ -67,8 +67,8 @@ public class StartGameHost : MonoBehaviour
         await RoomManager.Instance.StartGameInRoom();
 
         // select the boss and difficulty to use
-        bossData.SetBossLevel(bossDropdown.value + 1);
-        bossData.SelectRandomBoss();
+        int bossHealth = 200;
+        bossData.InitializeBossData(bossDropdown.value + 1, bossHealth);
 
         gameObject.SetActive(false);
     }

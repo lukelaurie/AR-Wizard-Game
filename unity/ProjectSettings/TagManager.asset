@@ -7,8 +7,6 @@ TagManager:
   - Dragon
   - Fireball
   - JoinRoomUI
-  - InitiateSpellUI
-  - InitiateSpellUi
   - SharedSpace
   - playerInfo
   - GameLogic
@@ -17,6 +15,7 @@ TagManager:
   - WinBackground
   - CoinTotal
   - GameInfo
+  - GameBackground
   layers:
   - Default
   - TransparentFX

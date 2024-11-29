@@ -1,11 +1,25 @@
 using System;
+using Unity.Netcode;
 using UnityEngine;
 
-public class BossData : MonoBehaviour
+public class BossData : NetworkBehaviour
 {
-    private int bossLevel; 
-    private string bossName; 
 
+    private int bossLevel; 
+    private string bossName;
+    private NetworkVariable<float> bossHealth = new NetworkVariable<float>();
+    private int maxHealth;
+    [SerializeField] HealthBar healthBar;
+
+    public void InitializeBossData(int level, int health)
+    {
+        bossLevel = level; 
+        maxHealth = health; 
+        bossHealth.Value = health; 
+
+        SelectRandomBoss();
+        UpdateHealthServerRpc(maxHealth);
+    }
 
     public int GetBossLevel()
     {
@@ -17,12 +31,25 @@ public class BossData : MonoBehaviour
         return bossName;
     }
 
-    public void SetBossLevel(int bossDifficulty)
+    public float GetBossHealth()
     {
-        bossLevel = bossDifficulty;
+        return bossHealth.Value;
     }
 
-    public void SelectRandomBoss()
+
+    public void BossTakeDamage(float damageAmt)
+    {
+        bossHealth.Value -= damageAmt;
+        UpdateHealthServerRpc(bossHealth.Value);
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void UpdateHealthServerRpc(float newHealth)
+    {
+        bossHealth.Value = newHealth;
+    }
+
+    private void SelectRandomBoss()
     {
         string[] bosses = {"hydra", "basilisk"};
 

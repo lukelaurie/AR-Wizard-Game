@@ -8,29 +8,17 @@ using UnityEngine.AI;
 //used for dragon enemies,etc
 public class Enemy : NetworkBehaviour
 {
-    //TODO: walk around, face player (mabye)
-    //TODO: jump attack, fireball attack, audio effects, etc.
-
     private float waitTime = 3.0f;
     private float timer = 0.0f;
 
-    private NetworkVariable<float> health = new NetworkVariable<float>();
-    private float maxHealth = 200f;
+    BossData bossData;
     [SerializeField] HealthBar healthBar;
 
-
-    //public NavMeshAgent enemy;
-    //public Transform Player;
 
     public Animator enemyAnimator;
 
     private bool canPlayAnim;
     private bool canBeHit;
-
-    /*[SerializeField] float moveSpeed = 5f;
-    Rigidbody rb;
-    Transform target;
-    Vector2 moveDirection;*/
 
     [SerializeField] private AudioClip takeDamageSound;
     [SerializeField] private AudioClip deathSound;
@@ -45,88 +33,73 @@ public class Enemy : NetworkBehaviour
 
     private void Awake()
     {
-        //rb = GetComponent<RigidBody>()
         healthBar = GetComponentInChildren<HealthBar>();
     }
 
     void Start()
     {
+        bossData = GameObject.FindWithTag("GameInfo").GetComponent<BossData>();
+
         FindObjectOfType<AudioManager>().Stop("StartMusic");
         FindObjectOfType<AudioManager>().Play("BossMusic");
-        maxHealth = 200f;
-        UpdateHealthServerRpc(maxHealth);
+
         canPlayAnim = true;
         canBeHit = true;
-
-        // health = maxHealth;
-        //need to find player object
-        //target = GameObject.Find("Player").transform;
     }
 
     // Update is called once per frame
     void Update()
     {
         //play take damage animation
-        healthBar.UpdateHealthBar(health.Value, maxHealth);
-
-
-        //enemy.SetDestination(Player.position);
-        /*if(target)
-        {
-            Vector3 direction = (target.position - transform.position).normalized;
-            float angle = Mathf.Atan2(direction.y, direction,x) * Mathf.Rad2Deg;
-            rb.rotation = angle;
-            moveDirection = direction;
-        }*/
+        // healthBar.UpdateHealthBar(health.Value, maxHealth);
 
         timer += Time.deltaTime;
 
-        if (timer >= waitTime)
+        if (timer < waitTime)
         {
-
-            // generate rand wait time between 6 and 8 sec to roar or attack
-            int randTime = Random.Range(6, 9);
-
-            int randAttack = Random.Range(0, 3);
-
-            if (randAttack == 0)
-            {
-                //roar attack
-                enemyAnimator.Play("Scream");
-                AudioSource.PlayClipAtPoint(roarSound, transform.position, 1f);
-                canPlayAnim = false;
-                StartCoroutine(WaitAndPerformAction(3f));
-                Debug.Log("roar attack");
-            }
-            else if (randAttack == 1)
-            {
-                //ground pound
-                //play jump animation
-                //play jump and impact sound
-                // fling rocks around
-                Debug.Log("ground pound");
-
-                enemyAnimator.Play("Jump");
-                canPlayAnim = false;
-                StartCoroutine(WaitAndThrowObjects(2f, "rock"));
-                AudioSource.PlayClipAtPoint(jumpSound, transform.position, 1f);
-            }
-            else if (randAttack == 2)
-            {
-                //fire ball attack
-                //spin 360 and shoot fireballs around
-                Debug.Log("dragon fireball attack");
-
-                enemyAnimator.Play("Basic Attack");
-                canPlayAnim = false;
-                StartCoroutine(WaitAndThrowObjects(1f, "fireball"));
-            }
-
-            waitTime = (float)randTime;
-
-            //reset timer
-            timer = 0;
+            return;
         }
+        // generate rand wait time between 6 and 8 sec to roar or attack
+        int randTime = Random.Range(6, 9);
+        int randAttack = Random.Range(0, 3);
+
+        if (randAttack == 0)
+        {
+            //roar attack
+            enemyAnimator.Play("Scream");
+            AudioSource.PlayClipAtPoint(roarSound, transform.position, 1f);
+            canPlayAnim = false;
+            StartCoroutine(WaitAndPerformAction(3f));
+            Debug.Log("roar attack");
+        }
+        else if (randAttack == 1)
+        {
+            //ground pound
+            //play jump animation
+            //play jump and impact sound
+            // fling rocks around
+            Debug.Log("ground pound");
+
+            enemyAnimator.Play("Jump");
+            canPlayAnim = false;
+            StartCoroutine(WaitAndThrowObjects(2f, "rock"));
+            AudioSource.PlayClipAtPoint(jumpSound, transform.position, 1f);
+        }
+        else if (randAttack == 2)
+        {
+            //fire ball attack
+            //spin 360 and shoot fireballs around
+            Debug.Log("dragon fireball attack");
+
+            enemyAnimator.Play("Basic Attack");
+            canPlayAnim = false;
+            StartCoroutine(WaitAndThrowObjects(1f, "fireball"));
+        }
+
+        waitTime = (float)randTime;
+
+        //reset timer
+        timer = 0;
 
     }
 
@@ -141,7 +114,7 @@ public class Enemy : NetworkBehaviour
 
         GameObject spawnObj;
 
-        if(name == "fireball")
+        if (name == "fireball")
         {
             spawnObj = fireball;
         }
@@ -180,18 +153,9 @@ public class Enemy : NetworkBehaviour
         }
     }
 
-    //for physics
-    private void FixedUpdate()
-    {
-        /*if(target)
-        {
-            rb.velocity = new Vector2(moveDirection.x, moveDirection.y) * moveSpeed;
-        }*/
-    }
-
     public void TakeDamage(float damageAmount)
     {
-        if(!canBeHit)
+        if (!canBeHit)
         {
             Debug.Log("Enemy can't be hit (dead)");
             return;
@@ -205,7 +169,7 @@ public class Enemy : NetworkBehaviour
         {
             Debug.Log("defended within Enemy.cs");
 
-            if(canPlayAnim)
+            if (canPlayAnim)
             {
                 enemyAnimator.Play("Defend");
                 AudioSource.PlayClipAtPoint(defendSound, transform.position, 1f);
@@ -217,7 +181,7 @@ public class Enemy : NetworkBehaviour
         {
             Debug.Log("took damage within Enemy.cs");
 
-            if(canPlayAnim)
+            if (canPlayAnim)
             {
                 enemyAnimator.Play("Get Hit");
                 AudioSource.PlayClipAtPoint(takeDamageSound, transform.position, 1f);
@@ -226,9 +190,9 @@ public class Enemy : NetworkBehaviour
                 StartCoroutine(WaitAndPerformAction(1.5f));
             }
 
-            UpdateHealthServerRpc(health.Value - damageAmount);
+            bossData.BossTakeDamage(damageAmount);
 
-            if (health.Value <= 0)
+            if (bossData.GetBossHealth() <= 0)
             {
                 //TODO: PUT ALL OF THE WIN INFORMATION HERE
                 //BOSS DIES HERE
@@ -280,11 +244,4 @@ public class Enemy : NetworkBehaviour
         //enemyAnimator.Play("Idle");
         canPlayAnim = true;
     }
-
-    [ServerRpc(RequireOwnership = false)]
-    public void UpdateHealthServerRpc(float newHealth)
-    {
-        health.Value = newHealth;
-    }
-
 }

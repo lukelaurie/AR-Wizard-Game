@@ -33,7 +33,7 @@ public class PlayerHealthManager : MonoBehaviour
 
             // set the current play to the state of being dead
             FindObjectOfType<AudioManager>().Play("PlayerDie");
-            ScreenToggle.ToggleGameObjectWithTag(false, "InitiateSpellUi");
+            ScreenToggle.ToggleGameObjectWithTag(false, "GameBackground");
             ScreenToggle.ToggleGameObjectWithTag(true, "DeathBackground");
             
             var server = GameObject.FindWithTag("GameLogic").GetComponent<NotifyServer>();

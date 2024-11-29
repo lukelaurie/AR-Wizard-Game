@@ -14,7 +14,7 @@ public class NotifyClient : NetworkBehaviour
         if (!IsOwner)
             return;
 
-        ScreenToggle.ToggleGameObjectWithTag(true, "InitiateSpellUi");
+        ScreenToggle.ToggleGameObjectWithTag(true, "GameBackground");
         EnableSpellShootingScript();
 
         // If they are the host allow them to click to place a boss object 
@@ -44,7 +44,7 @@ public class NotifyClient : NetworkBehaviour
             return;
 
         ScreenToggle.ToggleGameObjectWithTag(false, "DeathBackground");
-        ScreenToggle.ToggleGameObjectWithTag(false, "InitiateSpellUi");
+        ScreenToggle.ToggleGameObjectWithTag(false, "GameBackground");
 
         var loseBackground = ScreenToggle.FindGameObjectWithTag("LoseBackground");
         loseBackground.SetActive(true);
@@ -68,7 +68,7 @@ public class NotifyClient : NetworkBehaviour
     {
         if (!IsOwner)
             return;
-        ScreenToggle.ToggleGameObjectWithTag(false, "InitiateSpellUi");
+        ScreenToggle.ToggleGameObjectWithTag(false, "GameBackground");
         ScreenToggle.ToggleGameObjectWithTag(true, "WinBackground");
         var clientData = GameObject.FindWithTag("GameInfo").GetComponent<PlayerData>();
 
