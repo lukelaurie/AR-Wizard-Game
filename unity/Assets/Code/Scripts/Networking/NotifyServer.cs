@@ -19,7 +19,6 @@ public class NotifyServer : NetworkBehaviour
 
         if (clientDeathCount == NetworkManager.Singleton.ConnectedClients.Count)
         {
-            Debug.Log("here");
             AllClientsInvoker.Instance.InvokePartyLoseGameAllClients();
         }
     }

@@ -5,20 +5,27 @@ using UnityEngine;
 public class BossData : NetworkBehaviour
 {
 
-    private int bossLevel; 
+    private int bossLevel;
     private string bossName;
     private NetworkVariable<float> bossHealth = new NetworkVariable<float>();
-    private int maxHealth;
+    private NetworkVariable<float> maxHealth = new NetworkVariable<float>();
+
     [SerializeField] HealthBar healthBar;
 
-    public void InitializeBossData(int level, int health)
+    void Update()
     {
-        bossLevel = level; 
-        maxHealth = health; 
-        bossHealth.Value = health; 
+        healthBar.UpdateHealthBar(bossHealth.Value, maxHealth.Value);
+    }
+
+    public void InitializeBossData(int level)
+    {
+        bossLevel = level;
+        // have the boss health scale with level of the boss
+        float startHealth = 20 * level;
 
         SelectRandomBoss();
-        UpdateHealthServerRpc(maxHealth);
+        UpdateHealthServerRpc(startHealth);
+        SetMaxHealthServerRpc(startHealth);
     }
 
     public int GetBossLevel()
@@ -39,24 +46,35 @@ public class BossData : NetworkBehaviour
 
     public void BossTakeDamage(float damageAmt)
     {
-        bossHealth.Value -= damageAmt;
-        UpdateHealthServerRpc(bossHealth.Value);
+        UpdateHealthServerRpc(bossHealth.Value - damageAmt);
     }
 
-    [ServerRpc(RequireOwnership = false)]
-    private void UpdateHealthServerRpc(float newHealth)
-    {
-        bossHealth.Value = newHealth;
-    }
 
     private void SelectRandomBoss()
     {
-        string[] bosses = {"hydra", "basilisk"};
+        string[] bosses = { "hydra", "basilisk" };
 
         // select a random string from the list of bosses 
         System.Random random = new System.Random();
         int randIndex = random.Next(bosses.Length);
 
         bossName = bosses[randIndex];
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void UpdateHealthServerRpc(float newHealth)
+    {
+        bossHealth.Value = newHealth;
+
+        if (bossHealth.Value <= 0)
+        {
+            AllClientsInvoker.Instance.InvokePartyWinGameAllClients();
+        }
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void SetMaxHealthServerRpc(float newMaxHealth)
+    {
+        maxHealth.Value = newMaxHealth;
     }
 }

@@ -17,13 +17,6 @@ public class NotifyClient : NetworkBehaviour
         ScreenToggle.ToggleGameObjectWithTag(true, "GameBackground");
         EnableSpellShootingScript();
 
-        // If they are the host allow them to click to place a boss object 
-        if (IsHost)
-        {
-            EnablePlacementScript();
-            return;
-        }
-
         // try to get the Game object from the scene
         try
         {
@@ -45,6 +38,7 @@ public class NotifyClient : NetworkBehaviour
 
         ScreenToggle.ToggleGameObjectWithTag(false, "DeathBackground");
         ScreenToggle.ToggleGameObjectWithTag(false, "GameBackground");
+        ScreenToggle.ToggleGameObjectWithTag(false, "SpellPanel");        
 
         var loseBackground = ScreenToggle.FindGameObjectWithTag("LoseBackground");
         loseBackground.SetActive(true);
@@ -76,7 +70,7 @@ public class NotifyClient : NetworkBehaviour
 
         var reward = rewards[clientData.GetUsername()];
         GameObject winBackground = GameObject.FindWithTag("WinBackground");
-        TMPro.TMP_Text childText = winBackground.transform.GetChild(3).GetComponent<TMPro.TMP_Text>(); //TODO get of the name not the index
+        TMPro.TMP_Text childText = winBackground.transform.GetChild(3).GetComponent<TMPro.TMP_Text>();
         childText.text = reward.ToString();
     }
 
@@ -88,6 +82,16 @@ public class NotifyClient : NetworkBehaviour
 
         ScreenToggle.ToggleGameObjectWithTag(false, "LoseBackground");
         ScreenToggle.ToggleGameObjectWithTag(true, "JoinRoomUI");
+    }
+
+    [ClientRpc]
+    public void PlayerGameStartedClientRpc()
+    {
+        GameObject gameBackground = GameObject.FindWithTag("GameBackground");
+        TMPro.TMP_Text placeBossText = gameBackground.transform.GetChild(0).GetComponent<TMPro.TMP_Text>();
+
+        placeBossText.text = "";
+        ScreenToggle.ToggleGameObjectWithTag(true, "SpellPanel");
     }
 
 

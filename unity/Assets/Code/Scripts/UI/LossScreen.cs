@@ -50,11 +50,11 @@ public class LossScreen : NetworkBehaviour
             AllClientsInvoker.Instance.InvokePlayerRestartAllClients();
 
             // destroy the dragon that survived 
-            GameObject dragon = GameObject.FindWithTag("Dragon");
-            if (dragon != null)
-            {
-                Destroy(dragon);
-            }
+            // GameObject dragon = GameObject.FindWithTag("Dragon");
+            // if (dragon != null)
+            // {
+            //     Destroy(dragon);
+            // }
 
             // add the logic to restore player hp and remove boss object...
 

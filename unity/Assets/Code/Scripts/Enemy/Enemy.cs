@@ -38,7 +38,7 @@ public class Enemy : NetworkBehaviour
 
     void Start()
     {
-        bossData = GameObject.FindWithTag("GameInfo").GetComponent<BossData>();
+        bossData = gameObject.GetComponent<BossData>();
 
         FindObjectOfType<AudioManager>().Stop("StartMusic");
         FindObjectOfType<AudioManager>().Play("BossMusic");
@@ -194,26 +194,21 @@ public class Enemy : NetworkBehaviour
 
             if (bossData.GetBossHealth() <= 0)
             {
-                //TODO: PUT ALL OF THE WIN INFORMATION HERE
-                //BOSS DIES HERE
-                //!!!
-                //!!!
-                //!!!
-                //PUT WIN SCREEN AND SO ON
-
-                Debug.Log("Played death animation");
-
                 //play for everyone
-                FindObjectOfType<AudioManager>().Play("WinScreen");
+                // FindObjectOfType<AudioManager>().Play("WinScreen");
 
-                float newTime = 0.0f;
-                float animTime = 3.0f;
-
+                // float newTime = 0.0f;
+                // float animTime = 3.0f;
+                Debug.Log("die");
                 enemyAnimator.Play("Die");
                 AudioSource.PlayClipAtPoint(deathSound, transform.position, 1f);
-                FindObjectOfType<AudioManager>().Stop("BossMusic");
-                FindObjectOfType<AudioManager>().Play("StartMusic");
-                StartCoroutine(WaitAndDestroy());
+                // FindObjectOfType<AudioManager>().Stop("BossMusic");
+                // FindObjectOfType<AudioManager>().Play("StartMusic");
+                NotifyServer server = GameObject.FindWithTag("GameLogic").GetComponent<NotifyServer>();
+                // server.NotifyBossDeathServerRpc();
+                // StartCoroutine(WaitAndDestroy());
+
+
                 canBeHit = false;
             }
         }
@@ -223,8 +218,9 @@ public class Enemy : NetworkBehaviour
     {
         yield return new WaitForSeconds(3f);
 
-        Destroy(gameObject);
-        Debug.Log("Died after 3 seconds");
+        NotifyServer server = GameObject.FindWithTag("GameLogic").GetComponent<NotifyServer>();
+        // server.NotifyBossDeathServerRpc();
+
         FindObjectOfType<AudioManager>().Play("StartMusic");
     }
 

@@ -10,16 +10,19 @@ public class GameScreen : NetworkBehaviour
     private PlayerData playerData; 
 
 
-    // Start is called before the first frame update
     void Awake()
     {
-        placeCharacter = gameObject.GetComponent<PlaceCharacter>();
+        placeCharacter = GameObject.FindWithTag("GameLogic").GetComponent<PlaceCharacter>();
         playerData = GameObject.FindWithTag("GameInfo").GetComponent<PlayerData>();
     }
 
     void OnEnable()
     {
-        placeCharacter.ResetIsPlaced();
+        if (playerData.IsPlayerHost()) 
+        {
+            placeCharacter.enabled = true;
+            placeCharacter.ResetIsPlaced();
+        }
 
         if (playerData.IsPlayerHost())
         {
@@ -27,25 +30,7 @@ public class GameScreen : NetworkBehaviour
         }
         else
         {
-            placeBossText.text = "";
-            // placeBossText.text = "Waiting for host to place the boss...";
+            placeBossText.text = "Waiting for host to place the boss...";
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-// #if UNITY_EDITOR
-//         if (Input.GetMouseButtonDown(0))
-//         {
-//             placeCharacter.HandlePlaceObjectUnity();
-//         }
-// #endif
-// #if UNITY_IOS || UNITY_ANDROID
-//         if (Input.touchCount > 0 && Input.touchCount < 2 &&
-//             Input.GetTouch(0).phase == TouchPhase.Began) {
-//             placeCharacter.HandlePlaceObjectIOS();
-//         }
-// #endif
     }
 }

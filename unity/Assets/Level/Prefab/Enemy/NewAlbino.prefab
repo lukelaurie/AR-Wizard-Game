@@ -1980,7 +1980,6 @@ GameObject:
   - component: {fileID: 3510056695076331496}
   - component: {fileID: 3560183358942798707}
   - component: {fileID: 5661410082713375861}
-  - component: {fileID: 3402523246104925684}
   m_Layer: 8
   m_Name: NewAlbino
   m_TagString: Dragon
@@ -2083,19 +2082,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 7826970750904822753}
---- !u!114 &3402523246104925684
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6739088511435197133}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57c28ed28c284b8bbb08e7d5bded1bd9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _putInSharedOrigin: 1
 --- !u!1 &6750535430045099800
 GameObject:
   m_ObjectHideFlags: 0

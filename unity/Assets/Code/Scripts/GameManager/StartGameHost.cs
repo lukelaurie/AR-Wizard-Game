@@ -57,8 +57,6 @@ public class StartGameHost : MonoBehaviour
 
     private async void StartGame()
     {
-        BossData bossData = GameObject.FindWithTag("GameInfo").GetComponent<BossData>();
-
         AllClientsInvoker.Instance.InvokeJoinGameAllClients();
 
         StartGameAr.StartNewGame();
@@ -67,8 +65,8 @@ public class StartGameHost : MonoBehaviour
         await RoomManager.Instance.StartGameInRoom();
 
         // select the boss and difficulty to use
-        int bossHealth = 200;
-        bossData.InitializeBossData(bossDropdown.value + 1, bossHealth);
+        PlayerData playerData = GameObject.FindWithTag("GameInfo").GetComponent<PlayerData>();
+        playerData.SetBossLevel(bossDropdown.value + 1);
 
         gameObject.SetActive(false);
     }

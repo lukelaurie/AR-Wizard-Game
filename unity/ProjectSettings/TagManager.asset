@@ -16,6 +16,7 @@ TagManager:
   - CoinTotal
   - GameInfo
   - GameBackground
+  - SpellPanel
   layers:
   - Default
   - TransparentFX

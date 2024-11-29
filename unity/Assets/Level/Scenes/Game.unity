@@ -341,11 +341,11 @@ GameObject:
   - component: {fileID: 65866030}
   m_Layer: 5
   m_Name: Panel
-  m_TagString: Untagged
+  m_TagString: SpellPanel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &65866029
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12870,7 +12870,6 @@ GameObject:
   - component: {fileID: 1461851708}
   - component: {fileID: 1461851711}
   - component: {fileID: 1461851709}
-  - component: {fileID: 1461851712}
   m_Layer: 5
   m_Name: Game Background
   m_TagString: GameBackground
@@ -12920,19 +12919,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1461851707}
   m_CullTransparentMesh: 1
---- !u!114 &1461851712
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1461851707}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2729f40811bb9be48a68b1bff1488127, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  placementObject: {fileID: 6739088511435197133, guid: 2f8b4a6dbba08c24e8690a207e35a2da, type: 3}
 --- !u!1 &1481248107
 GameObject:
   m_ObjectHideFlags: 0
@@ -14877,12 +14863,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1766984765}
-  - component: {fileID: 1766984767}
   - component: {fileID: 1766984766}
   - component: {fileID: 1766984768}
   - component: {fileID: 1766984769}
   - component: {fileID: 1766984770}
   - component: {fileID: 1766984771}
+  - component: {fileID: 1766984772}
   m_Layer: 0
   m_Name: GameLogic
   m_TagString: GameLogic
@@ -14925,19 +14911,6 @@ MonoBehaviour:
   lightningSpawnDist: 3
   camera: {fileID: 0}
   lightning: {fileID: 8297969081835673719, guid: 5b2066b37d9c9e94998ed02b0df55f8e, type: 3}
---- !u!114 &1766984767
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1766984764}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2729f40811bb9be48a68b1bff1488127, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  placementObject: {fileID: 6739088511435197133, guid: 2f8b4a6dbba08c24e8690a207e35a2da, type: 3}
 --- !u!114 &1766984768
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14986,6 +14959,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 158bf7d1704e67c42809335af63a445d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1766984772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1766984764}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2729f40811bb9be48a68b1bff1488127, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  placementObject: {fileID: 6739088511435197133, guid: 2f8b4a6dbba08c24e8690a207e35a2da, type: 3}
 --- !u!1 &1782947370
 GameObject:
   m_ObjectHideFlags: 0
@@ -15053,7 +15039,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1787196191}
   - component: {fileID: 1787196193}
-  - component: {fileID: 1787196192}
   m_Layer: 0
   m_Name: GameData
   m_TagString: GameInfo
@@ -15076,19 +15061,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2116741797}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1787196192
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1787196190}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f59ffe532379684e8612fd37202e55b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthBar: {fileID: 0}
 --- !u!114 &1787196193
 MonoBehaviour:
   m_ObjectHideFlags: 0

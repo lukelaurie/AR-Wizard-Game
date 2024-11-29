@@ -36,7 +36,7 @@ public class PlayerHealthManager : MonoBehaviour
             ScreenToggle.ToggleGameObjectWithTag(false, "GameBackground");
             ScreenToggle.ToggleGameObjectWithTag(true, "DeathBackground");
             
-            var server = GameObject.FindWithTag("GameLogic").GetComponent<NotifyServer>();
+            NotifyServer server = GameObject.FindWithTag("GameLogic").GetComponent<NotifyServer>();
             server.NotifyClientDeathServerRpc();
 
 

@@ -12,6 +12,7 @@ public class PlayerData : MonoBehaviour
     private int coinTotal;
     private bool isPlayerHost;
     private bool isPlayerDead = false;
+    private int selectedBossLevel;
 
     [SerializeField] private int health;
 
@@ -38,6 +39,16 @@ public class PlayerData : MonoBehaviour
     public int GetHealth()
     {
         return health;
+    }
+
+    public int GetBossLevel()
+    {
+        return selectedBossLevel;
+    }
+
+    public int SelectedBossLevel()
+    {
+        return selectedBossLevel;
     }
 
     public void SetUsername(string newUsername)
@@ -69,7 +80,11 @@ public class PlayerData : MonoBehaviour
     public void HealPlayer(int healingAmt)
     {
         health += healingAmt;
-        Debug.Log("1");
         OnPlayerHealed?.Invoke(health);
+    }
+
+    public void SetBossLevel(int bossLevel)
+    {
+        selectedBossLevel = bossLevel;
     }
 }
