@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class SpellList : MonoBehaviour
 {
     private int[] spells = { 1, 0, 0, 0 };
@@ -10,7 +10,6 @@ public class SpellList : MonoBehaviour
     [SerializeField] private Button healButton;
     [SerializeField] private Button rockButton;
     [SerializeField] private Button tempButton;
-    // Start is called before the first frame update
     void Start()
     {
         Button[] buttons = { lightButton, healButton, rockButton, tempButton };

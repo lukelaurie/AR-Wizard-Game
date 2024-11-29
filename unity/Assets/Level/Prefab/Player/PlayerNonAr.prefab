@@ -2579,6 +2579,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: debe475292243354c982408086bf7fd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fireButton: {fileID: 7512577594707690568}
+  lightButton: {fileID: 8146496851391002007}
+  healButton: {fileID: 2794522324248192755}
+  rockButton: {fileID: 3866579492946155844}
+  tempButton: {fileID: 3949599557354473651}
 --- !u!1 &7014254919154192681
 GameObject:
   m_ObjectHideFlags: 0
