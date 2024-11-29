@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using UnityEngine;
@@ -10,7 +11,7 @@ public class RoomManager : MonoBehaviour
 {
 
     // ensure that this is a singleton object 
-    public static RoomManager Instance { get; private set;} // can only set/modify in this class
+    public static RoomManager Instance { get; private set; } // can only set/modify in this class
 
     void Awake()
     {
@@ -29,12 +30,10 @@ public class RoomManager : MonoBehaviour
     public async Task<string> CreateRoom()
     {
         string url = $"{GlobalConfig.baseURL}/api/protected/create-room";
-        string cookieToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzI2NzE2NjMsInVzZXJuYW1lIjoidXNlcjEifQ.QmzfOmDIyhhZddDj2u_DdvkjPlVyhPRZtcWuqo5gUkA";
 
         using (UnityWebRequest request = new UnityWebRequest(url, "POST")) // using ensures removed after 
         {
             request.SetRequestHeader("Content-Type", "application/json");
-            request.SetRequestHeader("Cookie", $"token={cookieToken}");
 
             // allows the response to be stored
             request.downloadHandler = new DownloadHandlerBuffer();
@@ -65,12 +64,11 @@ public class RoomManager : MonoBehaviour
     public async Task<bool> JoinRoom(string roomId)
     {
         string url = $"{GlobalConfig.baseURL}/api/protected/join-room?roomNumber={roomId}";
-        string cookieToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzI2NzE4NDEsInVzZXJuYW1lIjoidXNlciJ9.Zv8btttGCIl-ENXEEdtTkKT3GoUEHqKtF3djaUtgnFs";
 
         using (UnityWebRequest request = new UnityWebRequest(url, "GET")) // using ensures removed after 
         {
             request.SetRequestHeader("Content-Type", "application/json");
-            request.SetRequestHeader("Cookie", $"token={cookieToken}");
+            request.downloadHandler = new DownloadHandlerBuffer();
 
             // Send the web request 
             UnityWebRequestAsyncOperation operation = request.SendWebRequest();
@@ -82,7 +80,7 @@ public class RoomManager : MonoBehaviour
             // check for a response of 200 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"Error joining room: {request.error}");
+                Debug.LogError($"Error joining room: {request.downloadHandler.text}");
                 return false;
             }
 
@@ -94,12 +92,10 @@ public class RoomManager : MonoBehaviour
     public async Task<string[]> GetPlayersInRoom()
     {
         string url = $"{GlobalConfig.baseURL}/api/protected/get-room";
-        string cookieToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzI2NzE2NjMsInVzZXJuYW1lIjoidXNlcjEifQ.QmzfOmDIyhhZddDj2u_DdvkjPlVyhPRZtcWuqo5gUkA";
 
         using (UnityWebRequest request = new UnityWebRequest(url, "GET")) // using ensures removed after 
         {
             request.SetRequestHeader("Content-Type", "application/json");
-            request.SetRequestHeader("Cookie", $"token={cookieToken}");
 
             // allows the response to be stored
             request.downloadHandler = new DownloadHandlerBuffer();
@@ -114,17 +110,16 @@ public class RoomManager : MonoBehaviour
             // check for a response of 200 
             if (request.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError($"Error creating room: {request.error}");
+                Debug.LogError($"Error getting players in room: {request.error}");
                 return null;
             }
 
             string response = request.downloadHandler.text.Trim();
-            Debug.Log($"Players in room: {response}");
 
             // try to deserialize the object into a list of strings
-            try 
+            try
             {
-                string[] players = JsonConvert.DeserializeObject<string[]>(response); 
+                string[] players = JsonConvert.DeserializeObject<string[]>(response);
                 return players;
             }
             catch (JsonException ex)
@@ -132,6 +127,119 @@ public class RoomManager : MonoBehaviour
                 Debug.LogError("Error parsing the json");
                 return null;
             }
+        }
+    }
+
+    public async Task<bool> StartGameInRoom()
+    {
+        string url = $"{GlobalConfig.baseURL}/api/protected/start-game";
+
+        using (UnityWebRequest request = new UnityWebRequest(url, "GET")) // using ensures removed after 
+        {
+            request.SetRequestHeader("Content-Type", "application/json");
+
+            // allows the response to be stored
+            request.downloadHandler = new DownloadHandlerBuffer();
+
+            // Send the web request 
+            UnityWebRequestAsyncOperation operation = request.SendWebRequest();
+            while (!operation.isDone)
+            {
+                await Task.Yield();
+            }
+
+            // check for a response of 200 
+            if (request.result != UnityWebRequest.Result.Success)
+            {
+                Debug.LogError($"Error starting room: {request.error}");
+                return false;
+            }
+            return true;
+
+        }
+    }
+
+    public async Task<bool> IsGameStarted()
+    {
+        string url = $"{GlobalConfig.baseURL}/api/protected/is-game-started";
+
+        using (UnityWebRequest request = new UnityWebRequest(url, "GET")) // using ensures removed after 
+        {
+            request.SetRequestHeader("Content-Type", "application/json");
+
+            // allows the response to be stored
+            request.downloadHandler = new DownloadHandlerBuffer();
+
+            // Send the web request 
+            UnityWebRequestAsyncOperation operation = request.SendWebRequest();
+            while (!operation.isDone)
+            {
+                await Task.Yield();
+            }
+
+            // check for a response of 200 
+            if (request.result != UnityWebRequest.Result.Success)
+            {
+                return false;
+            }
+
+            return true;
+        }
+    }
+
+    public async Task<string> EndGame(string bossName, bool winStatus, int level)
+    {
+        string url = $"{GlobalConfig.baseURL}/api/protected/end-game";
+
+        using UnityWebRequest request = new UnityWebRequest(url, "POST");
+        byte[] bodyRaw = Encoding.UTF8.GetBytes("{ \"bossName\": \"" + bossName + "\", \"winStatus\": " + winStatus.ToString().ToLower() + ", \"level\": " + level + " }");
+        request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+        request.downloadHandler = new DownloadHandlerBuffer();
+        request.SetRequestHeader("Content-Type", "application/json");
+
+        // Send the web request 
+        UnityWebRequestAsyncOperation operation = request.SendWebRequest();
+        while (!operation.isDone)
+        {
+            await Task.Yield();
+        }
+
+        // check for a response of 200 
+        if (request.result != UnityWebRequest.Result.Success)
+        {
+            Debug.LogError($"Error ending game, status code: {request.result}");
+            return null;
+        }
+        return request.downloadHandler.text;
+
+    }
+
+    public async Task<bool> LeaveGame()
+    {
+        string url = $"{GlobalConfig.baseURL}/api/protected/leave-game";
+
+        using (UnityWebRequest request = new UnityWebRequest(url, "GET")) // using ensures removed after 
+        {
+            request.SetRequestHeader("Content-Type", "application/json");
+
+            // allows the response to be stored
+
+            // Send the web request 
+            UnityWebRequestAsyncOperation operation = request.SendWebRequest();
+
+            while (!operation.isDone)
+            {
+                await Task.Yield();
+            }
+
+            // check for a response of 200 
+            if (request.result != UnityWebRequest.Result.Success)
+            {
+                Debug.LogError($"Error deleting the user from the game");
+                return false;
+            }
+
+            return true;
         }
     }
 }

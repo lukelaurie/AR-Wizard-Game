@@ -1,47 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
+using Unity.Netcode;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class PlayerGameEvents : MonoBehaviour
+public class PlayerGameEvents : NetworkBehaviour
 {
-    [SerializeField] private GameObject winBackground;
-    [SerializeField] private GameObject loseBackground;
-    [SerializeField] private GameObject deathBackground;
-    [SerializeField] private GameObject spellPanel;
 
-    void Update()
+    async void Update()
     {
-        if (Input.GetKey(KeyCode.A)) 
+        if (Input.GetKeyUp(KeyCode.A) && GameObject.FindWithTag("GameInfo").GetComponent<PlayerData>().IsPlayerHost())
         {
-            partyLoseGame();
+            AllClientsInvoker.Instance.InvokePartyLoseGameAllClients();
         }
-        
-        if (Input.GetKey(KeyCode.B)) 
-        {
-            playerDie();
-        }
-        
-        if (Input.GetKey(KeyCode.C)) 
-        {
-            partyWinGame();
-        }
-    }
 
-    private void partyLoseGame()
-    {
-        spellPanel.SetActive(false);
-        loseBackground.SetActive(true);
-    }
-    
-    private void playerDie()
-    {
-        spellPanel.SetActive(false);
-        deathBackground.SetActive(true);
-    }
-    
-    private void partyWinGame()
-    {
-        spellPanel.SetActive(false);
-        winBackground.SetActive(true);
+        if (Input.GetKeyUp(KeyCode.B) && GameObject.FindWithTag("GameInfo").GetComponent<PlayerData>().IsPlayerHost())
+        {
+            AllClientsInvoker.Instance.InvokePlayerDieAllClients();
+        }
+
+        if (Input.GetKeyUp(KeyCode.C) && GameObject.FindWithTag("GameInfo").GetComponent<PlayerData>().IsPlayerHost())
+        {
+
+            AllClientsInvoker.Instance.InvokePartyWinGameAllClients();
+        }
     }
 }

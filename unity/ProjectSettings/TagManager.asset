@@ -9,6 +9,14 @@ TagManager:
   - JoinRoomUI
   - InitiateSpellUI
   - InitiateSpellUi
+  - SharedSpace
+  - playerInfo
+  - GameLogic
+  - LoseBackground
+  - DeathBackground
+  - WinBackground
+  - CoinTotal
+  - GameInfo
   layers:
   - Default
   - TransparentFX

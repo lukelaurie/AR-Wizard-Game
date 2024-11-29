@@ -33,7 +33,7 @@ public class ShowHideBlitImageUI : NetworkBehaviour
     private void StartNetworkingManagerSharedARImageOnOnStartGame()
     {
         BlitImageUI.SetActive(false);
-        // retakePicture.SetActive(false);
+        retakePicture.SetActive(false);
     }
 
     private void StartNetworkingManagerSharedARImageOnOnSharedSpaceStarted()
@@ -48,7 +48,7 @@ public class ShowHideBlitImageUI : NetworkBehaviour
         }
 
         BlitImageUI.SetActive(true);
-        // retakePicture.SetActive(true);
+        retakePicture.SetActive(true);
 
     }
 

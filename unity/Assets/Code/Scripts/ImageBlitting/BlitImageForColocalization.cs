@@ -20,6 +20,7 @@ public class BlitImageForColocalization : MonoBehaviour
         m_ARCameraBackground = FindObjectOfType<ARCameraBackground>();
         StartGameHost.OnStartSharedSpaceHost += OnStartSharedSpace;
         StartGameClient.OnJoinSharedSpaceClient += OnStartSharedSpace;
+        RetakeImageLogic.OnRetakePicture += OnStartSharedSpace;
     }
 
     void OnStartSharedSpace()
@@ -81,9 +82,6 @@ public class BlitImageForColocalization : MonoBehaviour
             m_RenderTexture.width = newWidth;
             m_RenderTexture.height = newHeight;
             m_RenderTexture.depth = 24;
-
-            Debug.Log("Changing Render Texture with to " + m_RenderTexture.width + " and height to " + m_RenderTexture.height);
-
 
             m_RenderTexture.Create();
         }

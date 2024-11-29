@@ -32,6 +32,17 @@ public class Enemy : NetworkBehaviour
     Transform target;
     Vector2 moveDirection;*/
 
+    [SerializeField] private AudioClip takeDamageSound;
+    [SerializeField] private AudioClip deathSound;
+    [SerializeField] private AudioClip roarSound;
+    [SerializeField] private AudioClip jumpSound;
+    [SerializeField] private AudioClip defendSound;
+    [SerializeField] private AudioClip rockAttackSound;
+
+    [SerializeField] public GameObject fireball;
+    [SerializeField] public GameObject rock;
+
+
     private void Awake()
     {
         //rb = GetComponent<RigidBody>()
@@ -40,6 +51,8 @@ public class Enemy : NetworkBehaviour
 
     void Start()
     {
+        FindObjectOfType<AudioManager>().Stop("StartMusic");
+        FindObjectOfType<AudioManager>().Play("BossMusic");
         maxHealth = 200f;
         UpdateHealthServerRpc(maxHealth);
         canPlayAnim = true;
@@ -80,7 +93,7 @@ public class Enemy : NetworkBehaviour
             {
                 //roar attack
                 enemyAnimator.Play("Scream");
-                //play sound
+                AudioSource.PlayClipAtPoint(roarSound, transform.position, 1f);
                 canPlayAnim = false;
                 StartCoroutine(WaitAndPerformAction(3f));
                 Debug.Log("roar attack");
@@ -92,12 +105,21 @@ public class Enemy : NetworkBehaviour
                 //play jump and impact sound
                 // fling rocks around
                 Debug.Log("ground pound");
+
+                enemyAnimator.Play("Jump");
+                canPlayAnim = false;
+                StartCoroutine(WaitAndThrowObjects(2f, "rock"));
+                AudioSource.PlayClipAtPoint(jumpSound, transform.position, 1f);
             }
             else if (randAttack == 2)
             {
                 //fire ball attack
                 //spin 360 and shoot fireballs around
                 Debug.Log("dragon fireball attack");
+
+                enemyAnimator.Play("Basic Attack");
+                canPlayAnim = false;
+                StartCoroutine(WaitAndThrowObjects(1f, "fireball"));
             }
 
             waitTime = (float)randTime;
@@ -106,6 +128,56 @@ public class Enemy : NetworkBehaviour
             timer = 0;
         }
 
+    }
+
+    private void SpawnObjectsAround(string name)
+    {
+        int numberOfObjects = 12;
+        float radius = 2f;
+        float speed = 6f;
+
+        float angleStep = 360f / numberOfObjects;
+        float angle = 0f;
+
+        GameObject spawnObj;
+
+        if(name == "fireball")
+        {
+            spawnObj = fireball;
+        }
+        else
+        {
+            AudioSource.PlayClipAtPoint(rockAttackSound, transform.position, 1f);
+            spawnObj = rock;
+            speed = 11f;
+            numberOfObjects = 9;
+        }
+
+        for (int i = 0; i < numberOfObjects; i++)
+        {
+            //calc spawn pos based on angle
+            float spawnX = transform.position.x + Mathf.Cos(angle * Mathf.Deg2Rad) * radius;
+            float spawnZ = transform.position.z + Mathf.Sin(angle * Mathf.Deg2Rad) * radius;
+            float spawnY = transform.position.y + 1f; //spawns above slightly
+            Vector3 spawnPosition = new Vector3(spawnX, spawnY, spawnZ);
+
+            GameObject spawnedObj = Instantiate(spawnObj, spawnPosition, Quaternion.identity);
+
+            Rigidbody rb = spawnedObj.GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                //shoot in the direction of where the object was spawned
+                Vector3 direction = new Vector3(
+                    spawnPosition.x - transform.position.x,
+                    0, //zero out Y to ignore height offset
+                    spawnPosition.z - transform.position.z
+                ).normalized;
+                rb.velocity = direction * speed;
+            }
+
+            //increment angle
+            angle += angleStep;
+        }
     }
 
     //for physics
@@ -136,6 +208,7 @@ public class Enemy : NetworkBehaviour
             if(canPlayAnim)
             {
                 enemyAnimator.Play("Defend");
+                AudioSource.PlayClipAtPoint(defendSound, transform.position, 1f);
                 canPlayAnim = false;
                 StartCoroutine(WaitAndPerformAction(2f));
             }
@@ -147,6 +220,7 @@ public class Enemy : NetworkBehaviour
             if(canPlayAnim)
             {
                 enemyAnimator.Play("Get Hit");
+                AudioSource.PlayClipAtPoint(takeDamageSound, transform.position, 1f);
 
                 canPlayAnim = false;
                 StartCoroutine(WaitAndPerformAction(1.5f));
@@ -156,12 +230,25 @@ public class Enemy : NetworkBehaviour
 
             if (health.Value <= 0)
             {
+                //TODO: PUT ALL OF THE WIN INFORMATION HERE
+                //BOSS DIES HERE
+                //!!!
+                //!!!
+                //!!!
+                //PUT WIN SCREEN AND SO ON
+
                 Debug.Log("Played death animation");
+
+                //play for everyone
+                FindObjectOfType<AudioManager>().Play("WinScreen");
 
                 float newTime = 0.0f;
                 float animTime = 3.0f;
 
                 enemyAnimator.Play("Die");
+                AudioSource.PlayClipAtPoint(deathSound, transform.position, 1f);
+                FindObjectOfType<AudioManager>().Stop("BossMusic");
+                FindObjectOfType<AudioManager>().Play("StartMusic");
                 StartCoroutine(WaitAndDestroy());
                 canBeHit = false;
             }
@@ -174,13 +261,23 @@ public class Enemy : NetworkBehaviour
 
         Destroy(gameObject);
         Debug.Log("Died after 3 seconds");
+        FindObjectOfType<AudioManager>().Play("StartMusic");
     }
 
     private IEnumerator WaitAndPerformAction(float seconds)
     {
         yield return new WaitForSeconds(seconds);
 
-        enemyAnimator.Play("Idle");
+        //enemyAnimator.Play("Idle");
+        canPlayAnim = true;
+    }
+
+    private IEnumerator WaitAndThrowObjects(float seconds, string obj)
+    {
+        yield return new WaitForSeconds(seconds);
+
+        SpawnObjectsAround(obj);
+        //enemyAnimator.Play("Idle");
         canPlayAnim = true;
     }
 
