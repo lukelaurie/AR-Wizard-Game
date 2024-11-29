@@ -321,6 +321,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f34d80f01d008024492ff51f9ed6dc8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  continueButton: {fileID: 0}
 --- !u!1 &1265645234011492511
 GameObject:
   m_ObjectHideFlags: 0
@@ -1123,6 +1124,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 618e1adb823a9ca44a766b3d6c20239c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tryAgain: {fileID: 0}
+  quit: {fileID: 0}
 --- !u!1 &2350070456718461999
 GameObject:
   m_ObjectHideFlags: 0
@@ -1318,7 +1321,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3788168258
+  GlobalObjectIdHash: 2847599674
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -2494,6 +2497,7 @@ GameObject:
   - component: {fileID: 7446369898836606726}
   - component: {fileID: 7927810839665226968}
   - component: {fileID: 4698501421387665417}
+  - component: {fileID: 7863414340213638325}
   m_Layer: 6
   m_Name: Panel
   m_TagString: Untagged
@@ -2563,6 +2567,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &7863414340213638325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6830768642441522111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: debe475292243354c982408086bf7fd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7014254919154192681
 GameObject:
   m_ObjectHideFlags: 0
