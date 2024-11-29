@@ -4,24 +4,52 @@ using UnityEngine;
 
 public class PlayerHealthManager : MonoBehaviour
 {
+    private PlayerData playerData;
+
     void Start()
     {
-        PlayerData playerData = GameObject.FindWithTag("GameInfo").GetComponent<PlayerData>();
-        Debug.Log(playerData + "    ??????");
+        playerData = GameObject.FindWithTag("GameInfo").GetComponent<PlayerData>();
+    }
 
+    void OnEnable()
+    {
+        playerData = GameObject.FindWithTag("GameInfo").GetComponent<PlayerData>();
 
         playerData.OnPlayerTakeDamage += HandlePlayerDamage;
         playerData.OnPlayerHealed += HandlePlayerHealed;
     }
 
-    private void HandlePlayerDamage(int currentHealth)
+    void OnDisable()
     {
-        Debug.Log($"Health updated: {currentHealth}");
+        playerData.OnPlayerTakeDamage -= HandlePlayerDamage;
+        playerData.OnPlayerHealed -= HandlePlayerHealed;
     }
 
-    private void HandlePlayerHealed(int currentHealth)
+    public void HandlePlayerDamage(int currentHealth)
     {
-        Debug.Log($"Health healed: {currentHealth}");
+        if (currentHealth <= 0)
+        {
+            playerData.SetIsPlayerDead(true);
+
+            // set the current play to the state of being dead
+            FindObjectOfType<AudioManager>().Play("PlayerDie");
+            ScreenToggle.ToggleGameObjectWithTag(false, "InitiateSpellUi");
+            ScreenToggle.ToggleGameObjectWithTag(true, "DeathBackground");
+            
+            var server = GameObject.FindWithTag("GameLogic").GetComponent<NotifyServer>();
+            server.NotifyClientDeathServerRpc();
+
+
+        }
+        else
+        {
+            FindObjectOfType<AudioManager>().Play("PlayerTakeDamage");
+        }
+    }
+
+    public void HandlePlayerHealed(int currentHealth)
+    {
+        FindObjectOfType<AudioManager>().Play("PlayerHeal");
     }
 
 }

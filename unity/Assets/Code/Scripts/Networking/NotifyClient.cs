@@ -14,7 +14,7 @@ public class NotifyClient : NetworkBehaviour
         if (!IsOwner)
             return;
 
-        ToggleGameObjectWithTag(true, "InitiateSpellUi");
+        ScreenToggle.ToggleGameObjectWithTag(true, "InitiateSpellUi");
         EnableSpellShootingScript();
 
         // If they are the host allow them to click to place a boss object 
@@ -42,9 +42,11 @@ public class NotifyClient : NetworkBehaviour
     {
         if (!IsOwner)
             return;
-        ToggleGameObjectWithTag(false, "InitiateSpellUi");
 
-        var loseBackground = FindGameObjectWithTag("LoseBackground");
+        ScreenToggle.ToggleGameObjectWithTag(false, "DeathBackground");
+        ScreenToggle.ToggleGameObjectWithTag(false, "InitiateSpellUi");
+
+        var loseBackground = ScreenToggle.FindGameObjectWithTag("LoseBackground");
         loseBackground.SetActive(true);
 
         TMPro.TMP_Text childText = loseBackground.transform.GetChild(1).GetComponent<TMPro.TMP_Text>();
@@ -66,27 +68,16 @@ public class NotifyClient : NetworkBehaviour
     {
         if (!IsOwner)
             return;
-        ToggleGameObjectWithTag(false, "InitiateSpellUi");
-        ToggleGameObjectWithTag(true, "WinBackground");
+        ScreenToggle.ToggleGameObjectWithTag(false, "InitiateSpellUi");
+        ScreenToggle.ToggleGameObjectWithTag(true, "WinBackground");
         var clientData = GameObject.FindWithTag("GameInfo").GetComponent<PlayerData>();
 
         Dictionary<string, int> rewards = JsonConvert.DeserializeObject<Dictionary<string, int>>(rewardsDictJson);
 
         var reward = rewards[clientData.GetUsername()];
-        Debug.Log($"Rewards: ");
-        Debug.Log($"My reward {reward}");
         GameObject winBackground = GameObject.FindWithTag("WinBackground");
         TMPro.TMP_Text childText = winBackground.transform.GetChild(3).GetComponent<TMPro.TMP_Text>(); //TODO get of the name not the index
         childText.text = reward.ToString();
-    }
-
-    [ClientRpc]
-    public void PlayerDieClientRpc()
-    {
-        if (!IsOwner)
-            return;
-        ToggleGameObjectWithTag(false, "InitiateSpellUi");
-        ToggleGameObjectWithTag(true, "DeathBackground");
     }
 
     [ClientRpc]
@@ -95,9 +86,10 @@ public class NotifyClient : NetworkBehaviour
         if (!IsOwner || IsHost)
             return;
 
-        ToggleGameObjectWithTag(false, "LoseBackground");
-        ToggleGameObjectWithTag(true, "JoinRoomUI");
+        ScreenToggle.ToggleGameObjectWithTag(false, "LoseBackground");
+        ScreenToggle.ToggleGameObjectWithTag(true, "JoinRoomUI");
     }
+
 
     private void EnablePlacementScript()
     {
@@ -125,25 +117,6 @@ public class NotifyClient : NetworkBehaviour
 
         playerShoot.enabled = true;
         return;
-    }
-
-    private void ToggleGameObjectWithTag(bool on, string tag)
-    {
-        var obj = FindGameObjectWithTag(tag);
-        obj.SetActive(on);
-    }
-
-    private GameObject FindGameObjectWithTag(string tag)
-    {
-        GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>(true);
-        foreach (GameObject obj in allObjects)
-        {
-            if (obj.CompareTag(tag))
-            {
-                return obj;
-            }
-        }
-        return null;
     }
 
 }

@@ -11,6 +11,8 @@ public class PlayerData : MonoBehaviour
     private string username;
     private int coinTotal;
     private bool isPlayerHost;
+    private bool isPlayerDead = false;
+
     [SerializeField] private int health;
 
     public string GetUsername()
@@ -26,6 +28,11 @@ public class PlayerData : MonoBehaviour
     public bool IsPlayerHost()
     {
         return isPlayerHost;
+    }
+
+    public bool IsPlayerDead()
+    {
+        return isPlayerDead;
     }
 
     public int GetHealth()
@@ -48,18 +55,21 @@ public class PlayerData : MonoBehaviour
         isPlayerHost = isHost;
     }
 
+    public void SetIsPlayerDead(bool isDead)
+    {
+        isPlayerDead = isDead;
+    }
+
     public void PlayerTakeDamage(int damageAmt)
     {
         health -= damageAmt;
-        Debug.Log(1);
         OnPlayerTakeDamage?.Invoke(health);
     }
 
     public void HealPlayer(int healingAmt)
     {
         health += healingAmt;
-        Debug.Log(2);
-
+        Debug.Log("1");
         OnPlayerHealed?.Invoke(health);
     }
 }

@@ -3080,6 +3080,93 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 470815063}
   m_CullTransparentMesh: 1
+--- !u!1 &471462885
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 471462887}
+  - component: {fileID: 471462886}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &471462886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 471462885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 653a4c9a82e21de41b7ba09767f9e2bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: LoseScreen
+    clip: {fileID: 8300000, guid: 366a8fa805f7abc4998123cfcd353aae, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: WinScreen
+    clip: {fileID: 8300000, guid: 03c98ffe120354a4882f9e3c37ffea9b, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: StartMusic
+    clip: {fileID: 8300000, guid: c30d205d01d69144e9f72bdfade46da1, type: 3}
+    volume: 0.04
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: BossMusic
+    clip: {fileID: 8300000, guid: cffb21e2c3b3b2243b67477c253c7674, type: 3}
+    volume: 0.106
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: PlayerTakeDamage
+    clip: {fileID: 8300000, guid: b49720e4fef1f2443b21a52ade62c11c, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: PlayerDie
+    clip: {fileID: 8300000, guid: 41b9cecd0f1fd3945811da00e4fd1125, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: PlayerHeal
+    clip: {fileID: 8300000, guid: eee873ade574adb4eb361fa23f5a9082, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+--- !u!4 &471462887
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 471462885}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -6.287496, y: 1.1209875, z: -3.485438}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &497509754
 GameObject:
   m_ObjectHideFlags: 0
@@ -14585,6 +14672,9 @@ GameObject:
   - component: {fileID: 1766984767}
   - component: {fileID: 1766984766}
   - component: {fileID: 1766984768}
+  - component: {fileID: 1766984769}
+  - component: {fileID: 1766984770}
+  - component: {fileID: 1766984771}
   m_Layer: 0
   m_Name: GameLogic
   m_TagString: GameLogic
@@ -14650,6 +14740,42 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f60e304c9273a447589b385af4ec144f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1766984769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1766984764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d954333566bfe4c439827cfc039c824f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1766984770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1766984764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf1893306817c947a0cbb9c29cc6c1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1766984771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1766984764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 158bf7d1704e67c42809335af63a445d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1782947370
@@ -18843,3 +18969,4 @@ SceneRoots:
   - {fileID: 894163052}
   - {fileID: 1782947371}
   - {fileID: 782628377}
+  - {fileID: 471462887}

@@ -58,6 +58,7 @@ public class PlayerShoot : MonoBehaviour
         Vector3 mouseScreenPos = Input.mousePosition;
         Ray ray = camera.ScreenPointToRay(mouseScreenPos);
         RaycastHit hit;
+        
         Physics.Raycast(ray, out hit, Mathf.Infinity);
         Vector3 spawnPos = camera.transform.position + camera.transform.forward * spawnDist;
 

@@ -42,6 +42,9 @@ public class LossScreen : NetworkBehaviour
     {
         placeBoss.ResetIsPlaced();
 
+        var server = GameObject.FindWithTag("GameLogic").GetComponent<NotifyServer>();
+        server.ResetClientDeaths();
+
         if (playerData.IsPlayerHost())
         {
             AllClientsInvoker.Instance.InvokePlayerRestartAllClients();
