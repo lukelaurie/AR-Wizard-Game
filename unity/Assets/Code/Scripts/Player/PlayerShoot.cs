@@ -55,25 +55,20 @@ public class PlayerShoot : MonoBehaviour
 
     void ShootFireball()
     {
-        Vector3 mouseScreenPos = Input.mousePosition;
-        Ray ray = camera.ScreenPointToRay(mouseScreenPos);
-        RaycastHit hit;
-        
-        Physics.Raycast(ray, out hit, Mathf.Infinity);
-        Vector3 spawnPos = camera.transform.position + camera.transform.forward * spawnDist;
+        Vector3 spawnPos = camera.transform.position - camera.transform.forward * 5;
+        Vector3 fireballDirection = camera.transform.forward;
 
-        GameObject projectile = Instantiate(fireball, spawnPos, Quaternion.LookRotation(ray.direction));
-        projectile.GetComponent<Rigidbody>().velocity = ray.direction * speed;
+        GameObject projectile = Instantiate(fireball, spawnPos, Quaternion.LookRotation(fireballDirection));
+        projectile.GetComponent<Rigidbody>().velocity = fireballDirection * speed;
     }
 
     void ShootLightning()
     {
-        Vector3 mouseScreenPos = Input.mousePosition;
-        Ray ray = camera.ScreenPointToRay(mouseScreenPos);
-        RaycastHit hit;
-        Physics.Raycast(ray, out hit, Mathf.Infinity);
         Vector3 spawnPos = camera.transform.position + camera.transform.forward * lightningSpawnDist;
-        GameObject projectile = Instantiate(lightning, spawnPos, Quaternion.LookRotation(ray.direction) * Quaternion.Euler(80, 0, 0));
+
+        Vector3 lightningDetection = -camera.transform.forward;
+
+        GameObject projectile = Instantiate(lightning, spawnPos, Quaternion.LookRotation(lightningDetection) * Quaternion.Euler(80, 0, 0));
 
         //Physics.IgnoreCollision(gameObject.GetComponent<Collider>(), projectile.GetComponent<Collider>());
     }
