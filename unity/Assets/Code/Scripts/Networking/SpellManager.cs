@@ -46,7 +46,7 @@ public class SpellManager : MonoBehaviour
         // check for a response of 200 
         if (request.result != UnityWebRequest.Result.Success)
         {
-            Debug.LogError($"Error buying spell: {request.error}");
+            Debug.Log($"Error buying spell: {request.error}");
             return "Error buying spell";
         }
 
@@ -79,7 +79,7 @@ public class SpellManager : MonoBehaviour
         // check for a response of 200 
         if (request.result != UnityWebRequest.Result.Success)
         {
-            Debug.LogError($"Error buying spell: {request.error}");
+            Debug.Log($"Error buying spell: {request.error}");
             return "Error buying spell";
         }
 

@@ -49,9 +49,9 @@ public class UpdatePlayerData : MonoBehaviour
     {
         var spells = await SpellManager.Instance.GetSpells();
         playerData.SetSpells(spells);
-        foreach (var e in spellUpdateCallBacks)
+        foreach (var f in spellUpdateCallBacks)
         {
-            e.Invoke(spells);
+            f.Invoke(spells);
         }
     }
 

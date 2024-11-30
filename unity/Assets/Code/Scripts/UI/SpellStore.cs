@@ -25,6 +25,8 @@ public class SpellStore : MonoBehaviour
     [SerializeField] private TMPro.TMP_Text rockLevel;
     // Start is called before the first frame update
 
+    private readonly int MAX_LEVEL = 5;
+
     private readonly Dictionary<string, int> spellPrices = new(){
         {"fireball",  500},
         {"lightning", 1000},
@@ -50,35 +52,13 @@ public class SpellStore : MonoBehaviour
     {
         playerData = GameObject.FindWithTag("GameInfo").GetComponent<PlayerData>();
 
-        fireballButton.onClick.AddListener(HandleFireBallClick);
-        lightningButton.onClick.AddListener(HandleLightningClick);
-        healingButton.onClick.AddListener(HandleHealingClick);
-        rockButton.onClick.AddListener(HandleRockClick);
-
-        fireballPrice.text = "Unlock:\n$1";
-        lightningPrice.text = "Upgrade:\n$2";
-        healingPrice.text = "Upgrade:\n$3";
-        rockPrice.text = "Unlock:\n$4";
+        fireballButton.onClick.AddListener(() => HandleSpellClick("fireball"));
+        lightningButton.onClick.AddListener(() => HandleSpellClick("lightning"));
+        healingButton.onClick.AddListener(() => HandleSpellClick("healing"));
+        rockButton.onClick.AddListener(() => HandleSpellClick("rock"));
 
         UpdateUi(playerData.GetSpells());
         UpdatePlayerData.Instance.AddSpellsUpdateCallBack(UpdateUi);
-    }
-
-    private void HandleFireBallClick()
-    {
-        HandleSpellClick("fireball");
-    }
-    private void HandleLightningClick()
-    {
-        HandleSpellClick("lightning");
-    }
-    private void HandleHealingClick()
-    {
-        HandleSpellClick("healing");
-    }
-    private void HandleRockClick()
-    {
-        HandleSpellClick("rock");
     }
 
     private void UpdateUi(Dictionary<string, int> spells)
@@ -124,11 +104,11 @@ public class SpellStore : MonoBehaviour
     {
         if (playerData.IsSpellUnlocked(spellName))
         {
-            if (playerData.GetSpells()[spellName] == 5)
+            if (playerData.GetSpells()[spellName] == MAX_LEVEL)
             {
                 return;
             }
-            string response = await SpellManager.Instance.UpgradeSpell(spellName);
+            await SpellManager.Instance.UpgradeSpell(spellName);
             UpdatePlayerData.Instance.UpdatePlayerSpells();
             UpdatePlayerData.Instance.UpdatePlayerCoinTotal();
         }
