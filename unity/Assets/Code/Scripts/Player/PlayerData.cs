@@ -15,6 +15,8 @@ public class PlayerData : MonoBehaviour
     private int selectedBossLevel;
 
     [SerializeField] private int health;
+    private Dictionary<string, int> spells;
+
 
     public string GetUsername()
     {
@@ -24,6 +26,11 @@ public class PlayerData : MonoBehaviour
     public int GetCoinTotal()
     {
         return coinTotal;
+    }
+
+    public Dictionary<string, int> GetSpells()
+    {
+        return spells;
     }
 
     public bool IsPlayerHost()
@@ -48,7 +55,10 @@ public class PlayerData : MonoBehaviour
 
     public int SelectedBossLevel()
     {
-        return selectedBossLevel;
+        return selectedBossLevel; }
+    public bool IsSpellUnlocked(string spellName)
+    {
+        return spells.ContainsKey(spellName);
     }
 
     public void SetUsername(string newUsername)
@@ -85,6 +95,10 @@ public class PlayerData : MonoBehaviour
 
     public void SetBossLevel(int bossLevel)
     {
-        selectedBossLevel = bossLevel;
+        selectedBossLevel = bossLevel; 
+    }
+    public void SetSpells(Dictionary<string, int> newSpells)
+    {
+        spells = newSpells;
     }
 }
