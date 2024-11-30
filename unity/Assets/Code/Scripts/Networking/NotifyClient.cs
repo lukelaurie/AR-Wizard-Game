@@ -28,6 +28,12 @@ public class NotifyClient : NetworkBehaviour
             Debug.Log("Look! No error is thrown because it was caught and this printed instead!!!!");
         }
         StartGameAr.StartNewGame();
+
+        // if the dragon exists in scene already just start the game 
+        GameObject dragon = ScreenToggle.FindGameObjectWithTag("Dragon");
+        Debug.Log(dragon);
+        if (dragon != null)
+            PlayerGameStartedClientRpc();
     }
 
     [ClientRpc]
