@@ -15,7 +15,7 @@ public class MainPage : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerData = GameObject.FindWithTag("GameInfo").GetComponent<PlayerData>();
+        playerData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
         int userCoins = playerData.GetCoinTotal();
         coinText.text = $"Coins:\n{userCoins}";
 

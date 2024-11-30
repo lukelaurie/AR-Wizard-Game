@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 public class PlaceCharacter : NetworkBehaviour
 {
     [SerializeField] private GameObject placementObject;
-    
+
     private int bossLevel;
     private bool isPlaced = false;
     private Camera mainCam;
@@ -25,10 +25,11 @@ public class PlaceCharacter : NetworkBehaviour
 
     void Update()
     {
-        if (isPlaced) {
+        if (isPlaced)
+        {
             return;
         }
-        
+
 #if UNITY_EDITOR
         if (Input.GetMouseButtonDown(0))
         {
@@ -86,11 +87,11 @@ public class PlaceCharacter : NetworkBehaviour
         {
             GameObject hitObject = hit.collider.gameObject;
 
-            if (hitObject.tag != "Dragon" && hitObject.tag != "Fireball")
+            if (hitObject.tag != TagManager.Boss && hitObject.tag != TagManager.Boss)
             {
                 // calculate rotation of the object relative to object location
                 Quaternion rotation = Quaternion.Euler(0, 0, 0);
-                
+
                 SpawnPlayerServerRpc(hit.point, rotation, NetworkManager.Singleton.LocalClientId);
             }
         }
@@ -107,9 +108,9 @@ public class PlaceCharacter : NetworkBehaviour
         characterNetworkObject.SpawnWithOwnership(callerID);
         isPlaced = true;
 
-        PlayerData playerData = GameObject.FindWithTag("GameInfo").GetComponent<PlayerData>();
+        PlayerData playerData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
         bossData.InitializeBossData(playerData.GetBossLevel());
-        
+
         // notify all the clients that the boss has been placed
         AllClientsInvoker.Instance.InvokePlayerBossPlaced();
     }

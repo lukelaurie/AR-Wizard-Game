@@ -36,7 +36,7 @@ public class LogInScreen : MonoBehaviour
 
         if (username != null)
         {
-            var clientData = GameObject.FindWithTag("GameInfo").GetComponent<PlayerData>();
+            var clientData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
             clientData.SetUsername(username);
 
             SwapMainPage();
@@ -84,7 +84,7 @@ public class LogInScreen : MonoBehaviour
 
         if (isLoggedIn)
         {
-            var clientData = GameObject.FindWithTag("GameInfo").GetComponent<PlayerData>();
+            var clientData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
             clientData.SetUsername(username);
 
             SwapMainPage();

@@ -73,7 +73,7 @@ public class AllClientsInvoker : MonoBehaviour
 
     private async Task<string> EndPlayerGames()
     {
-        BossData bossData = GameObject.FindWithTag("Dragon").GetComponent<BossData>();
+        BossData bossData = GameObject.FindWithTag(TagManager.Boss).GetComponent<BossData>();
         string bossName = bossData.GetBossName();
         int bossLevel = bossData.GetBossLevel();
 
@@ -82,7 +82,7 @@ public class AllClientsInvoker : MonoBehaviour
 
     private void DestoyDragon()
     {
-        GameObject dragon = GameObject.FindWithTag("Dragon");
+        GameObject dragon = GameObject.FindWithTag(TagManager.Boss);
         if (dragon != null)
         {
             Destroy(dragon);

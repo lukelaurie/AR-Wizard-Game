@@ -14,13 +14,13 @@ public class NotifyClient : NetworkBehaviour
         if (!IsOwner)
             return;
 
-        ScreenToggle.ToggleGameObjectWithTag(true, "GameBackground");
+        ScreenToggle.ToggleGameObjectWithTag(true, TagManager.GameBackground);
         EnableSpellShootingScript();
 
         // try to get the Game object from the scene
         try
         {
-            GameObject joinRoomUI = GameObject.FindWithTag("JoinRoomUI");
+            GameObject joinRoomUI = GameObject.FindWithTag(TagManager.JoinRoom);
             joinRoomUI.SetActive(false);
         }
         catch
@@ -30,7 +30,7 @@ public class NotifyClient : NetworkBehaviour
         StartGameAr.StartNewGame();
 
         // if the dragon exists in scene already just start the game 
-        GameObject dragon = ScreenToggle.FindGameObjectWithTag("Dragon");
+        GameObject dragon = ScreenToggle.FindGameObjectWithTag(TagManager.Boss);
         Debug.Log(dragon);
         if (dragon != null)
             PlayerGameStartedClientRpc();
@@ -42,11 +42,11 @@ public class NotifyClient : NetworkBehaviour
         if (!IsOwner)
             return;
 
-        ScreenToggle.ToggleGameObjectWithTag(false, "DeathBackground");
-        ScreenToggle.ToggleGameObjectWithTag(false, "GameBackground");
-        ScreenToggle.ToggleGameObjectWithTag(false, "SpellPanel");        
+        ScreenToggle.ToggleGameObjectWithTag(false, TagManager.DeathBackground);
+        ScreenToggle.ToggleGameObjectWithTag(false, TagManager.GameBackground);
+        ScreenToggle.ToggleGameObjectWithTag(false, TagManager.SpellPanel);
 
-        var loseBackground = ScreenToggle.FindGameObjectWithTag("LoseBackground");
+        var loseBackground = ScreenToggle.FindGameObjectWithTag(TagManager.LoseBackground);
         loseBackground.SetActive(true);
 
         TMPro.TMP_Text childText = loseBackground.transform.GetChild(1).GetComponent<TMPro.TMP_Text>();
@@ -68,14 +68,14 @@ public class NotifyClient : NetworkBehaviour
     {
         if (!IsOwner)
             return;
-        ScreenToggle.ToggleGameObjectWithTag(false, "GameBackground");
-        ScreenToggle.ToggleGameObjectWithTag(true, "WinBackground");
-        var clientData = GameObject.FindWithTag("GameInfo").GetComponent<PlayerData>();
+        ScreenToggle.ToggleGameObjectWithTag(false, TagManager.GameBackground);
+        ScreenToggle.ToggleGameObjectWithTag(true, TagManager.WinBackground);
+        var clientData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
 
         Dictionary<string, int> rewards = JsonConvert.DeserializeObject<Dictionary<string, int>>(rewardsDictJson);
 
         var reward = rewards[clientData.GetUsername()];
-        GameObject winBackground = GameObject.FindWithTag("WinBackground");
+        GameObject winBackground = GameObject.FindWithTag(TagManager.WinBackground);
         TMPro.TMP_Text childText = winBackground.transform.GetChild(3).GetComponent<TMPro.TMP_Text>();
         childText.text = reward.ToString();
     }
@@ -86,24 +86,24 @@ public class NotifyClient : NetworkBehaviour
         if (!IsOwner || IsHost)
             return;
 
-        ScreenToggle.ToggleGameObjectWithTag(false, "LoseBackground");
-        ScreenToggle.ToggleGameObjectWithTag(true, "JoinRoomUI");
+        ScreenToggle.ToggleGameObjectWithTag(false, TagManager.LoseBackground);
+        ScreenToggle.ToggleGameObjectWithTag(true, TagManager.JoinRoom);
     }
 
     [ClientRpc]
     public void PlayerGameStartedClientRpc()
     {
-        GameObject gameBackground = GameObject.FindWithTag("GameBackground");
+        GameObject gameBackground = GameObject.FindWithTag(TagManager.GameBackground);
         TMPro.TMP_Text placeBossText = gameBackground.transform.GetChild(0).GetComponent<TMPro.TMP_Text>();
 
         placeBossText.text = "";
-        ScreenToggle.ToggleGameObjectWithTag(true, "SpellPanel");
+        ScreenToggle.ToggleGameObjectWithTag(true, TagManager.SpellPanel);
     }
 
 
     private void EnablePlacementScript()
     {
-        var placeBoss = GameObject.FindWithTag("GameLogic").GetComponent<PlaceCharacter>();
+        var placeBoss = GameObject.FindWithTag(TagManager.GameLogic).GetComponent<PlaceCharacter>();
 
         if (placeBoss == null)
         {
@@ -117,7 +117,7 @@ public class NotifyClient : NetworkBehaviour
 
     private void EnableSpellShootingScript()
     {
-        var playerShoot = GameObject.FindWithTag("GameLogic").GetComponent<PlayerShoot>();
+        var playerShoot = GameObject.FindWithTag(TagManager.GameLogic).GetComponent<PlayerShoot>();
 
         if (playerShoot == null)
         {

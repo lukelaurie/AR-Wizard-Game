@@ -31,7 +31,7 @@ public class StartGameHost : MonoBehaviour
         NetworkManager.Singleton.StartHost();
         Debug.Log("Starting The AR Dedicated Server...");
 
-        var clientData = GameObject.FindWithTag("GameInfo").GetComponent<PlayerData>();
+        var clientData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
         clientData.SetIsPlayerHost(true);
 
         startGameButton.onClick.AddListener(StartGame);
@@ -65,7 +65,7 @@ public class StartGameHost : MonoBehaviour
         await RoomManager.Instance.StartGameInRoom();
 
         // select the boss and difficulty to use
-        PlayerData playerData = GameObject.FindWithTag("GameInfo").GetComponent<PlayerData>();
+        PlayerData playerData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
         playerData.SetBossLevel(bossDropdown.value + 1);
 
         gameObject.SetActive(false);

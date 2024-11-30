@@ -204,7 +204,7 @@ public class Enemy : NetworkBehaviour
                 AudioSource.PlayClipAtPoint(deathSound, transform.position, 1f);
                 // FindObjectOfType<AudioManager>().Stop("BossMusic");
                 // FindObjectOfType<AudioManager>().Play("StartMusic");
-                NotifyServer server = GameObject.FindWithTag("GameLogic").GetComponent<NotifyServer>();
+                NotifyServer server = GameObject.FindWithTag(TagManager.GameLogic).GetComponent<NotifyServer>();
                 // server.NotifyBossDeathServerRpc();
                 // StartCoroutine(WaitAndDestroy());
 
@@ -218,7 +218,7 @@ public class Enemy : NetworkBehaviour
     {
         yield return new WaitForSeconds(3f);
 
-        NotifyServer server = GameObject.FindWithTag("GameLogic").GetComponent<NotifyServer>();
+        NotifyServer server = GameObject.FindWithTag(TagManager.GameLogic).GetComponent<NotifyServer>();
         // server.NotifyBossDeathServerRpc();
 
         FindObjectOfType<AudioManager>().Play("StartMusic");

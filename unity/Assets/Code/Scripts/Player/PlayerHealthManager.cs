@@ -8,12 +8,12 @@ public class PlayerHealthManager : MonoBehaviour
 
     void Start()
     {
-        playerData = GameObject.FindWithTag("GameInfo").GetComponent<PlayerData>();
+        playerData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
     }
 
     void OnEnable()
     {
-        playerData = GameObject.FindWithTag("GameInfo").GetComponent<PlayerData>();
+        playerData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
 
         playerData.OnPlayerTakeDamage += HandlePlayerDamage;
         playerData.OnPlayerHealed += HandlePlayerHealed;
@@ -33,10 +33,10 @@ public class PlayerHealthManager : MonoBehaviour
 
             // set the current play to the state of being dead
             FindObjectOfType<AudioManager>().Play("PlayerDie");
-            ScreenToggle.ToggleGameObjectWithTag(false, "GameBackground");
-            ScreenToggle.ToggleGameObjectWithTag(true, "DeathBackground");
-            
-            NotifyServer server = GameObject.FindWithTag("GameLogic").GetComponent<NotifyServer>();
+            ScreenToggle.ToggleGameObjectWithTag(false, TagManager.GameBackground);
+            ScreenToggle.ToggleGameObjectWithTag(true, TagManager.DeathBackground);
+
+            NotifyServer server = GameObject.FindWithTag(TagManager.GameLogic).GetComponent<NotifyServer>();
             server.NotifyClientDeathServerRpc();
 
 

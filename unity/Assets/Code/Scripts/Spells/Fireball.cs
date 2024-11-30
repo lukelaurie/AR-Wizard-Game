@@ -17,7 +17,7 @@ public class Fireball : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (!collision.gameObject.CompareTag("Dragon"))
+        if (!collision.gameObject.CompareTag(TagManager.Boss))
         {
             return;
         }

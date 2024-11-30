@@ -41,11 +41,11 @@ public class HitDetection : MonoBehaviour
             {
                 hitObj = hit.transform.gameObject;
 
-                if(hitObj.CompareTag("Dragon"))
+                if (hitObj.CompareTag(TagManager.Boss))
                 {
                     Debug.Log("hit enemy");
                     Enemy enemyScript = hitObj.GetComponent<Enemy>();
-                    
+
                     // Check if the component exists to avoid null reference errors
                     if (enemyScript != null)
                     {

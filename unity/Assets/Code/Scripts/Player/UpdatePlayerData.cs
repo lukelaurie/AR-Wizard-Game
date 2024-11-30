@@ -10,7 +10,7 @@ public class UpdatePlayerData : MonoBehaviour
 
     void Start()
     {
-        playerData = GameObject.FindWithTag("GameInfo").GetComponent<PlayerData>();
+        playerData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
 
         UpdatePlayerCoinTotal();
     }
