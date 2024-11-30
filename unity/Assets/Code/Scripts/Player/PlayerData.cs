@@ -7,6 +7,8 @@ public class PlayerData : MonoBehaviour
     private string username;
     private int coinTotal;
     private bool isPlayerHost;
+    private Dictionary<string, int> spells;
+
 
     public string GetUsername()
     {
@@ -18,9 +20,19 @@ public class PlayerData : MonoBehaviour
         return coinTotal;
     }
 
+    public Dictionary<string, int> GetSpells()
+    {
+        return spells;
+    }
+
     public bool IsPlayerHost()
     {
         return isPlayerHost;
+    }
+
+    public bool IsSpellUnlocked(string spellName)
+    {
+        return spells.ContainsKey(spellName);
     }
 
     public void SetUsername(string newUsername)
@@ -36,5 +48,10 @@ public class PlayerData : MonoBehaviour
     public void SetIsPlayerHost(bool isHost)
     {
         isPlayerHost = isHost;
+    }
+
+    public void SetSpells(Dictionary<string, int> newSpells)
+    {
+        spells = newSpells;
     }
 }
