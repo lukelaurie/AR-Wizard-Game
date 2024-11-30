@@ -14,7 +14,7 @@ public class BossData : NetworkBehaviour
 
     void Update()
     {
-        healthBar.UpdateHealthBar(bossHealth.Value, maxHealth.Value);
+        healthBar.UpdateHealthBar(bossHealth.Value, maxHealth.Value + 20);
     }
 
     public void InitializeBossData(int level)
