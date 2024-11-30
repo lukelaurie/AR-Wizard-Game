@@ -5,21 +5,34 @@ using UnityEngine.UI;
 
 public class PlayerShoot : MonoBehaviour
 {
-    public Button fireButton;
-    public Button lightningButton;
     public GameObject fireball;
     public float speed = 8f;
     public float spawnDist = 2f;
     public float lightningSpawnDist = 3f;
 
+    public readonly float FireBallCoolDown = 1f;
+    public readonly float LightningCoolDown = 0.2f;
+    public readonly float HealCoolDown = 10f;
+    public readonly float RockCoolDown = 4f;
+
     public Camera camera;
 
-    private float waitTime = 1f;
-    private float lWaitTime = 0.2f;
-    private float fireballTimer = 0.0f;
-    private float lightningTimer = 0.0f;
-
     public GameObject lightning;
+
+    public static PlayerShoot Instance { get; private set; }
+
+    void Awake()
+    {
+        if (!Instance)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     void Start()
     {
@@ -27,33 +40,9 @@ public class PlayerShoot : MonoBehaviour
         {
             camera = GameObject.FindObjectOfType<Camera>();
         }
-        fireButton.onClick.AddListener(ShootFireball);
-        lightningButton.onClick.AddListener(ShootLightning);
     }
 
-    void Update()
-    {
-
-        fireballTimer += Time.deltaTime;
-
-        //must wait a second between shooting
-        if (Input.GetKey(KeyCode.F) && fireballTimer >= waitTime)
-        {
-            ShootFireball();
-            fireballTimer = 0;
-        }
-
-
-
-        lightningTimer += Time.deltaTime;
-        if (Input.GetKey(KeyCode.L) && lightningTimer >= lWaitTime)
-        {
-            ShootLightning();
-            lightningTimer = 0;
-        }
-    }
-
-    void ShootFireball()
+    public void ShootFireball()
     {
         // Vector3 spawnPos = camera.transform.position - camera.transform.forward * 5;
         Vector3 spawnPos = camera.transform.position;
@@ -63,7 +52,7 @@ public class PlayerShoot : MonoBehaviour
         projectile.GetComponent<Rigidbody>().velocity = fireballDirection * speed;
     }
 
-    void ShootLightning()
+    public void ShootLightning()
     {
         Vector3 spawnPos = camera.transform.position + camera.transform.forward * lightningSpawnDist;
 
@@ -72,5 +61,15 @@ public class PlayerShoot : MonoBehaviour
         GameObject projectile = Instantiate(lightning, spawnPos, Quaternion.LookRotation(lightningDetection) * Quaternion.Euler(80, 0, 0));
 
         //Physics.IgnoreCollision(gameObject.GetComponent<Collider>(), projectile.GetComponent<Collider>());
+    }
+
+    public void Heal()
+    {
+        Debug.Log("TODO: HEAL");
+    }
+
+    public void ShootRock()
+    {
+        Debug.Log("TODO: Shoot Rock");
     }
 }
