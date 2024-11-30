@@ -109,14 +109,15 @@ public class SpellStore : MonoBehaviour
                 return;
             }
             await SpellManager.Instance.UpgradeSpell(spellName);
-            UpdatePlayerData.Instance.UpdatePlayerSpells();
             UpdatePlayerData.Instance.UpdatePlayerCoinTotal();
+            UpdatePlayerData.Instance.UpdatePlayerSpells();
+
         }
         else
         {
             await SpellManager.Instance.PurchaseSpell(spellName);
-            UpdatePlayerData.Instance.UpdatePlayerSpells();
             UpdatePlayerData.Instance.UpdatePlayerCoinTotal();
+            UpdatePlayerData.Instance.UpdatePlayerSpells();
         }
     }
 }
