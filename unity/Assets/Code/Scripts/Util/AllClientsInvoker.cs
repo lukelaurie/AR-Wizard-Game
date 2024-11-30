@@ -47,7 +47,6 @@ public class AllClientsInvoker : MonoBehaviour
             var clientNotifyObj = client.PlayerObject.GetComponent<NotifyClient>();
             clientNotifyObj.PartyWinGameClientRpc(rewards);
         }
-        DestoyDragon();
     }
 
     public void InvokePlayerRestartAllClients()

@@ -3881,6 +3881,42 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+  - name: AlbinoHurt
+    clip: {fileID: 8300000, guid: 836d09a504839b84288a253c53f1faa7, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: AlbinoDeath
+    clip: {fileID: 8300000, guid: 12a7a02e72aafd04788e95d00e6f921b, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: AlbinoRoar
+    clip: {fileID: 8300000, guid: 1871d8ac0b3aa2449a630d9466e2e103, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: AlbinoJump
+    clip: {fileID: 8300000, guid: 4751dbf0fcd92584faf078342759527b, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: AlbinoBlock
+    clip: {fileID: 8300000, guid: 79524660346f52847a00041750e2ff68, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: AlbinoRoarAttack
+    clip: {fileID: 8300000, guid: b53e0bbb22d099b48a8d61dfe411963c, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
 --- !u!4 &471462887
 Transform:
   m_ObjectHideFlags: 0

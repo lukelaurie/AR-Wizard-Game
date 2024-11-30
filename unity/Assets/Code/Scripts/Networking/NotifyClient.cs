@@ -31,9 +31,8 @@ public class NotifyClient : NetworkBehaviour
 
         // if the dragon exists in scene already just start the game 
         GameObject dragon = ScreenToggle.FindGameObjectWithTag(TagManager.Boss);
-        Debug.Log(dragon);
         if (dragon != null)
-            PlayerGameStartedClientRpc();
+            ToggleGameStart();
     }
 
     [ClientRpc]
@@ -68,6 +67,16 @@ public class NotifyClient : NetworkBehaviour
     {
         if (!IsOwner)
             return;
+
+        // have the boss play its death animation first
+        GameObject boss = ScreenToggle.FindGameObjectWithTag(TagManager.Boss);
+        Enemy bossScript = boss.GetComponent<Enemy>();
+
+        Debug.Log(boss);
+        Debug.Log(1);
+        bossScript.PlayBossDeath(1.5f);
+        Debug.Log(2);
+
         ScreenToggle.ToggleGameObjectWithTag(false, TagManager.GameBackground);
         ScreenToggle.ToggleGameObjectWithTag(true, TagManager.WinBackground);
         var clientData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
@@ -93,26 +102,19 @@ public class NotifyClient : NetworkBehaviour
     [ClientRpc]
     public void PlayerGameStartedClientRpc()
     {
+        if (!IsOwner)
+            return;
+
+        ToggleGameStart();
+    }
+
+    private void ToggleGameStart()
+    {
         GameObject gameBackground = GameObject.FindWithTag(TagManager.GameBackground);
         TMPro.TMP_Text placeBossText = gameBackground.transform.GetChild(0).GetComponent<TMPro.TMP_Text>();
 
         placeBossText.text = "";
         ScreenToggle.ToggleGameObjectWithTag(true, TagManager.SpellPanel);
-    }
-
-
-    private void EnablePlacementScript()
-    {
-        var placeBoss = GameObject.FindWithTag(TagManager.GameLogic).GetComponent<PlaceCharacter>();
-
-        if (placeBoss == null)
-        {
-            Debug.Log("Unable to find boss script");
-            return;
-        }
-
-        placeBoss.enabled = true;
-        return;
     }
 
     private void EnableSpellShootingScript()

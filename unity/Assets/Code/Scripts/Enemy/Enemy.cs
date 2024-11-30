@@ -12,29 +12,14 @@ public class Enemy : NetworkBehaviour
     private float timer = 0.0f;
 
     BossData bossData;
-    [SerializeField] HealthBar healthBar;
-
 
     public Animator enemyAnimator;
 
     private bool canPlayAnim;
     private bool canBeHit;
 
-    [SerializeField] private AudioClip takeDamageSound;
-    [SerializeField] private AudioClip deathSound;
-    [SerializeField] private AudioClip roarSound;
-    [SerializeField] private AudioClip jumpSound;
-    [SerializeField] private AudioClip defendSound;
-    [SerializeField] private AudioClip rockAttackSound;
-
     [SerializeField] public GameObject fireball;
     [SerializeField] public GameObject rock;
-
-
-    private void Awake()
-    {
-        healthBar = GetComponentInChildren<HealthBar>();
-    }
 
     void Start()
     {
@@ -50,57 +35,39 @@ public class Enemy : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        //play take damage animation
-        // healthBar.UpdateHealthBar(health.Value, maxHealth);
-
         timer += Time.deltaTime;
 
         if (timer < waitTime)
-        {
             return;
-        }
-        // generate rand wait time between 6 and 8 sec to roar or attack
-        int randTime = Random.Range(6, 9);
+
         int randAttack = Random.Range(0, 3);
-
-        if (randAttack == 0)
+        switch (randAttack)
         {
-            //roar attack
-            enemyAnimator.Play("Scream");
-            AudioSource.PlayClipAtPoint(roarSound, transform.position, 1f);
-            canPlayAnim = false;
-            StartCoroutine(WaitAndPerformAction(3f));
-            Debug.Log("roar attack");
-        }
-        else if (randAttack == 1)
-        {
-            //ground pound
-            //play jump animation
-            //play jump and impact sound
-            // fling rocks around
-            Debug.Log("ground pound");
+            case 0:
+                //roar attack
+                enemyAnimator.Play("Scream");
+                FindObjectOfType<AudioManager>().Play("AlbinoRoar");
 
-            enemyAnimator.Play("Jump");
-            canPlayAnim = false;
-            StartCoroutine(WaitAndThrowObjects(2f, "rock"));
-            AudioSource.PlayClipAtPoint(jumpSound, transform.position, 1f);
-        }
-        else if (randAttack == 2)
-        {
-            //fire ball attack
-            //spin 360 and shoot fireballs around
-            Debug.Log("dragon fireball attack");
-
-            enemyAnimator.Play("Basic Attack");
-            canPlayAnim = false;
-            StartCoroutine(WaitAndThrowObjects(1f, "fireball"));
+                canPlayAnim = false;
+                StartCoroutine(WaitAndPerformAction(3f));
+                break;
+            case 1:
+                // ground pound
+                enemyAnimator.Play("Jump");
+                canPlayAnim = false;
+                StartCoroutine(WaitAndThrowObjects(2f, "rock"));
+                FindObjectOfType<AudioManager>().Play("AlbinoJump");
+                break;
+            case 2:
+                // fireball
+                enemyAnimator.Play("Basic Attack");
+                canPlayAnim = false;
+                StartCoroutine(WaitAndThrowObjects(1f, "fireball"));
+                break;
         }
 
-        waitTime = (float)randTime;
-
-        //reset timer
+        waitTime = (float)Random.Range(6, 9); // how long wait between attacks
         timer = 0;
-
     }
 
     private void SpawnObjectsAround(string name)
@@ -120,7 +87,7 @@ public class Enemy : NetworkBehaviour
         }
         else
         {
-            AudioSource.PlayClipAtPoint(rockAttackSound, transform.position, 1f);
+            FindObjectOfType<AudioManager>().Play("AlbinoRoarAttack");
             spawnObj = rock;
             speed = 11f;
             numberOfObjects = 9;
@@ -160,35 +127,21 @@ public class Enemy : NetworkBehaviour
             Debug.Log("Enemy can't be hit (dead)");
             return;
         }
-        Debug.Log("Called TakeDamage in Enemy.cs");
 
         int randInt = Random.Range(0, 5);
 
         //has a chance to randomly block an attack
-        if (randInt == 0)
+        if (randInt == 0 && canPlayAnim)
         {
-            Debug.Log("defended within Enemy.cs");
-
-            if (canPlayAnim)
-            {
-                enemyAnimator.Play("Defend");
-                AudioSource.PlayClipAtPoint(defendSound, transform.position, 1f);
-                canPlayAnim = false;
-                StartCoroutine(WaitAndPerformAction(2f));
-            }
+            FindObjectOfType<AudioManager>().Play("AlbinoBlock");
+            canPlayAnim = false;
+            StartCoroutine(WaitAndPerformAction(2f));
         }
-        else
+        else if (canPlayAnim && bossData.GetBossHealth() > 0)
         {
-            Debug.Log("took damage within Enemy.cs");
-
-            if (canPlayAnim)
-            {
-                enemyAnimator.Play("Get Hit");
-                AudioSource.PlayClipAtPoint(takeDamageSound, transform.position, 1f);
-
-                canPlayAnim = false;
-                StartCoroutine(WaitAndPerformAction(1.5f));
-            }
+            enemyAnimator.Play("AlbinoHurt");
+            canPlayAnim = false;
+            StartCoroutine(WaitAndPerformAction(1.5f));
 
             bossData.BossTakeDamage(damageAmount);
 
@@ -199,18 +152,32 @@ public class Enemy : NetworkBehaviour
 
                 // float newTime = 0.0f;
                 // float animTime = 3.0f;
-                Debug.Log("die");
                 enemyAnimator.Play("Die");
-                AudioSource.PlayClipAtPoint(deathSound, transform.position, 1f);
+                // AudioSource.PlayClipAtPoint(deathSound, transform.position, 1f);
                 // FindObjectOfType<AudioManager>().Stop("BossMusic");
                 // FindObjectOfType<AudioManager>().Play("StartMusic");
-                NotifyServer server = GameObject.FindWithTag(TagManager.GameLogic).GetComponent<NotifyServer>();
-                // server.NotifyBossDeathServerRpc();
-                // StartCoroutine(WaitAndDestroy());
 
 
                 canBeHit = false;
             }
+        }
+    }
+
+    public IEnumerator PlayBossDeath(float seconds)
+    {
+        enemyAnimator.Play("Die");
+        FindObjectOfType<AudioManager>().Play("AlbinoDeath");
+        canPlayAnim = false;
+        canBeHit = false;
+
+        Debug.Log("Inside");
+        yield return new WaitForSeconds(3f);
+
+        // have the host destroy
+        PlayerData playerData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
+        if (playerData.IsPlayerHost())
+        {
+            Destroy(gameObject);
         }
     }
 
@@ -227,8 +194,6 @@ public class Enemy : NetworkBehaviour
     private IEnumerator WaitAndPerformAction(float seconds)
     {
         yield return new WaitForSeconds(seconds);
-
-        //enemyAnimator.Play("Idle");
         canPlayAnim = true;
     }
 
