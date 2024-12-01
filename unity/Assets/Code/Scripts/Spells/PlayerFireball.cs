@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
-public class PlayerFireBall : MonoBehaviour
+public class PlayerFireball : MonoBehaviour
 {
     private float damageAmount;
     private float lifetime = 4f;

@@ -19360,8 +19360,8 @@ GameObject:
   - component: {fileID: 3827326278544378718}
   - component: {fileID: -7249498057256547297}
   - component: {fileID: 7691871114072602530}
-  - component: {fileID: 681274945118198257}
   - component: {fileID: -4266536172778724927}
+  - component: {fileID: 6634468123772767451}
   m_Layer: 9
   m_Name: BossFireball
   m_TagString: Fireball
@@ -24231,7 +24231,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -24242,20 +24242,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &681274945118198257
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8634321614551258705}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43a66ac5db963104ebaa330cc93325ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damageAmount: 10
-  explosion: {fileID: 9172233667358306048, guid: 8edb1dc090d511d4086a9defa5c448c7, type: 3}
 --- !u!82 &-4266536172778724927
 AudioSource:
   m_ObjectHideFlags: 0
@@ -24352,3 +24338,16 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6634468123772767451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8634321614551258705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61b7500498934497785cdc62657f4b7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosion: {fileID: 9172233667358306048, guid: 8edb1dc090d511d4086a9defa5c448c7, type: 3}

@@ -61,7 +61,7 @@ public class PlayerShoot : MonoBehaviour
         Vector3 fireballDirection = playerCamera.transform.forward;
 
         GameObject projectile = Instantiate(fireball, spawnPos, Quaternion.LookRotation(fireballDirection));
-        projectile.GetComponent<PlayerFireBall>().SetDamage(CalcAmount("fireball"));
+        projectile.GetComponent<PlayerFireball>().SetDamage(CalcAmount("fireball"));
         projectile.GetComponent<Rigidbody>().velocity = fireballDirection * fireballSpeed;
     }
 

@@ -104,7 +104,8 @@ public class Enemy : NetworkBehaviour
             Vector3 spawnPosition = new Vector3(spawnX, spawnY, spawnZ);
 
             GameObject spawnedObj = Instantiate(spawnObj, spawnPosition, Quaternion.identity);
-            //Fireball fireballScript = spawnedObj.GetComponent<Fireball>();
+            BossFireball fireballScript = spawnedObj.GetComponent<BossFireball>();
+            fireballScript.SetDamage(10f);
             //fireballScript.SetTargetToBoss();
             //Debug.LogError("TODO");
             Rigidbody rb = spawnedObj.GetComponent<Rigidbody>();
