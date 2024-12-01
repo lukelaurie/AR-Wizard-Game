@@ -55,7 +55,8 @@ public class PlayerData : MonoBehaviour
 
     public int SelectedBossLevel()
     {
-        return selectedBossLevel; }
+        return selectedBossLevel;
+    }
     public bool IsSpellUnlocked(string spellName)
     {
         return spells.ContainsKey(spellName);
@@ -100,7 +101,7 @@ public class PlayerData : MonoBehaviour
 
     public void SetBossLevel(int bossLevel)
     {
-        selectedBossLevel = bossLevel; 
+        selectedBossLevel = bossLevel;
     }
     public void SetSpells(Dictionary<string, int> newSpells)
     {

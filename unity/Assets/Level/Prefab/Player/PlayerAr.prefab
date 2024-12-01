@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4276111633128954287}
   - component: {fileID: 4962820327145714608}
   - component: {fileID: 668801939753174835}
+  - component: {fileID: -4048477039616369730}
   m_Layer: 6
   m_Name: PlayerAr
   m_TagString: Player
@@ -113,3 +114,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 0
   takeDamageSound: {fileID: 8300000, guid: b49720e4fef1f2443b21a52ade62c11c, type: 3}
+--- !u!65 &-4048477039616369730
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9110343311535083804}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 4, y: 10, z: 4}
+  m_Center: {x: 0, y: 5, z: 0}

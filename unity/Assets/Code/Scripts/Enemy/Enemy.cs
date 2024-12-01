@@ -40,7 +40,9 @@ public class Enemy : NetworkBehaviour
         if (timer < waitTime)
             return;
 
-        int randAttack = UnityEngine.Random.Range(0, 3);
+        // int randAttack = UnityEngine.Random.Range(0, 3);
+        int randAttack = 2;
+
         switch (randAttack)
         {
             case 0:
@@ -102,6 +104,8 @@ public class Enemy : NetworkBehaviour
             Vector3 spawnPosition = new Vector3(spawnX, spawnY, spawnZ);
 
             GameObject spawnedObj = Instantiate(spawnObj, spawnPosition, Quaternion.identity);
+            Fireball fireballScript = spawnedObj.GetComponent<Fireball>();
+            fireballScript.SetTargetToBoss();
 
             Rigidbody rb = spawnedObj.GetComponent<Rigidbody>();
             if (rb != null)
@@ -180,7 +184,7 @@ public class Enemy : NetworkBehaviour
         }
 
         // after boss dies toggle the screen
-        onDeathComplete?.Invoke(); 
+        onDeathComplete?.Invoke();
     }
 
     private IEnumerator WaitAndDestroy()
