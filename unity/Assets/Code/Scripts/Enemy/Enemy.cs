@@ -8,18 +8,18 @@ using UnityEngine;
 //used for dragon enemies,etc
 public class Enemy : NetworkBehaviour
 {
+    [SerializeField] public GameObject fireball;
+    [SerializeField] public GameObject rock;
+    public Animator enemyAnimator;
+
     private float waitTime = 3.0f;
     private float timer = 0.0f;
-
-    BossData bossData;
-
-    public Animator enemyAnimator;
 
     private bool canPlayAnim;
     private bool canBeHit;
 
-    [SerializeField] public GameObject fireball;
-    [SerializeField] public GameObject rock;
+    private BossData bossData;
+    private PlayerData playerData;
 
     void Start()
     {
@@ -30,41 +30,32 @@ public class Enemy : NetworkBehaviour
 
         canPlayAnim = true;
         canBeHit = true;
+        playerData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!playerData.IsPlayerHost())
+            return;
+
         timer += Time.deltaTime;
 
         if (timer < waitTime)
             return;
 
-        // int randAttack = UnityEngine.Random.Range(0, 3);
-        int randAttack = 2;
+        int randAttack = UnityEngine.Random.Range(0, 3);
 
         switch (randAttack)
         {
             case 0:
-                //roar attack
-                enemyAnimator.Play("Scream");
-                FindObjectOfType<AudioManager>().Play("AlbinoRoar");
-
-                canPlayAnim = false;
-                StartCoroutine(WaitAndPerformAction(3f));
+                AllClientsInvoker.Instance.InvokeBossAttackPlayers("Roar");
                 break;
             case 1:
-                // ground pound
-                enemyAnimator.Play("Jump");
-                canPlayAnim = false;
-                StartCoroutine(WaitAndThrowObjects(2f, "rock"));
-                FindObjectOfType<AudioManager>().Play("AlbinoJump");
+                AllClientsInvoker.Instance.InvokeBossAttackPlayers("GroundPound");
                 break;
             case 2:
-                // fireball
-                enemyAnimator.Play("Basic Attack");
-                canPlayAnim = false;
-                StartCoroutine(WaitAndThrowObjects(1f, "fireball"));
+                AllClientsInvoker.Instance.InvokeBossAttackPlayers("Fireball");
                 break;
         }
 
@@ -104,10 +95,10 @@ public class Enemy : NetworkBehaviour
             Vector3 spawnPosition = new Vector3(spawnX, spawnY, spawnZ);
 
             GameObject spawnedObj = Instantiate(spawnObj, spawnPosition, Quaternion.identity);
-            BossFireball fireballScript = spawnedObj.GetComponent<BossFireball>();
-            fireballScript.SetDamage(10f);
-            //fireballScript.SetTargetToBoss();
-            //Debug.LogError("TODO");
+
+            IBossSpell spellScript = (name == "fireball") ? spawnedObj.GetComponent<BossFireball>() : spawnedObj.GetComponent<BossRock>();
+            spellScript.SetDamage(10f);
+
             Rigidbody rb = spawnedObj.GetComponent<Rigidbody>();
             if (rb != null)
             {
@@ -123,6 +114,31 @@ public class Enemy : NetworkBehaviour
             //increment angle
             angle += angleStep;
         }
+    }
+
+    private IEnumerator WaitAndDestroy()
+    {
+        yield return new WaitForSeconds(3f);
+
+        NotifyServer server = GameObject.FindWithTag(TagManager.GameLogic).GetComponent<NotifyServer>();
+        // server.NotifyBossDeathServerRpc();
+
+        FindObjectOfType<AudioManager>().Play("StartMusic");
+    }
+
+    private IEnumerator WaitAndPerformAction(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        canPlayAnim = true;
+    }
+
+    private IEnumerator WaitAndThrowObjects(float seconds, string obj)
+    {
+        yield return new WaitForSeconds(seconds);
+
+        SpawnObjectsAround(obj);
+        //enemyAnimator.Play("Idle");
+        canPlayAnim = true;
     }
 
     public void TakeDamage(float damageAmount)
@@ -149,23 +165,34 @@ public class Enemy : NetworkBehaviour
             StartCoroutine(WaitAndPerformAction(1.5f));
 
             bossData.BossTakeDamage(damageAmount);
-
-            if (bossData.GetBossHealth() <= 0)
-            {
-                //play for everyone
-                // FindObjectOfType<AudioManager>().Play("WinScreen");
-
-                // float newTime = 0.0f;
-                // float animTime = 3.0f;
-                enemyAnimator.Play("Die");
-                // AudioSource.PlayClipAtPoint(deathSound, transform.position, 1f);
-                // FindObjectOfType<AudioManager>().Stop("BossMusic");
-                // FindObjectOfType<AudioManager>().Play("StartMusic");
-
-
-                canBeHit = false;
-            }
         }
+    }
+
+    public void BossRoarAttack()
+    {
+        //roar attack
+        enemyAnimator.Play("Scream");
+        FindObjectOfType<AudioManager>().Play("AlbinoRoar");
+
+        canPlayAnim = false;
+        StartCoroutine(WaitAndPerformAction(3f));
+    }
+
+    public void BossGroundPoundAttack()
+    {
+        // ground pound
+        enemyAnimator.Play("Jump");
+        canPlayAnim = false;
+        StartCoroutine(WaitAndThrowObjects(2f, "rock"));
+        FindObjectOfType<AudioManager>().Play("AlbinoJump");
+    }
+
+    public void BossFireballAttack()
+    {
+        // fireball
+        enemyAnimator.Play("Basic Attack");
+        canPlayAnim = false;
+        StartCoroutine(WaitAndThrowObjects(1f, "fireball"));
     }
 
     public IEnumerator PlayBossDeath(float seconds, System.Action onDeathComplete)
@@ -178,7 +205,6 @@ public class Enemy : NetworkBehaviour
         yield return new WaitForSeconds(seconds);
 
         // have the host destroy
-        PlayerData playerData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
         if (playerData.IsPlayerHost())
         {
             Destroy(gameObject);
@@ -186,30 +212,5 @@ public class Enemy : NetworkBehaviour
 
         // after boss dies toggle the screen
         onDeathComplete?.Invoke();
-    }
-
-    private IEnumerator WaitAndDestroy()
-    {
-        yield return new WaitForSeconds(3f);
-
-        NotifyServer server = GameObject.FindWithTag(TagManager.GameLogic).GetComponent<NotifyServer>();
-        // server.NotifyBossDeathServerRpc();
-
-        FindObjectOfType<AudioManager>().Play("StartMusic");
-    }
-
-    private IEnumerator WaitAndPerformAction(float seconds)
-    {
-        yield return new WaitForSeconds(seconds);
-        canPlayAnim = true;
-    }
-
-    private IEnumerator WaitAndThrowObjects(float seconds, string obj)
-    {
-        yield return new WaitForSeconds(seconds);
-
-        SpawnObjectsAround(obj);
-        //enemyAnimator.Play("Idle");
-        canPlayAnim = true;
     }
 }

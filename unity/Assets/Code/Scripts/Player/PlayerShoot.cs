@@ -86,7 +86,7 @@ public class PlayerShoot : MonoBehaviour
         Vector3 rockDirection = playerCamera.transform.forward;
 
         GameObject projectile = Instantiate(rock, spawnPos, Quaternion.LookRotation(rockDirection));
-        projectile.GetComponent<Rock>().SetDamage(CalcAmount("rock"));
+        projectile.GetComponent<PlayerRock>().SetDamage(CalcAmount("rock"));
         projectile.GetComponent<Rigidbody>().velocity = rockDirection * rockSpeed;
     }
 

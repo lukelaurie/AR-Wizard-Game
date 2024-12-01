@@ -119,6 +119,29 @@ public class NotifyClient : NetworkBehaviour
         partyHealthScript.UpdateHealthBars(roomsJson);
     }
 
+    [ClientRpc]
+    public void BossAttackPlayersClientRpc(string bossAttack)
+    {
+        if (!IsOwner)
+            return;
+
+        Enemy bossScript = ScreenToggle.FindGameObjectWithTag(TagManager.BossParent).GetComponent<Enemy>();
+
+        switch (bossAttack)
+        {
+            case "Roar":
+                bossScript.BossRoarAttack();
+                break;
+            case "GroundPound":
+                bossScript.BossGroundPoundAttack();
+                break;
+            case "Fireball":
+                bossScript.BossFireballAttack();
+                break;
+        }
+
+    }
+
     private void WinGameScreen(string rewardsDictJson)
     {
         ScreenToggle.ToggleGameObjectWithTag(false, TagManager.GameBackground);

@@ -82,6 +82,15 @@ public class AllClientsInvoker : MonoBehaviour
         }
     }
 
+    public void InvokeBossAttackPlayers(string bossAttack)
+    {
+        foreach (var client in NetworkManager.Singleton.ConnectedClientsList)
+        {
+            var clientNotifyObj = client.PlayerObject.GetComponent<NotifyClient>();
+            clientNotifyObj.BossAttackPlayersClientRpc(bossAttack);
+        }
+    } 
+
     private async Task<string> EndPlayerGames()
     {
         BossData bossData = GameObject.FindWithTag(TagManager.BossParent).GetComponent<BossData>();

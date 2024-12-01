@@ -27,10 +27,11 @@ public class PlayerHealthManager : MonoBehaviour
 
     public void HandlePlayerDamage(int currentHealth)
     {
+        Debug.Log(currentHealth);
         NotifyServer server = GameObject.FindWithTag(TagManager.GameLogic).GetComponent<NotifyServer>();
         server.NotifyClientHealthServerRpc(playerData.GetUsername(), currentHealth);
 
-        if (currentHealth <= 0)
+        if (currentHealth <= 0 && !playerData.IsPlayerDead())
         {
             playerData.SetIsPlayerDead(true);
 

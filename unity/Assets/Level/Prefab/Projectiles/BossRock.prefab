@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 5054829605388025207}
   - component: {fileID: 3940379634352894702}
   - component: {fileID: 8466430597097077336}
-  - component: {fileID: -1524709390909293624}
+  - component: {fileID: 5342064407283540095}
   m_Layer: 9
-  m_Name: Rock_Obj
+  m_Name: BossRock
   m_TagString: Fireball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -97,7 +97,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -231,7 +231,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &-1524709390909293624
+--- !u!114 &5342064407283540095
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -240,7 +240,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2498187935734536976}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e863673d6eb2402c9dc22abaf45224c, type: 3}
+  m_Script: {fileID: 11500000, guid: 9496afcb6a363684999a2c5c8beaf64b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   crumble: {fileID: 9172233667358306048, guid: 0633e8646ab4b485387e8f4786d40e03, type: 3}

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Rock : MonoBehaviour
+public class PlayerRock : MonoBehaviour
 {
     private float damageAmount;
     private float lifetime = 4f;
