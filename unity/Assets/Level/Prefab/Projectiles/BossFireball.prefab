@@ -19363,7 +19363,7 @@ GameObject:
   - component: {fileID: 681274945118198257}
   - component: {fileID: -4266536172778724927}
   m_Layer: 9
-  m_Name: Fireball_Particles
+  m_Name: BossFireball
   m_TagString: Fireball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
