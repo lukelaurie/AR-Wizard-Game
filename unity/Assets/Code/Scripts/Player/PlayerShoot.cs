@@ -27,7 +27,7 @@ public class PlayerShoot : MonoBehaviour
     };
 
     private readonly float increasePerLevel = 0.3f;
-    private Camera camera;
+    private Camera playerCamera;
 
     private PlayerData playerData;
 
@@ -49,16 +49,16 @@ public class PlayerShoot : MonoBehaviour
     void Start()
     {
         playerData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
-        if (camera == null)
+        if (playerCamera == null)
         {
-            camera = GameObject.FindObjectOfType<Camera>();
+            playerCamera = GameObject.FindObjectOfType<Camera>();
         }
     }
 
     public void ShootFireball()
     {
-        Vector3 spawnPos = camera.transform.position;
-        Vector3 fireballDirection = camera.transform.forward;
+        Vector3 spawnPos = playerCamera.transform.position;
+        Vector3 fireballDirection = playerCamera.transform.forward;
 
         GameObject projectile = Instantiate(fireball, spawnPos, Quaternion.LookRotation(fireballDirection));
         projectile.GetComponent<Fireball>().SetDamage(CalcAmount("fireball"));
@@ -67,9 +67,9 @@ public class PlayerShoot : MonoBehaviour
 
     public void ShootLightning()
     {
-        Vector3 spawnPos = camera.transform.position + camera.transform.forward * lightningSpawnDist;
+        Vector3 spawnPos = playerCamera.transform.position + playerCamera.transform.forward * lightningSpawnDist;
 
-        Vector3 lightningDetection = -camera.transform.forward;
+        Vector3 lightningDetection = -playerCamera.transform.forward;
 
         GameObject projectile = Instantiate(lightning, spawnPos, Quaternion.LookRotation(lightningDetection) * Quaternion.Euler(80, 0, 0));
         projectile.GetComponent<Lightning>().SetDamage(CalcAmount("lightning"));
@@ -82,8 +82,8 @@ public class PlayerShoot : MonoBehaviour
 
     public void ShootRock()
     {
-        Vector3 spawnPos = camera.transform.position;
-        Vector3 rockDirection = camera.transform.forward;
+        Vector3 spawnPos = playerCamera.transform.position;
+        Vector3 rockDirection = playerCamera.transform.forward;
 
         GameObject projectile = Instantiate(rock, spawnPos, Quaternion.LookRotation(rockDirection));
         projectile.GetComponent<Rock>().SetDamage(CalcAmount("rock"));
