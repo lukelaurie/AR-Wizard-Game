@@ -2743,6 +2743,91 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 348458349}
   m_CullTransparentMesh: 1
+--- !u!1 &356666795
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 356666796}
+  - component: {fileID: 356666798}
+  - component: {fileID: 356666797}
+  - component: {fileID: 356666799}
+  m_Layer: 5
+  m_Name: PartyHealth
+  m_TagString: PartyHealth
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &356666796
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 356666795}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1461851708}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -323, y: 793}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &356666797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 356666795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aee86bc0b1d78ce45923e08ce57c16b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthBar: {fileID: 8350392721023992350, guid: d2a228538d603724c9a399b8e490cd86, type: 3}
+--- !u!222 &356666798
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 356666795}
+  m_CullTransparentMesh: 1
+--- !u!114 &356666799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 356666795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 3
+  m_Spacing: 0
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 1
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
 --- !u!1 &372447741
 GameObject:
   m_ObjectHideFlags: 0
@@ -12052,6 +12137,7 @@ RectTransform:
   m_Children:
   - {fileID: 377939221}
   - {fileID: 65866029}
+  - {fileID: 356666796}
   m_Father: {fileID: 1827949243}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -14426,7 +14512,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2729f40811bb9be48a68b1bff1488127, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  placementObject: {fileID: 3477335585301766762, guid: 8bc00e932bdd2e047b3f5b9583d08c1e, type: 3}
+  placementObject: {fileID: 844035104550790214, guid: 2f8b4a6dbba08c24e8690a207e35a2da, type: 3}
 --- !u!1 &1782947370
 GameObject:
   m_ObjectHideFlags: 0
@@ -14493,6 +14579,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1787196191}
   - component: {fileID: 1787196193}
+  - component: {fileID: 1787196194}
   m_Layer: 0
   m_Name: GameData
   m_TagString: GameInfo
@@ -14527,7 +14614,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b787ca7f41e0e04eaa90efde0e6a8ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 50
+--- !u!114 &1787196194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1787196190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9e03ca6f77e68849a69acddeae3d284, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1800406397
 GameObject:
   m_ObjectHideFlags: 0

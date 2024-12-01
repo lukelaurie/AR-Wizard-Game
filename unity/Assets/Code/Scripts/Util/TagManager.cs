@@ -4,6 +4,7 @@ using UnityEngine;
 
 public static class TagManager
 {
+    public const string BossParent = "Boss";
     public const string Boss = "Dragon";
     public const string Fireball = "Fireball";
     public const string GameLogic = "GameLogic";
@@ -14,4 +15,5 @@ public static class TagManager
     public const string LoseBackground = "LoseBackground";
     public const string GameInfo = "GameInfo";
     public const string WinBackground = "WinBackground";
+    public const string PartyHealth = "PartyHealth";
 }

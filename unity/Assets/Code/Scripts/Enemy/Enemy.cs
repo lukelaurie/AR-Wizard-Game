@@ -1,8 +1,8 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
+using System.Threading.Tasks;
 using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.AI;
 
 //keeps track of health, moveSpeed, animations, and following
 //used for dragon enemies,etc
@@ -40,7 +40,7 @@ public class Enemy : NetworkBehaviour
         if (timer < waitTime)
             return;
 
-        int randAttack = Random.Range(0, 3);
+        int randAttack = UnityEngine.Random.Range(0, 3);
         switch (randAttack)
         {
             case 0:
@@ -66,7 +66,7 @@ public class Enemy : NetworkBehaviour
                 break;
         }
 
-        waitTime = (float)Random.Range(6, 9); // how long wait between attacks
+        waitTime = (float)UnityEngine.Random.Range(6, 9); // how long wait between attacks
         timer = 0;
     }
 
@@ -128,7 +128,7 @@ public class Enemy : NetworkBehaviour
             return;
         }
 
-        int randInt = Random.Range(0, 5);
+        int randInt = UnityEngine.Random.Range(0, 5);
 
         //has a chance to randomly block an attack
         if (randInt == 0 && canPlayAnim)
@@ -163,15 +163,14 @@ public class Enemy : NetworkBehaviour
         }
     }
 
-    public IEnumerator PlayBossDeath(float seconds)
+    public IEnumerator PlayBossDeath(float seconds, System.Action onDeathComplete)
     {
         enemyAnimator.Play("Die");
         FindObjectOfType<AudioManager>().Play("AlbinoDeath");
         canPlayAnim = false;
         canBeHit = false;
 
-        Debug.Log("Inside");
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(seconds);
 
         // have the host destroy
         PlayerData playerData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
@@ -179,6 +178,9 @@ public class Enemy : NetworkBehaviour
         {
             Destroy(gameObject);
         }
+
+        // after boss dies toggle the screen
+        onDeathComplete?.Invoke(); 
     }
 
     private IEnumerator WaitAndDestroy()

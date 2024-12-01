@@ -47,16 +47,8 @@ public class LossScreen : NetworkBehaviour
 
         if (playerData.IsPlayerHost())
         {
+            playerData.ResetHealth();
             AllClientsInvoker.Instance.InvokePlayerRestartAllClients();
-
-            // destroy the dragon that survived 
-            // GameObject dragon = GameObject.FindWithTag(TagManager.Boss);
-            // if (dragon != null)
-            // {
-            //     Destroy(dragon);
-            // }
-
-            // add the logic to restore player hp and remove boss object...
 
             SwapScreens.Instance.ToggleHostScreen();
             placeBoss.enabled = false;

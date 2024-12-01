@@ -14,13 +14,20 @@ public class NotifyServer : NetworkBehaviour
             return;
 
         clientDeathCount += 1;
-        Debug.Log(clientDeathCount);
-        Debug.Log(NetworkManager.Singleton.ConnectedClients.Count);
 
         if (clientDeathCount == NetworkManager.Singleton.ConnectedClients.Count)
         {
             AllClientsInvoker.Instance.InvokePartyLoseGameAllClients();
         }
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void NotifyClientHealthServerRpc(string username, int health, ServerRpcParams rpcParams = default)
+    {
+        RoomHealth roomHealthScript = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<RoomHealth>();
+        roomHealthScript.UpdatePlayerHealth(username, health);
+
+        AllClientsInvoker.Instance.InvokePlayerHealthChange(roomHealthScript.SerializeRooms());
     }
 
     public void ResetClientDeaths()

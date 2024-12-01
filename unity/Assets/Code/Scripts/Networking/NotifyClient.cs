@@ -30,9 +30,12 @@ public class NotifyClient : NetworkBehaviour
         StartGameAr.StartNewGame();
 
         // if the dragon exists in scene already just start the game 
-        GameObject dragon = ScreenToggle.FindGameObjectWithTag(TagManager.Boss);
+        GameObject dragon = ScreenToggle.FindGameObjectWithTag(TagManager.BossParent);
         if (dragon != null)
             ToggleGameStart();
+
+        ScreenToggle.ToggleGameObjectWithTag(true, TagManager.PartyHealth);
+        NotifyClientsUserHealth();
     }
 
     [ClientRpc]
@@ -69,14 +72,55 @@ public class NotifyClient : NetworkBehaviour
             return;
 
         // have the boss play its death animation first
-        GameObject boss = ScreenToggle.FindGameObjectWithTag(TagManager.Boss);
+        GameObject boss = ScreenToggle.FindGameObjectWithTag(TagManager.BossParent);
         Enemy bossScript = boss.GetComponent<Enemy>();
 
-        Debug.Log(boss);
-        Debug.Log(1);
-        bossScript.PlayBossDeath(1.5f);
-        Debug.Log(2);
+        StartCoroutine(bossScript.PlayBossDeath(2f, () => WinGameScreen(rewardsDictJson)));
+    }
 
+    [ClientRpc]
+    public void PlayerRestartGameClientRpc()
+    {
+        if (!IsOwner || IsHost)
+            return;
+
+        var clientData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
+        clientData.ResetHealth();
+        ScreenToggle.ToggleGameObjectWithTag(false, TagManager.LoseBackground);
+        ScreenToggle.ToggleGameObjectWithTag(true, TagManager.JoinRoom);
+
+
+        NotifyClientsUserHealth();
+    }
+
+    [ClientRpc]
+    public void PlayerGameStartedClientRpc()
+    {
+        if (!IsOwner)
+            return;
+
+        ToggleGameStart();
+    }
+
+    [ClientRpc]
+    public void OtherPlayerHealthChangeClientRpc(string roomsJson)
+    {
+        if (!IsOwner)
+            return;
+
+        GameObject partyObj = GameObject.FindWithTag(TagManager.PartyHealth);
+
+        // dont change the health bars if not yet instantiated
+        if (partyObj == null)
+            return;
+
+        Debug.Log(roomsJson);
+        HealthUiUpdate partyHealthScript = partyObj.GetComponent<HealthUiUpdate>();
+        partyHealthScript.UpdateHealthBars(roomsJson);
+    }
+
+    private void WinGameScreen(string rewardsDictJson)
+    {
         ScreenToggle.ToggleGameObjectWithTag(false, TagManager.GameBackground);
         ScreenToggle.ToggleGameObjectWithTag(true, TagManager.WinBackground);
         var clientData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
@@ -89,25 +133,6 @@ public class NotifyClient : NetworkBehaviour
         childText.text = reward.ToString();
     }
 
-    [ClientRpc]
-    public void PlayerRestartGameClientRpc()
-    {
-        if (!IsOwner || IsHost)
-            return;
-
-        ScreenToggle.ToggleGameObjectWithTag(false, TagManager.LoseBackground);
-        ScreenToggle.ToggleGameObjectWithTag(true, TagManager.JoinRoom);
-    }
-
-    [ClientRpc]
-    public void PlayerGameStartedClientRpc()
-    {
-        if (!IsOwner)
-            return;
-
-        ToggleGameStart();
-    }
-
     private void ToggleGameStart()
     {
         GameObject gameBackground = GameObject.FindWithTag(TagManager.GameBackground);
@@ -115,6 +140,7 @@ public class NotifyClient : NetworkBehaviour
 
         placeBossText.text = "";
         ScreenToggle.ToggleGameObjectWithTag(true, TagManager.SpellPanel);
+        NotifyClientsUserHealth();
     }
 
     private void EnableSpellShootingScript()
@@ -129,6 +155,20 @@ public class NotifyClient : NetworkBehaviour
 
         playerShoot.enabled = true;
         return;
+    }
+
+    private void NotifyClientsUserHealth()
+    {
+        // send a request to all other clients so they can show the hp of this user
+        NotifyServer server = GameObject.FindWithTag(TagManager.GameLogic).GetComponent<NotifyServer>();
+        var clientData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
+
+        server.NotifyClientHealthServerRpc(clientData.GetUsername(), clientData.GetHealth());
+    }
+
+    private Dictionary<string, int> DeserializeRooms(string json)
+    {
+        return JsonConvert.DeserializeObject<Dictionary<string, int>>(json);
     }
 
 }

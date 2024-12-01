@@ -14,7 +14,7 @@ public class PlayerData : MonoBehaviour
     private bool isPlayerDead = false;
     private int selectedBossLevel;
 
-    [SerializeField] private int health;
+    private int health = 50;
     private Dictionary<string, int> spells;
 
 
@@ -91,6 +91,11 @@ public class PlayerData : MonoBehaviour
     {
         health += healingAmt;
         OnPlayerHealed?.Invoke(health);
+    }
+
+    public void ResetHealth()
+    {
+        health = 50;
     }
 
     public void SetBossLevel(int bossLevel)
