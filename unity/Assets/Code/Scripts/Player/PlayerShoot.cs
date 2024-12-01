@@ -6,16 +6,18 @@ using UnityEngine.UI;
 
 public class PlayerShoot : MonoBehaviour
 {
-    public GameObject fireball;
-    public GameObject lightning;
+    [SerializeField] private GameObject fireball;
+    [SerializeField] private GameObject lightning;
+    [SerializeField] private GameObject rock;
 
     private readonly float fireballSpeed = 8f;
-    private readonly float lightningSpawnDist = 3f;
+    private readonly float rockSpeed = 3f;
+    private readonly float lightningSpawnDist = 2f;
 
     public readonly float FireBallCoolDown = 1f;
     public readonly float LightningCoolDown = 0.2f;
     public readonly float HealCoolDown = 10f;
-    public readonly float RockCoolDown = 4f;
+    public readonly float RockCoolDown = 1f;
 
     private readonly Dictionary<string, float> spellAmounts = new(){
         {"fireball", 3f},
@@ -80,7 +82,12 @@ public class PlayerShoot : MonoBehaviour
 
     public void ShootRock()
     {
-        Debug.Log("TODO: Shoot Rock");
+        Vector3 spawnPos = camera.transform.position;
+        Vector3 rockDirection = camera.transform.forward;
+
+        GameObject projectile = Instantiate(rock, spawnPos, Quaternion.LookRotation(rockDirection));
+        projectile.GetComponent<Rock>().SetDamage(CalcAmount("rock"));
+        projectile.GetComponent<Rigidbody>().velocity = rockDirection * rockSpeed;
     }
 
     private float CalcAmount(string spellName)

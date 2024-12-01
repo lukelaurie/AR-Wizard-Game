@@ -114,7 +114,7 @@ public class SpellBar : MonoBehaviour
             return;
         }
         timeUnitlHealOffCoolDown = PlayerShoot.Instance.HealCoolDown;
-        PlayerShoot.Instance.ShootRock();
+        PlayerShoot.Instance.Heal();
     }
 
     private void HandleRockClick()
@@ -124,6 +124,6 @@ public class SpellBar : MonoBehaviour
             return;
         }
         timeUnitlRockOffCoolDown = PlayerShoot.Instance.RockCoolDown;
-        PlayerShoot.Instance.Heal();
+        PlayerShoot.Instance.ShootRock();
     }
 }

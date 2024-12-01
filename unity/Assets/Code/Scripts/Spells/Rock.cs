@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Fireball : MonoBehaviour
+public class Rock : MonoBehaviour
 {
     private float damageAmount;
     private float lifetime = 4f;
-    [SerializeField] private GameObject explosion;
-
+    [SerializeField] private GameObject crumble;
+    // Start is called before the first frame update
     void Start()
     {
         Destroy(gameObject, lifetime);
@@ -33,7 +33,7 @@ public class Fireball : MonoBehaviour
         if (parentObject.TryGetComponent<Enemy>(out Enemy enemyComponent))
         {
             enemyComponent.TakeDamage(damageAmount);
-            Instantiate(explosion, collision.contacts[0].point, Quaternion.identity);
+            Instantiate(crumble, collision.contacts[0].point, Quaternion.identity);
             Destroy(gameObject);
         }
         else

@@ -179,7 +179,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 930be6f19ed682947a34bff6a078dc27, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 84584b0199b5a4f52a3809ff3043bca7, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -13957,11 +13957,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireball: {fileID: 8634321614551258705, guid: d6cd1333671fc964b95053165f336027, type: 3}
-  speed: 8
-  spawnDist: 2
-  lightningSpawnDist: 3
-  camera: {fileID: 0}
   lightning: {fileID: 8297969081835673719, guid: 5b2066b37d9c9e94998ed02b0df55f8e, type: 3}
+  rock: {fileID: 2498187935734536976, guid: db7022bfc92160d4ea97fb494037b470, type: 3}
 --- !u!114 &1766984768
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16765,7 +16762,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 930be6f19ed682947a34bff6a078dc27, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 84584b0199b5a4f52a3809ff3043bca7, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
