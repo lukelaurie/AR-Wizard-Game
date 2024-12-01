@@ -17,6 +17,9 @@ TagManager:
   - GameInfo
   - GameBackground
   - SpellPanel
+  - AlbinoMesh
+  - Boss
+  - PartyHealth
   layers:
   - Default
   - TransparentFX

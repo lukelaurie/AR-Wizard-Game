@@ -87,13 +87,10 @@ public class PlaceCharacter : NetworkBehaviour
         {
             GameObject hitObject = hit.collider.gameObject;
 
-            if (hitObject.tag != TagManager.Boss && hitObject.tag != TagManager.Boss)
-            {
-                // calculate rotation of the object relative to object location
-                Quaternion rotation = Quaternion.Euler(0, 0, 0);
+            // calculate rotation of the object relative to object location
+            Quaternion rotation = Quaternion.Euler(0, 0, 0);
 
-                SpawnPlayerServerRpc(hit.point, rotation, NetworkManager.Singleton.LocalClientId);
-            }
+            SpawnPlayerServerRpc(hit.point, rotation, NetworkManager.Singleton.LocalClientId);
         }
     }
 
@@ -108,7 +105,7 @@ public class PlaceCharacter : NetworkBehaviour
         characterNetworkObject.SpawnWithOwnership(callerID);
         isPlaced = true;
 
-        PlayerData playerData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
+        PlayerData playerData = GameObject.FindWithTag("GameInfo").GetComponent<PlayerData>();
         bossData.InitializeBossData(playerData.GetBossLevel());
 
         // notify all the clients that the boss has been placed

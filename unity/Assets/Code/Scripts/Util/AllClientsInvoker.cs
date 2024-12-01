@@ -47,11 +47,13 @@ public class AllClientsInvoker : MonoBehaviour
             var clientNotifyObj = client.PlayerObject.GetComponent<NotifyClient>();
             clientNotifyObj.PartyWinGameClientRpc(rewards);
         }
-        DestoyDragon();
     }
 
     public void InvokePlayerRestartAllClients()
     {
+        RoomHealth roomHealthScript = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<RoomHealth>();
+        roomHealthScript.ResetRoom();
+
         foreach (var client in NetworkManager.Singleton.ConnectedClientsList)
         {
             var clientNotifyObj = client.PlayerObject.GetComponent<NotifyClient>();
@@ -71,9 +73,18 @@ public class AllClientsInvoker : MonoBehaviour
         }
     }
 
+    public void InvokePlayerHealthChange(string roomsJson)
+    {
+        foreach (var client in NetworkManager.Singleton.ConnectedClientsList)
+        {
+            var clientNotifyObj = client.PlayerObject.GetComponent<NotifyClient>();
+            clientNotifyObj.OtherPlayerHealthChangeClientRpc(roomsJson);
+        }
+    }
+
     private async Task<string> EndPlayerGames()
     {
-        BossData bossData = GameObject.FindWithTag(TagManager.Boss).GetComponent<BossData>();
+        BossData bossData = GameObject.FindWithTag(TagManager.BossParent).GetComponent<BossData>();
         string bossName = bossData.GetBossName();
         int bossLevel = bossData.GetBossLevel();
 
@@ -82,7 +93,7 @@ public class AllClientsInvoker : MonoBehaviour
 
     private void DestoyDragon()
     {
-        GameObject dragon = GameObject.FindWithTag(TagManager.Boss);
+        GameObject dragon = GameObject.FindWithTag(TagManager.BossParent);
         if (dragon != null)
         {
             Destroy(dragon);
