@@ -8,7 +8,8 @@ using UnityEngine.EventSystems;
 public class PlaceCharacter : NetworkBehaviour
 {
     [SerializeField] private GameObject placementObject;
-    
+
+    private int bossLevel;
     private bool isPlaced = false;
     private Camera mainCam;
 
@@ -24,10 +25,11 @@ public class PlaceCharacter : NetworkBehaviour
 
     void Update()
     {
-        if (isPlaced) {
+        if (isPlaced)
+        {
             return;
         }
-        
+
 #if UNITY_EDITOR
         if (Input.GetMouseButtonDown(0))
         {
@@ -85,13 +87,10 @@ public class PlaceCharacter : NetworkBehaviour
         {
             GameObject hitObject = hit.collider.gameObject;
 
-            if (hitObject.tag != "Dragon" && hitObject.tag != "Fireball")
-            {
-                // calculate rotation of the object relative to object location
-                Quaternion rotation = Quaternion.Euler(0, 0, 0);
-                
-                SpawnPlayerServerRpc(hit.point, rotation, NetworkManager.Singleton.LocalClientId);
-            }
+            // calculate rotation of the object relative to object location
+            Quaternion rotation = Quaternion.Euler(0, 0, 0);
+
+            SpawnPlayerServerRpc(hit.point, rotation, NetworkManager.Singleton.LocalClientId);
         }
     }
 
@@ -100,16 +99,26 @@ public class PlaceCharacter : NetworkBehaviour
     void SpawnPlayerServerRpc(Vector3 positon, Quaternion rotation, ulong callerID)
     {
         GameObject character = Instantiate(placementObject, positon, rotation);
+        BossData bossData = character.GetComponent<BossData>();
 
         NetworkObject characterNetworkObject = character.GetComponent<NetworkObject>();
-
         characterNetworkObject.SpawnWithOwnership(callerID);
-
         isPlaced = true;
+
+        PlayerData playerData = GameObject.FindWithTag("GameInfo").GetComponent<PlayerData>();
+        bossData.InitializeBossData(playerData.GetBossLevel());
+
+        // notify all the clients that the boss has been placed
+        AllClientsInvoker.Instance.InvokePlayerBossPlaced();
     }
 
     public void ResetIsPlaced()
     {
         isPlaced = false;
+    }
+
+    public void SetBossLevel(int newBossLevel)
+    {
+        bossLevel = newBossLevel;
     }
 }

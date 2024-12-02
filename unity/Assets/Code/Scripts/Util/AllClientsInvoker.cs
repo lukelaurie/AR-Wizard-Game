@@ -20,34 +20,26 @@ public class AllClientsInvoker : MonoBehaviour
         }
     }
 
-    public async void InvokePartyLoseGameAllClients()
+    public void InvokePartyLoseGameAllClients()
     {
-        string[] roomPlayers = await RoomManager.Instance.GetPlayersInRoom();
-        // await EndPlayerGames();
-
         foreach (var client in NetworkManager.Singleton.ConnectedClientsList)
         {
             var clientNotifyObj = client.PlayerObject.GetComponent<NotifyClient>();
-            var clientData = GameObject.FindWithTag("GameInfo").GetComponent<PlayerData>();
 
             clientNotifyObj.PartyLoseGameClientRpc();
         }
     }
-    public async void InvokeJoinGameAllClients()
+    public void InvokeJoinGameAllClients()
     {
-        string[] roomPlayers = await RoomManager.Instance.GetPlayersInRoom();
-
         foreach (var client in NetworkManager.Singleton.ConnectedClientsList)
         {
             var clientNotifyObj = client.PlayerObject.GetComponent<NotifyClient>();
-            var clientData = GameObject.FindWithTag("GameInfo").GetComponent<PlayerData>();
 
             clientNotifyObj.JoinGameClientRpc();
         }
     }
     public async void InvokePartyWinGameAllClients()
     {
-        string[] roomPlayers = await RoomManager.Instance.GetPlayersInRoom();
         string rewards = await EndPlayerGames();
 
         foreach (var client in NetworkManager.Singleton.ConnectedClientsList)
@@ -56,36 +48,73 @@ public class AllClientsInvoker : MonoBehaviour
             clientNotifyObj.PartyWinGameClientRpc(rewards);
         }
     }
-    public async void InvokePlayerDieAllClients()
-    {
-        string[] roomPlayers = await RoomManager.Instance.GetPlayersInRoom();
-
-        foreach (var client in NetworkManager.Singleton.ConnectedClientsList)
-        {
-            var clientNotifyObj = client.PlayerObject.GetComponent<NotifyClient>();
-            var clientData = GameObject.FindWithTag("GameInfo").GetComponent<PlayerData>();
-
-            clientNotifyObj.PlayerDieClientRpc();
-        }
-    }
 
     public void InvokePlayerRestartAllClients()
     {
+        RoomHealth roomHealthScript = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<RoomHealth>();
+        roomHealthScript.ResetRoom();
+
         foreach (var client in NetworkManager.Singleton.ConnectedClientsList)
         {
             var clientNotifyObj = client.PlayerObject.GetComponent<NotifyClient>();
 
             clientNotifyObj.PlayerRestartGameClientRpc();
         }
+        DestoyDragon();
     }
+
+    public void InvokePlayerBossPlaced()
+    {
+        foreach (var client in NetworkManager.Singleton.ConnectedClientsList)
+        {
+            var clientNotifyObj = client.PlayerObject.GetComponent<NotifyClient>();
+
+            clientNotifyObj.PlayerGameStartedClientRpc();
+        }
+    }
+
+    public void InvokePlayerHealthChange(string roomsJson)
+    {
+        foreach (var client in NetworkManager.Singleton.ConnectedClientsList)
+        {
+            var clientNotifyObj = client.PlayerObject.GetComponent<NotifyClient>();
+            clientNotifyObj.OtherPlayerHealthChangeClientRpc(roomsJson);
+        }
+    }
+
+    public void InvokeBossAttackPlayers(string bossAttack)
+    {
+        foreach (var client in NetworkManager.Singleton.ConnectedClientsList)
+        {
+            var clientNotifyObj = client.PlayerObject.GetComponent<NotifyClient>();
+            clientNotifyObj.BossAttackPlayersClientRpc(bossAttack);
+        }
+    } 
+
+    public void InvokePlayerSpellCast(Vector3 spawnPos, Vector3 direction, string casterUsername, string spell)
+    {
+        foreach (var client in NetworkManager.Singleton.ConnectedClientsList)
+        {
+            var clientNotifyObj = client.PlayerObject.GetComponent<NotifyClient>();
+            clientNotifyObj.SpawnOtherPlayerSpellClientRpc(spawnPos, direction, casterUsername, spell);
+        }
+    } 
 
     private async Task<string> EndPlayerGames()
     {
-        BossData bossData = GameObject.FindWithTag("GameInfo").GetComponent<BossData>();
+        BossData bossData = GameObject.FindWithTag(TagManager.BossParent).GetComponent<BossData>();
         string bossName = bossData.GetBossName();
         int bossLevel = bossData.GetBossLevel();
 
-        Debug.Log($"Name: {bossName}      Level: {bossLevel}");
         return await RoomManager.Instance.EndGame(bossName, true, bossLevel);
+    }
+
+    private void DestoyDragon()
+    {
+        GameObject dragon = GameObject.FindWithTag(TagManager.BossParent);
+        if (dragon != null)
+        {
+            Destroy(dragon);
+        }
     }
 }

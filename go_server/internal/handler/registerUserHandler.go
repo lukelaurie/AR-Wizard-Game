@@ -41,5 +41,12 @@ func RegisterUser(w http.ResponseWriter, r *http.Request) {
 	// 	return
 	// }
 
+	//give the new user a lvl 1 fireball
+	err = database.AddNewUserSpell(reqBody.Username, "fireball")
+	if err != nil {
+		utils.LogAndAddServerError(err, w)
+		return
+	}
+
 	json.NewEncoder(w).Encode("user registered")
 }

@@ -31,7 +31,6 @@ public class StartGameAr : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
 
-
         SetRandomUserId();
 
         joinServerButton.onClick.AddListener(SwapScreens.Instance.ToggleJoinScreen);
@@ -44,7 +43,6 @@ public class StartGameAr : MonoBehaviour
 
     private void OnDestroy()
     {
-        // NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnectedCallback;
         BlitImageForColocalization.OnTextureRendered -= BlitImageForColocalizationOnTextureRender;
     }
 

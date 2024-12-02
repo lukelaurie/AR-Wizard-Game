@@ -40,13 +40,10 @@ public class StartGameClient : MonoBehaviour
 
         OnJoinSharedSpaceClient?.Invoke();
 
-        // join the game as a new player
-        // StartGameAr.StartNewGame();
-
         NetworkManager.Singleton.StartClient();
         Debug.Log("Starting AR Client...");
 
-        var clientData = GameObject.FindWithTag("GameInfo").GetComponent<PlayerData>();
+        var clientData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
         clientData.SetIsPlayerHost(false);
     }
 

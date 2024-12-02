@@ -33,39 +33,33 @@ public class HitDetection : MonoBehaviour
 
     private void Fire()
     {
-        if (camera != null) // Ensure the camera reference is valid
+        Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit))
         {
-            Ray ray = camera.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit))
+            hitObj = hit.transform.gameObject;
+
+            if (hitObj.CompareTag(TagManager.Boss))
             {
-                hitObj = hit.transform.gameObject;
+                Enemy enemyScript = hitObj.GetComponent<Enemy>();
 
-                if(hitObj.CompareTag("Dragon"))
+                // Check if the component exists to avoid null reference errors
+                if (enemyScript != null)
                 {
-                    Debug.Log("hit enemy");
-                    Enemy enemyScript = hitObj.GetComponent<Enemy>();
-                    
-                    // Check if the component exists to avoid null reference errors
-                    if (enemyScript != null)
-                    {
-                        Debug.Log("in this if statement!!!!!");
-                        // Call the TakeDamage method from the Enemy script
-                        enemyScript.TakeDamage(50);
-                    }
-                    else
-                    {
-                        Debug.LogError("Enemy script not found on the object.");
-                    }
+                    // Call the TakeDamage method from the Enemy script
+                    enemyScript.TakeDamage(50);
                 }
+                else
+                {
+                    Debug.LogError("Enemy script not found on the object.");
+                }
+            }
 
-                collision = hit.point;
-                Renderer renderer = hitObj.GetComponent<Renderer>();
-                if (renderer != null)
-                {
-                    renderer.material.color = newColor;
-                }
-                Debug.Log("Hit object: " + hitObj.name);
+            collision = hit.point;
+            Renderer renderer = hitObj.GetComponent<Renderer>();
+            if (renderer != null)
+            {
+                renderer.material.color = newColor;
             }
         }
     }

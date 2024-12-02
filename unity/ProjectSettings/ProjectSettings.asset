@@ -83,7 +83,7 @@ PlayerSettings:
   captureSingleScreen: 0
   muteOtherAudioSources: 0
   Prepare IOS For Recording: 0
-  Force IOS Speakers When Recording: 0
+  Force IOS Speakers When Recording: 1
   deferSystemGesturesMode: 0
   hideHomeButton: 0
   submitAnalytics: 1
@@ -143,8 +143,6 @@ PlayerSettings:
   preloadedAssets:
   - {fileID: 4800000, guid: b02d09082cbc14569ae46c12d9836abc, type: 3}
   - {fileID: 4800000, guid: f40a6c94c8e1b494d93d434ae522a14f, type: 3}
-  - {fileID: 4800000, guid: b1d4c517492046e1a4e4cc49b0b73b42, type: 3}
-  - {fileID: 4800000, guid: 2b7e3540272684e0b8e12fed2c4609de, type: 3}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1

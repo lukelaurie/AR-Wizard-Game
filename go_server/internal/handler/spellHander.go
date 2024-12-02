@@ -11,21 +11,6 @@ import (
 	"github.com/lukelaurie/AR-Wizard-Game/go_server/internal/utils"
 )
 
-var spellPrices = map[string]int{
-	"fireball":  1000,
-	"lightning": 2000,
-	"destroy":   10000,
-}
-
-var levelPrices = map[int]int{
-	1: 1000,
-	2: 1500,
-	3: 3000,
-	4: 5000,
-	5: 9000,
-	6: 15000,
-}
-
 func PurchaseSpell(w http.ResponseWriter, r *http.Request) {
 	username, ok := middleware.GetUsernameFromContext(r.Context())
 	if !ok {
@@ -126,13 +111,16 @@ func GetSpells(w http.ResponseWriter, r *http.Request) {
 		utils.LogAndAddServerError(err, w)
 		return
 	}
-
-	json.NewEncoder(w).Encode(playerSpells)
+	var spellMap = map[string]int{}
+	for _, spell := range playerSpells {
+		spellMap[spell.SpellName] = spell.Level
+	}
+	json.NewEncoder(w).Encode(spellMap)
 }
 
 func validateUserSpellPurchase(reqBody model.SpellRequest, playerSpells []model.PlayerSpell, userCoins int) (int, error) {
 	// check if the spell is valid
-	spellPrice, ok := spellPrices[reqBody.SpellName]
+	spellPrice, ok := getSpellPrice(reqBody.SpellName, 1)
 	if !ok {
 		return -1, fmt.Errorf("the spell is invalid")
 	}
@@ -153,9 +141,15 @@ func validateUserSpellUpdate(reqBody model.SpellRequest, playerSpells []model.Pl
 		return -1, fmt.Errorf("user does not own the spell")
 	}
 
-	upgradePrice, ok := levelPrices[playerSpells[0].Level + 1]
-	if !ok {
+	curLevel, _ := getSpellLevel(playerSpells, reqBody.SpellName)
+
+	if curLevel == 5 {
 		return -1, fmt.Errorf("the spell is already max level")
+	}
+
+	upgradePrice, ok := getSpellPrice(reqBody.SpellName, curLevel+1)
+	if !ok {
+		return -1, fmt.Errorf("the spell could not be found")
 	}
 
 	if userCoins < upgradePrice {
@@ -188,4 +182,42 @@ func getPlayerSpellData(username string) (int, []model.PlayerSpell, error) {
 	}
 
 	return userCoins, playerSpells, nil
+}
+
+func getSpellPrice(name string, level int) (int, bool) {
+	var spellPrices = map[string]int{
+		"fireball":  500,
+		"lightning": 1000,
+		"healing":   2000,
+		"rock":      4000,
+	}
+
+	var levelPrices = map[int]int{
+		1: 1,
+		2: 3,
+		3: 8,
+		4: 15,
+		5: 22,
+	}
+
+	basePrice, ok := spellPrices[name]
+	if !ok {
+		return -1, false
+	}
+
+	levelMulti, ok := levelPrices[level]
+	if !ok {
+		return -1, false
+	}
+
+	return basePrice * levelMulti, true
+}
+
+func getSpellLevel(playerSpells []model.PlayerSpell, spellName string) (int, bool) {
+	for _, spell := range playerSpells {
+		if spell.SpellName == spellName {
+			return spell.Level, true
+		}
+	}
+	return -1, false
 }

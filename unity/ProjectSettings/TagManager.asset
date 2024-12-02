@@ -7,8 +7,6 @@ TagManager:
   - Dragon
   - Fireball
   - JoinRoomUI
-  - InitiateSpellUI
-  - InitiateSpellUi
   - SharedSpace
   - playerInfo
   - GameLogic
@@ -17,6 +15,11 @@ TagManager:
   - WinBackground
   - CoinTotal
   - GameInfo
+  - GameBackground
+  - SpellPanel
+  - AlbinoMesh
+  - Boss
+  - PartyHealth
   layers:
   - Default
   - TransparentFX
@@ -26,8 +29,8 @@ TagManager:
   - UI
   - Player
   - Lightning
-  - 
-  - 
+  - Boss
+  - Fireball
   - 
   - 
   - 
