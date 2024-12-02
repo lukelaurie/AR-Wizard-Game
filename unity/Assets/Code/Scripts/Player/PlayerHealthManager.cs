@@ -37,8 +37,7 @@ public class PlayerHealthManager : MonoBehaviour
 
             // set the current play to the state of being dead
             FindObjectOfType<AudioManager>().Play("PlayerDie");
-            ScreenToggle.ToggleGameObjectWithTag(false, TagManager.GameBackground);
-            ScreenToggle.ToggleGameObjectWithTag(true, TagManager.DeathBackground);
+            SwapScreens.Instance.ToggleDeathScreen();
 
             server.NotifyClientDeathServerRpc();
         }

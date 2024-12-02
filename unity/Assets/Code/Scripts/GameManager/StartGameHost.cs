@@ -7,12 +7,15 @@ public class StartGameHost : MonoBehaviour
 {
     [SerializeField] private TMPro.TMP_Text roomIdText;
     [SerializeField] private Button startGameButton;
+    [SerializeField] private Button homeButton;
     [SerializeField] private TMPro.TMP_Dropdown bossDropdown;
+    private PlayerData playerData;
 
     public static event Action OnStartSharedSpaceHost;
 
     async void Start()
     {
+        playerData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
         string roomId = await RoomManager.Instance.CreateRoom();
 
         // have text pop up on screen saying invalid credentials
@@ -27,17 +30,15 @@ public class StartGameHost : MonoBehaviour
 
         OnStartSharedSpaceHost?.Invoke();
 
-
         NetworkManager.Singleton.StartHost();
         Debug.Log("Starting The AR Dedicated Server...");
 
-        var clientData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
-        clientData.SetIsPlayerHost(true);
+        playerData.SetIsPlayerHost(true);
 
         startGameButton.onClick.AddListener(StartGame);
+        homeButton.onClick.AddListener(SwapScreens.Instance.QuitGame);
 
         NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
-
     }
 
     // once connected join the room if it has already started 
@@ -50,8 +51,8 @@ public class StartGameHost : MonoBehaviour
             return;
         }
 
-        var playerPrefab = NetworkManager.Singleton.ConnectedClients[clientId].PlayerObject;
-        var clientNotifyObj = playerPrefab.GetComponent<NotifyClient>();
+        NetworkObject playerPrefab = NetworkManager.Singleton.ConnectedClients[clientId].PlayerObject;
+        NotifyClient clientNotifyObj = playerPrefab.GetComponent<NotifyClient>();
         clientNotifyObj.JoinGameClientRpc();
     }
 
@@ -65,7 +66,6 @@ public class StartGameHost : MonoBehaviour
         await RoomManager.Instance.StartGameInRoom();
 
         // select the boss and difficulty to use
-        PlayerData playerData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
         playerData.SetBossLevel(bossDropdown.value + 1);
 
         gameObject.SetActive(false);

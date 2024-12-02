@@ -40,11 +40,6 @@ public class HealthUiUpdate : MonoBehaviour
         GameObject playerHealthBar = Instantiate(healthBar, transform);
         PlayerHealthBar healthBarScript = playerHealthBar.GetComponent<PlayerHealthBar>();
 
-        // check if first player to make health bar longer
-        int playerWidth = 160;
-        int playerHeight = 27;
-
-        healthBarScript.SetSliderDimensions(playerWidth, playerHeight);
         healthBarScript.UpdateHealthBar(partyMember.Item2, PLAYER_HEALTH);
         healthBarScript.SetPlayerName(partyMember.Item1);
     }

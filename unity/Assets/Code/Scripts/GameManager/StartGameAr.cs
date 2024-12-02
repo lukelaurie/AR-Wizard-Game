@@ -22,9 +22,6 @@ public class StartGameAr : MonoBehaviour
     public static event Action OnStartGame;
     public static event Action OnStartSharedSpace;
 
-    private bool isHost;
-
-    private bool isRoomCreated;
     private static string roomId = "";
 
     private void Start()

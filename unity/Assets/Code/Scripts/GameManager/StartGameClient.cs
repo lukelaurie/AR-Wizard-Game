@@ -6,18 +6,23 @@ using UnityEngine.UI;
 
 public class StartGameClient : MonoBehaviour
 {
-    [SerializeField] private GameObject initialScreen;
-    [SerializeField] private GameObject pictureScreen;
+    [SerializeField] private Button homeButton;
 
     [SerializeField] private TMPro.TMP_Text invalidIdText;
     [SerializeField] private TMPro.TMP_InputField roomInput;
     [SerializeField] private Button continueServerButton;
+    private bool isInGame;
+    private PlayerData playerData;
 
     public static event Action OnJoinSharedSpaceClient;
 
     void Start()
     {
         continueServerButton.onClick.AddListener(JoinRoom);
+        homeButton.onClick.AddListener(LeaveGame);
+
+        playerData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
+        isInGame = false;
     }
 
     private async void JoinRoom()
@@ -33,23 +38,24 @@ public class StartGameClient : MonoBehaviour
 
             return;
         }
-
+        
+        // have user join room and take the picture
+        isInGame = true;
         StartGameAr.SetRoomId(roomId);
-
-        SwapScreens();
-
+        SwapScreens.Instance.ToggleClientJoinGame();
         OnJoinSharedSpaceClient?.Invoke();
 
         NetworkManager.Singleton.StartClient();
         Debug.Log("Starting AR Client...");
 
-        var clientData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
-        clientData.SetIsPlayerHost(false);
+        playerData.SetIsPlayerHost(false);
     }
 
-    private void SwapScreens()
+    private async void LeaveGame()
     {
-        initialScreen.SetActive(false);
-        pictureScreen.SetActive(true);
+        if (isInGame)
+            await RoomManager.Instance.LeaveGame();
+        
+        SwapScreens.Instance.QuitGame();
     }
 }

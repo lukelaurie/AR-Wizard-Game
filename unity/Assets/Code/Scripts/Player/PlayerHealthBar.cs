@@ -18,11 +18,4 @@ public class PlayerHealthBar : MonoBehaviour
     {
         playerName.text = name;
     }
-
-    public void SetSliderDimensions(int width, int height)
-    {
-        // set the width and height of the health bars 
-        RectTransform rectTransform = slider.GetComponent<RectTransform>();
-        rectTransform.sizeDelta = new Vector2(width, height);
-    }
 }
