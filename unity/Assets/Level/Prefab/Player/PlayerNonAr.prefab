@@ -1321,7 +1321,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2847599674
+  GlobalObjectIdHash: 3788168258
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -1433,7 +1433,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6328ac9c1ca5c134a940025fc5cbd67e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitObj: {fileID: 100720, guid: 8252519d2c6fd014bb5f75765a8c4fda, type: 3}
+  hitObj: {fileID: 4203312771211977905, guid: 83fc1af8bce05f54095f54483d7019dc, type: 3}
   collision: {x: 0, y: 0, z: 0}
   camera: {fileID: 3812193401467533940}
   newColor: {r: 0.25910288, g: 0.8963489, b: 0.90943396, a: 1}
@@ -1450,14 +1450,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1aa392862d93a22459c68ed6ae43a04a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireButton: {fileID: 7512577594707690568}
-  lightningButton: {fileID: 8146496851391002007}
   fireball: {fileID: 8634321614551258705, guid: d6cd1333671fc964b95053165f336027, type: 3}
-  speed: 8
-  spawnDist: 2
-  lightningSpawnDist: 4
-  camera: {fileID: 3812193401467533940}
   lightning: {fileID: 8297969081835673719, guid: 5b2066b37d9c9e94998ed02b0df55f8e, type: 3}
+  rock: {fileID: 2498187935734536976, guid: db7022bfc92160d4ea97fb494037b470, type: 3}
 --- !u!114 &99153508397456998
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1470,7 +1465,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2729f40811bb9be48a68b1bff1488127, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  placementObject: {fileID: 6739088511435197133, guid: 2f8b4a6dbba08c24e8690a207e35a2da, type: 3}
+  placementObject: {fileID: 4203312771211977905, guid: 83fc1af8bce05f54095f54483d7019dc, type: 3}
 --- !u!114 &8803859182623098024
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -419,7 +419,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 727820149
+  GlobalObjectIdHash: 964110663
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -440,9 +440,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cef61facbca90ff418dc78d4446855bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyAnimator: {fileID: 8821384675864462848}
   fireball: {fileID: 8634321614551258705, guid: 35c21d64ed64245e1a7ec19781848481, type: 3}
-  rock: {fileID: 2498187935734536976, guid: 31588553934cda549829f79537621013, type: 3}
+  otherProjectile: {fileID: 2498187935734536976, guid: 31588553934cda549829f79537621013, type: 3}
+  enemyAnimator: {fileID: 8821384675864462848}
 --- !u!114 &7690758784976727140
 MonoBehaviour:
   m_ObjectHideFlags: 0
