@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,7 @@ public class PlayerShoot : NetworkBehaviour
     [SerializeField] private GameObject fireball;
     [SerializeField] private GameObject lightning;
     [SerializeField] private GameObject rock;
+    [SerializeField] private Image healFX;
 
     private readonly float fireballSpeed = 8f;
     private readonly float rockSpeed = 3f;
@@ -90,6 +92,8 @@ public class PlayerShoot : NetworkBehaviour
     public void Heal()
     {
         playerData.HealPlayer(CalcAmount(healName));
+        var coroutine = HealAnimation();
+        StartCoroutine(coroutine);
     }
 
     public void ShootRock()
@@ -115,5 +119,29 @@ public class PlayerShoot : NetworkBehaviour
         int lvl = spells[spellName];
         float multi = (lvl - 1) * increasePerLevel + 1;
         return multi * spellAmounts[spellName];
+    }
+
+    private IEnumerator HealAnimation()
+    {
+        var healColor = new Color(0.176f, 1, 0.836f);
+        float maxAlpha = 0.5f;
+        float minAlpha = 0f;
+        float curAlpha = 0f;
+        healFX.gameObject.SetActive(true);
+        for (float t = 0; curAlpha < maxAlpha; t += Time.deltaTime * 3)
+        {
+            curAlpha = Mathf.Lerp(minAlpha, maxAlpha, t);
+            healColor.a = curAlpha;
+            healFX.color = healColor;
+            yield return null;
+        }
+        for (float t = 1; curAlpha > minAlpha; t -= Time.deltaTime)
+        {
+            curAlpha = Mathf.Lerp(minAlpha, maxAlpha, t);
+            healColor.a = curAlpha;
+            healFX.color = healColor;
+            yield return null;
+        }
+        healFX.gameObject.SetActive(false);
     }
 }

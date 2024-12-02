@@ -200,7 +200,7 @@ public class NotifyClient : NetworkBehaviour
     private void ToggleGameStart()
     {
         GameObject gameBackground = GameObject.FindWithTag(TagManager.GameBackground);
-        TMPro.TMP_Text placeBossText = gameBackground.transform.GetChild(0).GetComponent<TMPro.TMP_Text>();
+        TMPro.TMP_Text placeBossText = gameBackground.transform.GetChild(1).GetComponent<TMPro.TMP_Text>();
 
         placeBossText.text = "";
         ScreenToggle.ToggleGameObjectWithTag(true, TagManager.SpellPanel);
