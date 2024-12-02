@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class NotifyServer : NetworkBehaviour
 {
+    [SerializeField] private GameObject fireball;
     private int clientDeathCount = 0;
 
     [ServerRpc(RequireOwnership = false)]
@@ -22,12 +23,18 @@ public class NotifyServer : NetworkBehaviour
     }
 
     [ServerRpc(RequireOwnership = false)]
-    public void NotifyClientHealthServerRpc(string username, int health, ServerRpcParams rpcParams = default)
+    public void NotifyClientHealthServerRpc(string username, float health, ServerRpcParams rpcParams = default)
     {
         RoomHealth roomHealthScript = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<RoomHealth>();
         roomHealthScript.UpdatePlayerHealth(username, health);
 
         AllClientsInvoker.Instance.InvokePlayerHealthChange(roomHealthScript.SerializeRooms());
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void SpawnObjectServerRpc(Vector3 spawnPos, Vector3 direction, string casterUsername, string spell, ServerRpcParams rpcParams = default)
+    {
+        AllClientsInvoker.Instance.InvokePlayerSpellCast(spawnPos, direction, casterUsername, spell);
     }
 
     public void ResetClientDeaths()

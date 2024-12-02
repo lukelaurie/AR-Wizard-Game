@@ -24,7 +24,7 @@ public class BossRock : MonoBehaviour, IBossSpell
         if (networkObject.IsOwner)
         {
             PlayerData playerData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
-            playerData.PlayerTakeDamage(2); //TODO
+            playerData.PlayerTakeDamage(25); //TODO
             Instantiate(crumble, collision.contacts[0].point, Quaternion.identity);
             Destroy(gameObject);
         }

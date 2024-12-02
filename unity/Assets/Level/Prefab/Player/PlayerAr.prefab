@@ -100,6 +100,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 099010d9a318341499a1d8aac7b2f68a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fireball: {fileID: 8634321614551258705, guid: d6cd1333671fc964b95053165f336027, type: 3}
+  lightning: {fileID: 8297969081835673719, guid: 5b2066b37d9c9e94998ed02b0df55f8e, type: 3}
+  rock: {fileID: 2498187935734536976, guid: db7022bfc92160d4ea97fb494037b470, type: 3}
 --- !u!114 &668801939753174835
 MonoBehaviour:
   m_ObjectHideFlags: 0

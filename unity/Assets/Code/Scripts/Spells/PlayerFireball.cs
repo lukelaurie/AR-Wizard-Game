@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
-public class PlayerFireball : MonoBehaviour
+public class PlayerFireball : MonoBehaviour, IBossSpell
 {
     private float damageAmount;
     private float lifetime = 4f;
@@ -33,7 +33,9 @@ public class PlayerFireball : MonoBehaviour
 
         if (parentObject.TryGetComponent<Enemy>(out Enemy enemyComponent))
         {
-            enemyComponent.TakeDamage(damageAmount);
+            if (damageAmount != 0)
+                enemyComponent.TakeDamage(damageAmount);
+                
             Instantiate(explosion, collision.contacts[0].point, Quaternion.identity);
             Destroy(gameObject);
         }

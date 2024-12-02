@@ -121,7 +121,6 @@ public class Enemy : NetworkBehaviour
         yield return new WaitForSeconds(3f);
 
         NotifyServer server = GameObject.FindWithTag(TagManager.GameLogic).GetComponent<NotifyServer>();
-        // server.NotifyBossDeathServerRpc();
 
         FindObjectOfType<AudioManager>().Play("StartMusic");
     }

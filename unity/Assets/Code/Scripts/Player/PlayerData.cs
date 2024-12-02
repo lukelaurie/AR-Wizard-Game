@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class PlayerData : MonoBehaviour
 {
-    public event Action<int> OnPlayerTakeDamage;
-    public event Action<int> OnPlayerHealed;
+    public event Action<float> OnPlayerTakeDamage;
+    public event Action<float> OnPlayerHealed;
 
     private string username;
     private int coinTotal;
@@ -14,7 +14,8 @@ public class PlayerData : MonoBehaviour
     private bool isPlayerDead = false;
     private int selectedBossLevel;
 
-    private int health = 50;
+    private readonly float MAX_HEALTH = 50f;
+    private float health = 50f;
     private Dictionary<string, int> spells;
 
 
@@ -43,7 +44,7 @@ public class PlayerData : MonoBehaviour
         return isPlayerDead;
     }
 
-    public int GetHealth()
+    public float GetHealth()
     {
         return health;
     }
@@ -82,21 +83,21 @@ public class PlayerData : MonoBehaviour
         isPlayerDead = isDead;
     }
 
-    public void PlayerTakeDamage(int damageAmt)
+    public void PlayerTakeDamage(float damageAmt)
     {
         health -= damageAmt;
         OnPlayerTakeDamage?.Invoke(health);
     }
 
-    public void HealPlayer(int healingAmt)
+    public void HealPlayer(float healingAmt)
     {
-        health += healingAmt;
+        health = Math.Min(MAX_HEALTH, health + healingAmt);
         OnPlayerHealed?.Invoke(health);
     }
 
     public void ResetHealth()
     {
-        health = 50;
+        health = 50f;
     }
 
     public void SetBossLevel(int bossLevel)

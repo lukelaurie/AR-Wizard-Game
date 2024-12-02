@@ -91,6 +91,15 @@ public class AllClientsInvoker : MonoBehaviour
         }
     } 
 
+    public void InvokePlayerSpellCast(Vector3 spawnPos, Vector3 direction, string casterUsername, string spell)
+    {
+        foreach (var client in NetworkManager.Singleton.ConnectedClientsList)
+        {
+            var clientNotifyObj = client.PlayerObject.GetComponent<NotifyClient>();
+            clientNotifyObj.SpawnOtherPlayerSpellClientRpc(spawnPos, direction, casterUsername, spell);
+        }
+    } 
+
     private async Task<string> EndPlayerGames()
     {
         BossData bossData = GameObject.FindWithTag(TagManager.BossParent).GetComponent<BossData>();
