@@ -362,7 +362,7 @@ GameObject:
   - component: {fileID: 4190574373005947314}
   - component: {fileID: 7690758784976727140}
   m_Layer: 8
-  m_Name: NewAlbino
+  m_Name: Tier2boss
   m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
