@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
-using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -90,7 +89,7 @@ public class PlayerShoot : NetworkBehaviour
 
     public void Heal()
     {
-        playerData.HealPlayer(CalcAmount("healing"));
+        playerData.HealPlayer(CalcAmount(healName));
     }
 
     public void ShootRock()
