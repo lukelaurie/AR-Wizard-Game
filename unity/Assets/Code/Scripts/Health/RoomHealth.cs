@@ -8,17 +8,15 @@ using UnityEngine;
 
 public class RoomHealth : MonoBehaviour
 {
-    private PlayerData playerData;
-    private Dictionary<string, int> roomHealth;
+    private Dictionary<string, float> roomHealth;
 
     // Start is called before the first frame update
     void Start()
     {
-        roomHealth = new Dictionary<string, int>();
-        playerData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
+        roomHealth = new Dictionary<string, float>();
     }
 
-    public void UpdatePlayerHealth(string playerName, int newHealth)
+    public void UpdatePlayerHealth(string playerName, float newHealth)
     {
         roomHealth[playerName] = newHealth;
     }
@@ -30,6 +28,6 @@ public class RoomHealth : MonoBehaviour
 
     public void ResetRoom()
     {
-        roomHealth = new Dictionary<string, int>();
+        roomHealth = new Dictionary<string, float>();
     }
 }

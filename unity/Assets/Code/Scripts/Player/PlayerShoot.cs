@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerShoot : MonoBehaviour
+public class PlayerShoot : NetworkBehaviour
 {
     [SerializeField] private GameObject fireball;
     [SerializeField] private GameObject lightning;
@@ -13,6 +14,11 @@ public class PlayerShoot : MonoBehaviour
     private readonly float fireballSpeed = 8f;
     private readonly float rockSpeed = 3f;
     private readonly float lightningSpawnDist = 2f;
+    private readonly string fireballName = "fireball";
+    private readonly string lightningName = "lightning";
+    private readonly string healName = "healing";
+    private readonly string rockName = "rock";
+    private NotifyServer server;
 
     public readonly float FireBallCoolDown = 1f;
     public readonly float LightningCoolDown = 0.2f;
@@ -22,7 +28,7 @@ public class PlayerShoot : MonoBehaviour
     private readonly Dictionary<string, float> spellAmounts = new(){
         {"fireball", 3f},
         {"lightning", 1f},
-        {"healing", -1f}, //TODO
+        {"healing", 2f},
         {"rock", 6f},
     };
 
@@ -53,6 +59,8 @@ public class PlayerShoot : MonoBehaviour
         {
             playerCamera = GameObject.FindObjectOfType<Camera>();
         }
+
+        server = GameObject.FindWithTag(TagManager.GameLogic).GetComponent<NotifyServer>();
     }
 
     public void ShootFireball()
@@ -61,8 +69,11 @@ public class PlayerShoot : MonoBehaviour
         Vector3 fireballDirection = playerCamera.transform.forward;
 
         GameObject projectile = Instantiate(fireball, spawnPos, Quaternion.LookRotation(fireballDirection));
-        projectile.GetComponent<PlayerFireball>().SetDamage(CalcAmount("fireball"));
+
+        projectile.GetComponent<PlayerFireball>().SetDamage(CalcAmount(fireballName));
         projectile.GetComponent<Rigidbody>().velocity = fireballDirection * fireballSpeed;
+
+        server.SpawnObjectServerRpc(spawnPos, fireballDirection, playerData.GetUsername(), fireballName);
     }
 
     public void ShootLightning()
@@ -72,12 +83,14 @@ public class PlayerShoot : MonoBehaviour
         Vector3 lightningDetection = -playerCamera.transform.forward;
 
         GameObject projectile = Instantiate(lightning, spawnPos, Quaternion.LookRotation(lightningDetection) * Quaternion.Euler(80, 0, 0));
-        projectile.GetComponent<Lightning>().SetDamage(CalcAmount("lightning"));
+        projectile.GetComponent<Lightning>().SetDamage(CalcAmount(lightningName));
+
+        server.SpawnObjectServerRpc(spawnPos, lightningDetection, playerData.GetUsername(), lightningName);
     }
 
     public void Heal()
     {
-        Debug.Log("TODO: HEAL");
+        playerData.HealPlayer(CalcAmount("healing"));
     }
 
     public void ShootRock()
@@ -86,8 +99,10 @@ public class PlayerShoot : MonoBehaviour
         Vector3 rockDirection = playerCamera.transform.forward;
 
         GameObject projectile = Instantiate(rock, spawnPos, Quaternion.LookRotation(rockDirection));
-        projectile.GetComponent<PlayerRock>().SetDamage(CalcAmount("rock"));
+        projectile.GetComponent<PlayerRock>().SetDamage(CalcAmount(rockName));
         projectile.GetComponent<Rigidbody>().velocity = rockDirection * rockSpeed;
+
+        server.SpawnObjectServerRpc(spawnPos, rockDirection, playerData.GetUsername(), rockName);
     }
 
     private float CalcAmount(string spellName)

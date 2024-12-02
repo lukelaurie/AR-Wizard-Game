@@ -5,10 +5,12 @@ using UnityEngine;
 public class PlayerHealthManager : MonoBehaviour
 {
     private PlayerData playerData;
+    private NotifyServer server;
 
     void Start()
     {
         playerData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
+        server = GameObject.FindWithTag(TagManager.GameLogic).GetComponent<NotifyServer>();
     }
 
     void OnEnable()
@@ -25,10 +27,8 @@ public class PlayerHealthManager : MonoBehaviour
         playerData.OnPlayerHealed -= HandlePlayerHealed;
     }
 
-    public void HandlePlayerDamage(int currentHealth)
+    public void HandlePlayerDamage(float currentHealth)
     {
-        Debug.Log(currentHealth);
-        NotifyServer server = GameObject.FindWithTag(TagManager.GameLogic).GetComponent<NotifyServer>();
         server.NotifyClientHealthServerRpc(playerData.GetUsername(), currentHealth);
 
         if (currentHealth <= 0 && !playerData.IsPlayerDead())
@@ -48,8 +48,9 @@ public class PlayerHealthManager : MonoBehaviour
         }
     }
 
-    public void HandlePlayerHealed(int currentHealth)
+    public void HandlePlayerHealed(float currentHealth)
     {
+        server.NotifyClientHealthServerRpc(playerData.GetUsername(), currentHealth);
         FindObjectOfType<AudioManager>().Play("PlayerHeal");
     }
 

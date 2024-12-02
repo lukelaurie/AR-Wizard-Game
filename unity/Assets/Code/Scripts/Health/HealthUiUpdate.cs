@@ -35,7 +35,7 @@ public class HealthUiUpdate : MonoBehaviour
         }
     }
 
-    private void InitHealthBar(System.Tuple<string, int> partyMember)
+    private void InitHealthBar(System.Tuple<string, float> partyMember)
     {
         GameObject playerHealthBar = Instantiate(healthBar, transform);
         PlayerHealthBar healthBarScript = playerHealthBar.GetComponent<PlayerHealthBar>();
@@ -49,19 +49,19 @@ public class HealthUiUpdate : MonoBehaviour
         healthBarScript.SetPlayerName(partyMember.Item1);
     }
 
-    private List<Tuple<string, int>> GetPlayerInformation(string roomsJson)
+    private List<Tuple<string, float>> GetPlayerInformation(string roomsJson)
     {
-        var curRooms = JsonConvert.DeserializeObject<Dictionary<string, int>>(roomsJson);
-        var playerHealth = new List<Tuple<string, int>>();
+        var curRooms = JsonConvert.DeserializeObject<Dictionary<string, float>>(roomsJson);
+        var playerHealth = new List<Tuple<string, float>>();
         var sortedPlayerNames = curRooms.Keys.OrderBy(key => key);
 
         // add the current player information first 
-        playerHealth.Add(new Tuple<string, int>(playerData.GetUsername(), playerData.GetHealth()));
+        playerHealth.Add(new Tuple<string, float>(playerData.GetUsername(), playerData.GetHealth()));
 
         foreach (var key in sortedPlayerNames)
         {
             if (key != playerData.GetUsername())
-                playerHealth.Add(new Tuple<string, int>(key, curRooms[key]));
+                playerHealth.Add(new Tuple<string, float>(key, curRooms[key]));
         }
 
         return playerHealth;

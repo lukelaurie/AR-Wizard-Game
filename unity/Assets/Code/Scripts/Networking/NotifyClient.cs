@@ -8,6 +8,20 @@ using UnityEngine.UI;
 
 public class NotifyClient : NetworkBehaviour
 {
+    [SerializeField] private GameObject fireball;
+    [SerializeField] private GameObject lightning;
+    [SerializeField] private GameObject rock;
+    private PlayerData clientData;
+    private PlayerShoot playerShoot;
+    private NotifyServer server;
+
+    void Start()
+    {
+        clientData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
+        playerShoot = GameObject.FindWithTag(TagManager.GameLogic).GetComponent<PlayerShoot>();
+        server = GameObject.FindWithTag(TagManager.GameLogic).GetComponent<NotifyServer>();
+    }
+
     [ClientRpc]
     public void JoinGameClientRpc()
     {
@@ -71,10 +85,8 @@ public class NotifyClient : NetworkBehaviour
         if (!IsOwner)
             return;
 
+        Enemy bossScript = ScreenToggle.FindGameObjectWithTag(TagManager.BossParent).GetComponent<Enemy>();
         // have the boss play its death animation first
-        GameObject boss = ScreenToggle.FindGameObjectWithTag(TagManager.BossParent);
-        Enemy bossScript = boss.GetComponent<Enemy>();
-
         StartCoroutine(bossScript.PlayBossDeath(2f, () => WinGameScreen(rewardsDictJson)));
     }
 
@@ -84,7 +96,6 @@ public class NotifyClient : NetworkBehaviour
         if (!IsOwner || IsHost)
             return;
 
-        var clientData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
         clientData.ResetHealth();
         ScreenToggle.ToggleGameObjectWithTag(false, TagManager.LoseBackground);
         ScreenToggle.ToggleGameObjectWithTag(true, TagManager.JoinRoom);
@@ -110,11 +121,10 @@ public class NotifyClient : NetworkBehaviour
 
         GameObject partyObj = GameObject.FindWithTag(TagManager.PartyHealth);
 
-        // dont change the health bars if not yet instantiated
+        // don't change the health bars if not yet instantiated
         if (partyObj == null)
             return;
 
-        Debug.Log(roomsJson);
         HealthUiUpdate partyHealthScript = partyObj.GetComponent<HealthUiUpdate>();
         partyHealthScript.UpdateHealthBars(roomsJson);
     }
@@ -142,11 +152,42 @@ public class NotifyClient : NetworkBehaviour
 
     }
 
+    [ClientRpc]
+    public void SpawnOtherPlayerSpellClientRpc(Vector3 spawnPos, Vector3 direction, string casterUsername, string spell)
+    {
+        if (!IsOwner || clientData.GetUsername() == casterUsername)
+            return;
+
+        GameObject spellPrefab = null;
+        float spellSpeed = 0f;
+
+        switch (spell)
+        {
+            case "fireball":
+                spellPrefab = fireball;
+                spellSpeed = 8f;
+                break;
+            case "lightning":
+                spellPrefab = lightning;
+                spellSpeed = 8f;
+                break;
+            case "rock":
+                spellPrefab = rock;
+                spellSpeed = 8f;
+                break;
+        }
+
+        GameObject projectile = Instantiate(spellPrefab, spawnPos, Quaternion.LookRotation(direction));
+
+        projectile.GetComponent<IBossSpell>().SetDamage(0);
+        projectile.GetComponent<Rigidbody>().velocity = direction * spellSpeed;
+
+    }
+
     private void WinGameScreen(string rewardsDictJson)
     {
         ScreenToggle.ToggleGameObjectWithTag(false, TagManager.GameBackground);
         ScreenToggle.ToggleGameObjectWithTag(true, TagManager.WinBackground);
-        var clientData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
 
         Dictionary<string, int> rewards = JsonConvert.DeserializeObject<Dictionary<string, int>>(rewardsDictJson);
 
@@ -168,8 +209,6 @@ public class NotifyClient : NetworkBehaviour
 
     private void EnableSpellShootingScript()
     {
-        var playerShoot = GameObject.FindWithTag(TagManager.GameLogic).GetComponent<PlayerShoot>();
-
         if (playerShoot == null)
         {
             Debug.Log("Unable to find shoot script");
@@ -183,9 +222,6 @@ public class NotifyClient : NetworkBehaviour
     private void NotifyClientsUserHealth()
     {
         // send a request to all other clients so they can show the hp of this user
-        NotifyServer server = GameObject.FindWithTag(TagManager.GameLogic).GetComponent<NotifyServer>();
-        var clientData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
-
         server.NotifyClientHealthServerRpc(clientData.GetUsername(), clientData.GetHealth());
     }
 

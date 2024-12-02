@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Lightning : MonoBehaviour
+public class Lightning : MonoBehaviour, IBossSpell
 {
     private float damageAmount;
     private bool hasDamagedBoss = false;
