@@ -14,10 +14,10 @@ public class SpellBar : MonoBehaviour
     [SerializeField] private RectTransform healCoolDownIndicator;
     [SerializeField] private RectTransform rockCoolDownIndicator;
 
-    private float timeUnitlFireballOffCoolDown = 0f;
-    private float timeUnitlLightningOffCoolDown = 0f;
-    private float timeUnitlHealOffCoolDown = 0f;
-    private float timeUnitlRockOffCoolDown = 0f;
+    private float timeUnitlFireballOffCoolDown;
+    private float timeUnitlLightningOffCoolDown;
+    private float timeUnitlHealOffCoolDown;
+    private float timeUnitlRockOffCoolDown;
 
     private PlayerData playerData;
 
@@ -66,6 +66,11 @@ public class SpellBar : MonoBehaviour
         {
             rockButton.gameObject.SetActive(false);
         }
+
+        timeUnitlFireballOffCoolDown = 0f;
+        timeUnitlLightningOffCoolDown = 0f;
+        timeUnitlHealOffCoolDown = 0f;
+        timeUnitlRockOffCoolDown = 0f;
     }
 
     // Update is called once per frame
