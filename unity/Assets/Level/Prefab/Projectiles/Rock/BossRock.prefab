@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5054829605388025207}
   - component: {fileID: 3940379634352894702}
   - component: {fileID: 8466430597097077336}
-  - component: {fileID: 5342064407283540095}
+  - component: {fileID: 8108625183233810751}
   m_Layer: 9
   m_Name: BossRock
   m_TagString: Fireball
@@ -231,7 +231,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &5342064407283540095
+--- !u!114 &8108625183233810751
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -240,7 +240,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2498187935734536976}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9496afcb6a363684999a2c5c8beaf64b, type: 3}
+  m_Script: {fileID: 11500000, guid: 218b1b8d3d3eeab4bbbfed1b51559d5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  crumble: {fileID: 9172233667358306048, guid: 0633e8646ab4b485387e8f4786d40e03, type: 3}
+  puddle: {fileID: 9172233667358306048, guid: 0633e8646ab4b485387e8f4786d40e03, type: 3}

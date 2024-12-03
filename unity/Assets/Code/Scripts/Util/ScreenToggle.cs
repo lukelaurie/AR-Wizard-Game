@@ -4,12 +4,6 @@ using UnityEngine;
 
 public class ScreenToggle : MonoBehaviour
 {
-    public static void ToggleGameObjectWithTag(bool on, string tag)
-    {
-        var obj = FindGameObjectWithTag(tag);
-        obj.SetActive(on);
-    }
-
     public static GameObject FindGameObjectWithTag(string tag)
     {
         GameObject[] allObjects = GameObject.FindObjectsOfType<GameObject>(true);

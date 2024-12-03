@@ -52,7 +52,7 @@ public class BossData : NetworkBehaviour
 
     private void SelectRandomBoss()
     {
-        string[] bosses = { "hydra", "basilisk" };
+        string[] bosses = { "lavaspewer-tier1", "basilisk-tier2", "hydra-tier3", "toxicdragon-tier4" };
 
         // select a random string from the list of bosses 
         System.Random random = new System.Random();

@@ -10,7 +10,6 @@ public class RoomHealth : MonoBehaviour
 {
     private Dictionary<string, float> roomHealth;
 
-    // Start is called before the first frame update
     void Start()
     {
         roomHealth = new Dictionary<string, float>();
