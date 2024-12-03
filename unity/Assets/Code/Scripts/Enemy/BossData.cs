@@ -45,7 +45,9 @@ public class BossData : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     private void UpdateHealthServerRpc(float newHealth)
     {
+        Debug.Log(bossHealth.Value);
         bossHealth.Value = newHealth;
+        Debug.Log(newHealth);
 
         if (bossHealth.Value <= 0)
         {
