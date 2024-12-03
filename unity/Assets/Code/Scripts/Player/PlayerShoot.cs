@@ -13,7 +13,7 @@ public class PlayerShoot : NetworkBehaviour
     [SerializeField] private Image healFX;
 
     private readonly float fireballSpeed = 8f;
-    private readonly float rockSpeed = 3f;
+    private readonly float rockSpeed = 8f;
     private readonly float lightningSpawnDist = 2f;
     private readonly string fireballName = "fireball";
     private readonly string lightningName = "lightning";
@@ -68,8 +68,7 @@ public class PlayerShoot : NetworkBehaviour
     {
         Vector3 spawnPos = playerCamera.transform.position;
         Vector3 fireballDirection = playerCamera.transform.forward;
-
-        GameObject projectile = Instantiate(fireball, spawnPos, Quaternion.LookRotation(fireballDirection));
+        GameObject projectile = Instantiate(fireball, spawnPos, Quaternion.Euler(0, 0, 0));
 
         projectile.GetComponent<PlayerFireball>().SetDamage(CalcAmount(fireballName));
         projectile.GetComponent<Rigidbody>().velocity = fireballDirection * fireballSpeed;

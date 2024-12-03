@@ -35,7 +35,7 @@ public class PlayerFireball : MonoBehaviour, IPlayerSpell
         {
             if (damageAmount != 0)
                 enemyComponent.TakeDamage(damageAmount);
-                
+
             Instantiate(explosion, collision.contacts[0].point, Quaternion.identity);
             Destroy(gameObject);
         }

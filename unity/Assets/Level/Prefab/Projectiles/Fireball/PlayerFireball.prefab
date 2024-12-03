@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7685370459061181579}
   - component: {fileID: 5126716073493746392}
   - component: {fileID: 7912530055035393567}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4850,7 +4850,7 @@ GameObject:
   - component: {fileID: 7280216223017904325}
   - component: {fileID: 3242598608901185324}
   - component: {fileID: 1847054190772277105}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Sparks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9689,7 +9689,7 @@ GameObject:
   - component: {fileID: 2192716163870708243}
   - component: {fileID: 3868561665658111540}
   - component: {fileID: 5729650093480757326}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Fireball_Particles_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14528,7 +14528,7 @@ GameObject:
   - component: {fileID: 7028695985844102021}
   - component: {fileID: 1575202577389374553}
   - component: {fileID: 5485443894780681122}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: OuterGlow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19362,7 +19362,7 @@ GameObject:
   - component: {fileID: 7691871114072602530}
   - component: {fileID: 681274945118198257}
   - component: {fileID: -4266536172778724927}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: PlayerFireball
   m_TagString: Fireball
   m_Icon: {fileID: 0}
