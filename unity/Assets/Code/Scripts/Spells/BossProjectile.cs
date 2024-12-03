@@ -19,8 +19,10 @@ public class BossProjectile : MonoBehaviour
         Debug.Log("here");
         if (!collision.gameObject.CompareTag(TagManager.Player))
         {
-            return;
+            Instantiate(puddle, collision.contacts[0].point, Quaternion.identity);
+            Destroy(gameObject);
         }
+
         Debug.Log("here1");
         var networkObject = collision.gameObject.GetComponent<NetworkObject>();
         if (networkObject.IsOwner)
