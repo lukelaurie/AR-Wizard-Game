@@ -17,4 +17,5 @@ public static class TagManager
     public const string WinBackground = "WinBackground";
     public const string PartyHealth = "PartyHealth";
     public const string Player = "Player";
+    public const string Scenary = "ScenaryAr";
 }

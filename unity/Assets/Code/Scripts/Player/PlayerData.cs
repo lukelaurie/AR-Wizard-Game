@@ -14,9 +14,10 @@ public class PlayerData : MonoBehaviour
     private bool isPlayerDead = false;
     private int selectedBossLevel;
 
-    private readonly float MAX_HEALTH = 50f;
-    private float health = 50f;
+    private readonly float MAX_HEALTH = 100f;
+    private float health = 100f;
     private Dictionary<string, int> spells;
+    private Texture2D targetImage;
 
 
     public string GetUsername()
@@ -58,6 +59,12 @@ public class PlayerData : MonoBehaviour
     {
         return selectedBossLevel;
     }
+
+    public Texture2D GetTargetImage()
+    {
+        return targetImage;
+    }
+
     public bool IsSpellUnlocked(string spellName)
     {
         return spells.ContainsKey(spellName);
@@ -107,5 +114,10 @@ public class PlayerData : MonoBehaviour
     public void SetSpells(Dictionary<string, int> newSpells)
     {
         spells = newSpells;
+    }
+
+    public void SetTargetImage(Texture2D newImage)
+    {
+        targetImage = newImage;
     }
 }

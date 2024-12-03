@@ -9,7 +9,9 @@ using UnityEngine;
 public class Enemy : NetworkBehaviour
 {
     [SerializeField] public GameObject fireball;
-    [SerializeField] public GameObject rock;
+    [SerializeField] public GameObject otherProjectile;
+    [SerializeField] public GameObject attackPuddle;
+
     public Animator enemyAnimator;
 
     private float waitTime = 3.0f;
@@ -44,7 +46,8 @@ public class Enemy : NetworkBehaviour
         if (timer < waitTime)
             return;
 
-        int randAttack = UnityEngine.Random.Range(0, 3);
+        // int randAttack = UnityEngine.Random.Range(0, 3);
+        int randAttack = 1;
 
         switch (randAttack)
         {
@@ -81,7 +84,7 @@ public class Enemy : NetworkBehaviour
         else
         {
             FindObjectOfType<AudioManager>().Play("AlbinoRoarAttack");
-            spawnObj = rock;
+            spawnObj = otherProjectile;
             speed = 11f;
             numberOfObjects = 9;
         }
@@ -91,12 +94,13 @@ public class Enemy : NetworkBehaviour
             //calc spawn pos based on angle
             float spawnX = transform.position.x + Mathf.Cos(angle * Mathf.Deg2Rad) * radius;
             float spawnZ = transform.position.z + Mathf.Sin(angle * Mathf.Deg2Rad) * radius;
-            float spawnY = transform.position.y + 1f; //spawns above slightly
+            float spawnY = transform.position.y + .25f; //spawns above slightly
             Vector3 spawnPosition = new Vector3(spawnX, spawnY, spawnZ);
 
             GameObject spawnedObj = Instantiate(spawnObj, spawnPosition, Quaternion.identity);
 
-            IBossSpell spellScript = (name == "fireball") ? spawnedObj.GetComponent<BossFireball>() : spawnedObj.GetComponent<BossRock>();
+            // IBossSpell spellScript = (name == "fireball") ? spawnedObj.GetComponent<BossFireball>() : spawnedObj.GetComponent<BossRock>();
+            BossProjectile spellScript = spawnedObj.GetComponent<BossProjectile>();
             spellScript.SetDamage(10f);
 
             Rigidbody rb = spawnedObj.GetComponent<Rigidbody>();
@@ -184,6 +188,8 @@ public class Enemy : NetworkBehaviour
         canPlayAnim = false;
         StartCoroutine(WaitAndThrowObjects(2f, "rock"));
         FindObjectOfType<AudioManager>().Play("AlbinoJump");
+
+        Instantiate(attackPuddle, gameObject.transform.position, Quaternion.identity);
     }
 
     public void BossFireballAttack()

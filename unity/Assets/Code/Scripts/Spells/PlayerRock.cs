@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerRock : MonoBehaviour, IBossSpell
+public class PlayerRock : MonoBehaviour, IPlayerSpell
 {
     private float damageAmount;
     private float lifetime = 4f;
     [SerializeField] private GameObject crumble;
-    // Start is called before the first frame update
+
     void Start()
     {
         Destroy(gameObject, lifetime);
@@ -32,7 +32,9 @@ public class PlayerRock : MonoBehaviour, IBossSpell
 
         if (parentObject.TryGetComponent<Enemy>(out Enemy enemyComponent))
         {
-            enemyComponent.TakeDamage(damageAmount);
+            if (damageAmount != 0)
+                enemyComponent.TakeDamage(damageAmount);
+                
             Instantiate(crumble, collision.contacts[0].point, Quaternion.identity);
             Destroy(gameObject);
         }

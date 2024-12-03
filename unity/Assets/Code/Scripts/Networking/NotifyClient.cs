@@ -28,27 +28,15 @@ public class NotifyClient : NetworkBehaviour
         if (!IsOwner)
             return;
 
-        ScreenToggle.ToggleGameObjectWithTag(true, TagManager.GameBackground);
         EnableSpellShootingScript();
-
-        // try to get the Game object from the scene
-        try
-        {
-            GameObject joinRoomUI = GameObject.FindWithTag(TagManager.JoinRoom);
-            joinRoomUI.SetActive(false);
-        }
-        catch
-        {
-            Debug.Log("Look! No error is thrown because it was caught and this printed instead!!!!");
-        }
         StartGameAr.StartNewGame();
 
         // if the dragon exists in scene already just start the game 
         GameObject dragon = ScreenToggle.FindGameObjectWithTag(TagManager.BossParent);
         if (dragon != null)
-            ToggleGameStart();
+            ToggleOffPlacementText();
 
-        ScreenToggle.ToggleGameObjectWithTag(true, TagManager.PartyHealth);
+        SwapScreens.Instance.ToggleGameBackgroundClient();
         NotifyClientsUserHealth();
     }
 
@@ -58,25 +46,7 @@ public class NotifyClient : NetworkBehaviour
         if (!IsOwner)
             return;
 
-        ScreenToggle.ToggleGameObjectWithTag(false, TagManager.DeathBackground);
-        ScreenToggle.ToggleGameObjectWithTag(false, TagManager.GameBackground);
-        ScreenToggle.ToggleGameObjectWithTag(false, TagManager.SpellPanel);
-
-        var loseBackground = ScreenToggle.FindGameObjectWithTag(TagManager.LoseBackground);
-        loseBackground.SetActive(true);
-
-        TMPro.TMP_Text childText = loseBackground.transform.GetChild(1).GetComponent<TMPro.TMP_Text>();
-        Transform tryAgainButton = loseBackground.transform.Find("TryAgain");
-        if (IsHost)
-        {
-            childText.text = "Try Again...";
-            tryAgainButton.gameObject.SetActive(true);
-        }
-        else
-        {
-            childText.text = "Waiting For Host...";
-            tryAgainButton.gameObject.SetActive(false);
-        }
+        SwapScreens.Instance.ToggleLossScreen();
     }
 
     [ClientRpc]
@@ -96,11 +66,9 @@ public class NotifyClient : NetworkBehaviour
         if (!IsOwner || IsHost)
             return;
 
+        SwapScreens.Instance.ToggleResetGameClient();
+
         clientData.ResetHealth();
-        ScreenToggle.ToggleGameObjectWithTag(false, TagManager.LoseBackground);
-        ScreenToggle.ToggleGameObjectWithTag(true, TagManager.JoinRoom);
-
-
         NotifyClientsUserHealth();
     }
 
@@ -110,7 +78,9 @@ public class NotifyClient : NetworkBehaviour
         if (!IsOwner)
             return;
 
-        ToggleGameStart();
+        ToggleOffPlacementText();
+        SwapScreens.Instance.ToggleGameBackgroundClient();
+        NotifyClientsUserHealth();
     }
 
     [ClientRpc]
@@ -149,7 +119,6 @@ public class NotifyClient : NetworkBehaviour
                 bossScript.BossFireballAttack();
                 break;
         }
-
     }
 
     [ClientRpc]
@@ -179,32 +148,24 @@ public class NotifyClient : NetworkBehaviour
 
         GameObject projectile = Instantiate(spellPrefab, spawnPos, Quaternion.LookRotation(direction));
 
-        projectile.GetComponent<IBossSpell>().SetDamage(0);
+        projectile.GetComponent<IPlayerSpell>().SetDamage(0);
         projectile.GetComponent<Rigidbody>().velocity = direction * spellSpeed;
 
     }
 
     private void WinGameScreen(string rewardsDictJson)
     {
-        ScreenToggle.ToggleGameObjectWithTag(false, TagManager.GameBackground);
-        ScreenToggle.ToggleGameObjectWithTag(true, TagManager.WinBackground);
-
         Dictionary<string, int> rewards = JsonConvert.DeserializeObject<Dictionary<string, int>>(rewardsDictJson);
-
         var reward = rewards[clientData.GetUsername()];
-        GameObject winBackground = GameObject.FindWithTag(TagManager.WinBackground);
-        TMPro.TMP_Text childText = winBackground.transform.GetChild(3).GetComponent<TMPro.TMP_Text>();
-        childText.text = reward.ToString();
+
+        SwapScreens.Instance.ToggleWinScreen(reward);
     }
 
-    private void ToggleGameStart()
+    private void ToggleOffPlacementText()
     {
         GameObject gameBackground = GameObject.FindWithTag(TagManager.GameBackground);
         TMPro.TMP_Text placeBossText = gameBackground.transform.GetChild(0).GetComponent<TMPro.TMP_Text>();
-
         placeBossText.text = "";
-        ScreenToggle.ToggleGameObjectWithTag(true, TagManager.SpellPanel);
-        NotifyClientsUserHealth();
     }
 
     private void EnableSpellShootingScript()
@@ -224,10 +185,4 @@ public class NotifyClient : NetworkBehaviour
         // send a request to all other clients so they can show the hp of this user
         server.NotifyClientHealthServerRpc(clientData.GetUsername(), clientData.GetHealth());
     }
-
-    private Dictionary<string, int> DeserializeRooms(string json)
-    {
-        return JsonConvert.DeserializeObject<Dictionary<string, int>>(json);
-    }
-
 }

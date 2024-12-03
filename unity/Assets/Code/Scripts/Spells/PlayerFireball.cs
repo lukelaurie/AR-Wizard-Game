@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
-public class PlayerFireball : MonoBehaviour, IBossSpell
+public class PlayerFireball : MonoBehaviour, IPlayerSpell
 {
     private float damageAmount;
     private float lifetime = 4f;
