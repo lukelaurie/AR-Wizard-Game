@@ -125,7 +125,7 @@ func EndGame(w http.ResponseWriter, r *http.Request) {
 	for _, player := range curRoom {
 		delete(userRooms, player)
 		// get the reward of the player for defeating the boss
-		playerCoins, err := game.GetReward(reqBody.BossName, reqBody.Level)
+		playerCoins, err := game.GetReward(reqBody.Level)
 		if err != nil {
 			utils.LogAndAddServerError(err, w)
 			return
