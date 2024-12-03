@@ -18,6 +18,7 @@ public class SwapScreens : MonoBehaviour
     [SerializeField] private GameObject startGameScreens;
     [SerializeField] private GameObject createRoomScreen;
     [SerializeField] private GameObject joinRoomScreen;
+    [SerializeField] private GameObject takePictureScreen;
     [SerializeField] private GameObject joinRoomEnterIdScreen;
     [SerializeField] private GameObject joinRoomStartScreen;
     
@@ -63,17 +64,22 @@ public class SwapScreens : MonoBehaviour
         SceneManager.LoadScene("Game", LoadSceneMode.Single);
     }
 
-    public void ToggleHostScreen()
+    public void ToggleTakePictureScreen()
     {
         mainScreens.SetActive(false);
-        joinRoomScreen.SetActive(false);
+        startGameScreens.SetActive(true);
+        takePictureScreen.SetActive(true);
+    }
+
+    public void ToggleHostScreen()
+    {
+        takePictureScreen.SetActive(false);
         createRoomScreen.SetActive(true);
     }
 
     public void ToggleJoinScreen()
     {
-        mainScreens.SetActive(false);
-        createRoomScreen.SetActive(false);
+        takePictureScreen.SetActive(false);
         joinRoomScreen.SetActive(true);
     }
 

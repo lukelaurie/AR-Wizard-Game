@@ -23,33 +23,61 @@ public class StartGameAr : MonoBehaviour
     public static event Action OnStartSharedSpace;
 
     private static string roomId = "";
+    private PlayerData playerData;
 
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
 
+        playerData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
         SetRandomUserId();
 
-        joinServerButton.onClick.AddListener(SwapScreens.Instance.ToggleJoinScreen);
-        startServerButton.onClick.AddListener(SwapScreens.Instance.ToggleHostScreen);
-
-        BlitImageForColocalization.OnTextureRendered += BlitImageForColocalizationOnTextureRender;
+        joinServerButton.onClick.AddListener(StartJoinScreen);
+        startServerButton.onClick.AddListener(StartHostScreen);
 
         NetworkManager.Singleton.OnClientDisconnectCallback += OnDisconnectedFromHost;
     }
 
-    private void OnDestroy()
+    private void StartJoinScreen()
     {
-        BlitImageForColocalization.OnTextureRendered -= BlitImageForColocalizationOnTextureRender;
+        playerData.SetIsPlayerHost(false);
+        SwapScreens.Instance.ToggleTakePictureScreen();
     }
 
-    private void BlitImageForColocalizationOnTextureRender(Texture2D texture)
+    private void StartHostScreen()
     {
-        targetImage = texture;
+        playerData.SetIsPlayerHost(true);
+        SwapScreens.Instance.ToggleTakePictureScreen();
+    }
+
+    private void SetRandomUserId()
+    {
+        System.Random random = new System.Random();
+        int randomNumber = random.Next();
+        PrivacyData.SetUserId(randomNumber.ToString());
+    }
+
+    private void OnDisconnectedFromHost(ulong clientId)
+    {
+        if (NetworkManager.Singleton.LocalClientId == clientId)
+        {
+            try
+            {
+                SwapScreens.Instance.QuitGame();
+            }
+            catch
+            {
+                Debug.Log("Look! No error is thrown because it was caught and this printed instead!!!!");
+            }
+
+        }
+    }
+
+    public void BlitImageForColocalizationOnTextureRender()
+    {
+        targetImage = playerData.GetTargetImage();
 
         const int MAX_AMOUNT_CLIENTS_ROOM = 34;
-
-        OnStartSharedSpace?.Invoke(); // show the image & retake button
 
         if (sharedSpaceManager.GetColocalizationType() == SharedSpaceManager.ColocalizationType.MockColocalization)
         {
@@ -77,12 +105,6 @@ public class StartGameAr : MonoBehaviour
         }
     }
 
-    private void SetRandomUserId()
-    {
-        System.Random random = new System.Random();
-        int randomNumber = random.Next();
-        PrivacyData.SetUserId(randomNumber.ToString());
-    }
 
     public static void SetRoomId(string newRoomId)
     {
@@ -92,21 +114,5 @@ public class StartGameAr : MonoBehaviour
     public static void StartNewGame()
     {
         OnStartGame?.Invoke();
-    }
-
-    private void OnDisconnectedFromHost(ulong clientId)
-    {
-        if (NetworkManager.Singleton.LocalClientId == clientId)
-        {
-            try
-            {
-                SwapScreens.Instance.QuitGame();
-            }
-            catch
-            {
-                Debug.Log("Look! No error is thrown because it was caught and this printed instead!!!!");
-            }
-
-        }
     }
 }

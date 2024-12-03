@@ -20,6 +20,7 @@ TagManager:
   - AlbinoMesh
   - Boss
   - PartyHealth
+  - ScenaryAr
   layers:
   - Default
   - TransparentFX

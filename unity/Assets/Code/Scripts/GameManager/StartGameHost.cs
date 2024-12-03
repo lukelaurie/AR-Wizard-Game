@@ -28,10 +28,11 @@ public class StartGameHost : MonoBehaviour
         roomIdText.text = roomId;
         StartGameAr.SetRoomId(roomId);
 
-        OnStartSharedSpaceHost?.Invoke();
+        StartGameAr startGameAr = GameObject.FindWithTag(TagManager.Scenary).GetComponent<StartGameAr>();
+        startGameAr.BlitImageForColocalizationOnTextureRender();
 
-        NetworkManager.Singleton.StartHost();
         Debug.Log("Starting The AR Dedicated Server...");
+        NetworkManager.Singleton.StartHost();
 
         playerData.SetIsPlayerHost(true);
 

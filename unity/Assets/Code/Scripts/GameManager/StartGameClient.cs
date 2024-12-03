@@ -43,10 +43,12 @@ public class StartGameClient : MonoBehaviour
         isInGame = true;
         StartGameAr.SetRoomId(roomId);
         SwapScreens.Instance.ToggleClientJoinGame();
-        OnJoinSharedSpaceClient?.Invoke();
 
-        NetworkManager.Singleton.StartClient();
+        StartGameAr startGameAr = GameObject.FindWithTag(TagManager.Scenary).GetComponent<StartGameAr>();
+        startGameAr.BlitImageForColocalizationOnTextureRender();
+
         Debug.Log("Starting AR Client...");
+        NetworkManager.Singleton.StartClient();
 
         playerData.SetIsPlayerHost(false);
     }
