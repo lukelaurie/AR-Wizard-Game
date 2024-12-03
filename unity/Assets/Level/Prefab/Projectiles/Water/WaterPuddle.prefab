@@ -4840,6 +4840,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5539289906971657335}
   - component: {fileID: 5740546697661546531}
+  - component: {fileID: -5477171930983770191}
   m_Layer: 0
   m_Name: WaterPuddle
   m_TagString: Untagged
@@ -4962,6 +4963,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-5477171930983770191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1316801036678416962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6d38067533f8b141ba5797afac8d87c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4202222074073444855
 GameObject:
   m_ObjectHideFlags: 0

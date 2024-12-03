@@ -10,6 +10,8 @@ public class Enemy : NetworkBehaviour
 {
     [SerializeField] public GameObject fireball;
     [SerializeField] public GameObject otherProjectile;
+    [SerializeField] public GameObject attackPuddle;
+
     public Animator enemyAnimator;
 
     private float waitTime = 3.0f;
@@ -44,7 +46,8 @@ public class Enemy : NetworkBehaviour
         if (timer < waitTime)
             return;
 
-        int randAttack = UnityEngine.Random.Range(0, 3);
+        // int randAttack = UnityEngine.Random.Range(0, 3);
+        int randAttack = 1;
 
         switch (randAttack)
         {
@@ -185,6 +188,8 @@ public class Enemy : NetworkBehaviour
         canPlayAnim = false;
         StartCoroutine(WaitAndThrowObjects(2f, "rock"));
         FindObjectOfType<AudioManager>().Play("AlbinoJump");
+
+        Instantiate(attackPuddle, gameObject.transform.position, Quaternion.identity);
     }
 
     public void BossFireballAttack()

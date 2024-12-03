@@ -3952,7 +3952,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1430695479
+  GlobalObjectIdHash: 3409028289
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -3975,6 +3975,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireball: {fileID: 8634321614551258705, guid: 35c21d64ed64245e1a7ec19781848481, type: 3}
   otherProjectile: {fileID: 8021059145285629222, guid: 3a08022fd38240e4b988670b74143ae4, type: 3}
+  attackPuddle: {fileID: 7321197505506881284, guid: 4926e800e903552479f8af1f754e00cd, type: 3}
   enemyAnimator: {fileID: 6488958490796791945}
 --- !u!114 &2614032031521806095
 MonoBehaviour:

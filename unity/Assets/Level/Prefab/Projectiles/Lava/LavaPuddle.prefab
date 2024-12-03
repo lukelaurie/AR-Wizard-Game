@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5522055089425629784}
   - component: {fileID: 7204219446577710474}
   - component: {fileID: 1980394654258040775}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Puddle2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,7 +100,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 7180041696075743209}
   - component: {fileID: 2912553010295642859}
   - component: {fileID: 6253136647162056352}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Puddle1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -218,7 +218,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -249,7 +249,7 @@ GameObject:
   - component: {fileID: 6444268777082071966}
   - component: {fileID: 232893227209954624}
   - component: {fileID: 5949565297208690954}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Puddle3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -336,7 +336,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -365,7 +365,7 @@ GameObject:
   - component: {fileID: 7851239381230724563}
   - component: {fileID: 7372957703086481376}
   - component: {fileID: 7018752494624850422}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Steam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5194,7 +5194,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3551953493643190038}
   - component: {fileID: 2028101066693071194}
-  m_Layer: 0
+  - component: {fileID: 2617253451404382489}
+  m_Layer: 9
   m_Name: LavaPuddle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5316,3 +5317,15 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2617253451404382489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6313371142070455374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6d38067533f8b141ba5797afac8d87c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

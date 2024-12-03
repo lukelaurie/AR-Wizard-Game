@@ -12,7 +12,6 @@ public class PlaceCharacter : NetworkBehaviour
     [SerializeField] private GameObject tier3Boss;
     [SerializeField] private GameObject tier4Boss;
 
-    private int bossLevel;
     private bool isPlaced = false;
     private Camera mainCam;
     private PlayerData playerData;
@@ -142,10 +141,5 @@ public class PlaceCharacter : NetworkBehaviour
     public void ResetIsPlaced()
     {
         isPlaced = false;
-    }
-
-    public void SetBossLevel(int newBossLevel)
-    {
-        bossLevel = newBossLevel;
     }
 }

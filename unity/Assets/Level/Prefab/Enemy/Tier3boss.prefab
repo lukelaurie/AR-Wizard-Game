@@ -2420,6 +2420,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireball: {fileID: 8634321614551258705, guid: 35c21d64ed64245e1a7ec19781848481, type: 3}
   otherProjectile: {fileID: 7922310472881868978, guid: 3b2da3ee8ac951e418f73f8bbf261240, type: 3}
+  attackPuddle: {fileID: 1316801036678416962, guid: cb9d1e240009d1545a53ce7663f668a6, type: 3}
   enemyAnimator: {fileID: 6166749741468998219}
 --- !u!114 &4885582633458461070
 MonoBehaviour:
