@@ -14,8 +14,8 @@ public class PlayerData : MonoBehaviour
     private bool isPlayerDead = false;
     private int selectedBossLevel;
 
-    private readonly float MAX_HEALTH = 50f;
-    private float health = 50f;
+    private readonly float MAX_HEALTH = 100f;
+    private float health = 100f;
     private Dictionary<string, int> spells;
     private Texture2D targetImage;
 

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5522055089425629784}
   - component: {fileID: 7204219446577710474}
   - component: {fileID: 1980394654258040775}
+  - component: {fileID: 4153887314461094205}
   m_Layer: 9
   m_Name: Puddle2
   m_TagString: Untagged
@@ -118,6 +119,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2377c9fbe593ac449924b95e75fe85be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  puddleDamage: 4
+  puddleWidth: 3
+--- !u!54 &4153887314461094205
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1816819123235032914}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &3017719203224046181
 GameObject:
   m_ObjectHideFlags: 0
@@ -131,6 +161,7 @@ GameObject:
   - component: {fileID: 7180041696075743209}
   - component: {fileID: 2912553010295642859}
   - component: {fileID: 6253136647162056352}
+  - component: {fileID: 6418723213089223144}
   m_Layer: 9
   m_Name: Puddle1
   m_TagString: Untagged
@@ -236,6 +267,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2377c9fbe593ac449924b95e75fe85be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  puddleDamage: 4
+  puddleWidth: 3
+--- !u!54 &6418723213089223144
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3017719203224046181}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &4455212586862550939
 GameObject:
   m_ObjectHideFlags: 0
@@ -249,6 +309,7 @@ GameObject:
   - component: {fileID: 6444268777082071966}
   - component: {fileID: 232893227209954624}
   - component: {fileID: 5949565297208690954}
+  - component: {fileID: 866446464025092762}
   m_Layer: 9
   m_Name: Puddle3
   m_TagString: Untagged
@@ -354,6 +415,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2377c9fbe593ac449924b95e75fe85be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  puddleDamage: 4
+  puddleWidth: 3
+--- !u!54 &866446464025092762
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4455212586862550939}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &4956149753758777788
 GameObject:
   m_ObjectHideFlags: 0

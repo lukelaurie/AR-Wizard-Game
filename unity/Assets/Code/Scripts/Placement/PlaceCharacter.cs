@@ -88,10 +88,12 @@ public class PlaceCharacter : NetworkBehaviour
         // checks if the ray from the camera hit a physical game object
         if (Physics.Raycast(ray, out hit))
         {
-            GameObject hitObject = hit.collider.gameObject;
+            Vector3 oppositeDirection = -mainCam.transform.forward;
+            oppositeDirection.y = 0; 
+            // oppositeDirection.z = 0;
 
-            // calculate rotation of the object relative to object location
-            Quaternion rotation = Quaternion.Euler(0, 0, 0);
+            // Set the rotation so that the boss faces the opposite direction of the camera
+            Quaternion rotation = Quaternion.LookRotation(oppositeDirection);
 
             SpawnPlayerServerRpc(hit.point, rotation, NetworkManager.Singleton.LocalClientId);
         }
@@ -120,7 +122,8 @@ public class PlaceCharacter : NetworkBehaviour
     {
         GameObject placementObject = null;
 
-        switch (bossLevel) {
+        switch (bossLevel)
+        {
             case 1:
                 placementObject = tier1Boss;
                 break;

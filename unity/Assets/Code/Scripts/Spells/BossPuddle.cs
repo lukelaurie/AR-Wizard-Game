@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class BossPuddle : MonoBehaviour
 {
-    private float damageAmount;
+    [SerializeField] private float puddleDamage;
+    [SerializeField] private float puddleWidth; 
     private float lifetime;
     private float damageTickTime;
     private float currentTickTime;
@@ -15,19 +16,25 @@ public class BossPuddle : MonoBehaviour
     void Start()
     {
         lifetime = 5f;
-        damageTickTime = 0.5f;
+        damageTickTime = 1f;
         currentTickTime = damageTickTime;
-        maxSize = new Vector3(3f, 0f, 3f);
+
+        // get a random range on the puddle width 
+        float randPuddleWidth = UnityEngine.Random.Range(puddleWidth - 1f, puddleWidth + 2f);
+        maxSize = new Vector3(randPuddleWidth, 0f, randPuddleWidth);
 
         StartCoroutine(GrowPuddle());
         Destroy(gameObject, lifetime);
     }
 
-    void OnCollisionEnter(Collision other)
-    // void OnCollisionStay(Collision other)
+    void Update()
     {
-        Debug.Log(currentTickTime);
         currentTickTime += Time.deltaTime;
+    }
+
+    // void OnCollisionEnter(Collision other)
+    void OnCollisionStay(Collision other)
+    {
         if (currentTickTime < damageTickTime || !other.gameObject.CompareTag(TagManager.Player))
         {
             return;
@@ -37,8 +44,7 @@ public class BossPuddle : MonoBehaviour
         if (networkObject.IsOwner)
         {
             PlayerData playerData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
-            Debug.Log("here");
-            playerData.PlayerTakeDamage(5); //TODO
+            playerData.PlayerTakeDamage(puddleDamage);
             currentTickTime = 0f;
         }
     }
@@ -55,10 +61,5 @@ public class BossPuddle : MonoBehaviour
             timePassed += Time.deltaTime;
             yield return null;
         }
-    }
-
-    public void SetDamage(float newDamage)
-    {
-        damageAmount = newDamage;
     }
 }
