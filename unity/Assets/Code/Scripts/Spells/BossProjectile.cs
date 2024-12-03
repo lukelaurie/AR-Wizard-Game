@@ -15,7 +15,6 @@ public class BossProjectile : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("here");
         if (!collision.gameObject.CompareTag(TagManager.Player))
         {
             // Instantiate(puddle, collision.contacts[0].point, Quaternion.identity);
