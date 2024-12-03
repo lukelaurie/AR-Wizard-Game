@@ -7,16 +7,20 @@ using UnityEngine.EventSystems;
 
 public class PlaceCharacter : NetworkBehaviour
 {
-    [SerializeField] private GameObject placementObject;
+    [SerializeField] private GameObject tier1Boss;
+    [SerializeField] private GameObject tier2Boss;
+    [SerializeField] private GameObject tier3Boss;
+    [SerializeField] private GameObject tier4Boss;
 
     private int bossLevel;
     private bool isPlaced = false;
     private Camera mainCam;
-
+    private PlayerData playerData;
     public static event Action characterPlaced;
 
     void Start()
     {
+        playerData = GameObject.FindWithTag("GameInfo").GetComponent<PlayerData>();
         if (mainCam == null)
         {
             mainCam = GameObject.FindObjectOfType<Camera>();
@@ -98,18 +102,41 @@ public class PlaceCharacter : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)] // saying that any client can execute this method
     void SpawnPlayerServerRpc(Vector3 positon, Quaternion rotation, ulong callerID)
     {
+        GameObject placementObject = SelectBossObject(playerData.GetBossLevel());
+
         GameObject character = Instantiate(placementObject, positon, rotation);
-        BossData bossData = character.GetComponent<BossData>();
 
         NetworkObject characterNetworkObject = character.GetComponent<NetworkObject>();
         characterNetworkObject.SpawnWithOwnership(callerID);
         isPlaced = true;
 
-        PlayerData playerData = GameObject.FindWithTag("GameInfo").GetComponent<PlayerData>();
+        BossData bossData = character.GetComponent<BossData>();
         bossData.InitializeBossData(playerData.GetBossLevel());
 
         // notify all the clients that the boss has been placed
         AllClientsInvoker.Instance.InvokePlayerBossPlaced();
+    }
+
+    private GameObject SelectBossObject(int bossLevel)
+    {
+        GameObject placementObject = null;
+
+        switch (bossLevel) {
+            case 1:
+                placementObject = tier1Boss;
+                break;
+            case 2:
+                placementObject = tier2Boss;
+                break;
+            case 3:
+                placementObject = tier3Boss;
+                break;
+            case 4:
+                placementObject = tier4Boss;
+                break;
+        }
+
+        return placementObject;
     }
 
     public void ResetIsPlaced()
