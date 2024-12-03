@@ -163,7 +163,7 @@ public class Enemy : NetworkBehaviour
         }
         else if (canPlayAnim && bossData.GetBossHealth() > 0)
         {
-            enemyAnimator.Play("AlbinoHurt");
+            enemyAnimator.Play("Get Hit");
             canPlayAnim = false;
             StartCoroutine(WaitAndPerformAction(1.5f));
 

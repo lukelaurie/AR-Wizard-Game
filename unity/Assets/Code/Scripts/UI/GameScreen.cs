@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Netcode;
 using UnityEngine;
 
-public class GameScreen : NetworkBehaviour
+public class GameScreen : MonoBehaviour
 {
     [SerializeField] private TMPro.TMP_Text placeBossText;
     private PlaceCharacter placeCharacter;

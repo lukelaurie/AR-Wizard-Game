@@ -20,7 +20,6 @@ public class UpdatePlayerData : MonoBehaviour
         if (!Instance)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {

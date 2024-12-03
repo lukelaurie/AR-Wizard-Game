@@ -12,12 +12,6 @@ public class LogInScreen : MonoBehaviour
     [SerializeField] private TMPro.TMP_InputField passwordField;
     [SerializeField] private Button loginButton;
     [SerializeField] private Button registerPageButton;
-
-    // the canvases needed to start the game 
-    [SerializeField] private GameObject startScreens;
-    [SerializeField] private GameObject mainMenu;
-    [SerializeField] private GameObject gameStateScreens;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -29,8 +23,6 @@ public class LogInScreen : MonoBehaviour
 
     private async void IsLoggedIn()
     {
-        // UnityWebRequest.ClearCookieCache();        
-
         // check if the user is already logged in 
         string username = await AccountManager.Instance.IsLoggedIn();
 
@@ -39,7 +31,8 @@ public class LogInScreen : MonoBehaviour
             var clientData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
             clientData.SetUsername(username);
 
-            SwapMainPage();
+            SwapScreens.Instance.ToggleMainPage();
+            gameObject.SetActive(false);
         }
     }
 
@@ -87,7 +80,8 @@ public class LogInScreen : MonoBehaviour
             var clientData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
             clientData.SetUsername(username);
 
-            SwapMainPage();
+            SwapScreens.Instance.ToggleMainPage();
+            gameObject.SetActive(false);
         }
         else
         {
@@ -95,14 +89,5 @@ public class LogInScreen : MonoBehaviour
             await Task.Delay(2000); // wait for 2 seconds
             invalidText.text = "";
         }
-    }
-
-    private void SwapMainPage()
-    {
-        startScreens.SetActive(true);
-        mainMenu.SetActive(true);
-        gameStateScreens.SetActive(true);
-
-        gameObject.SetActive(false);
     }
 }

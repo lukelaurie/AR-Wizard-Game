@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7151651899680256888}
   - component: {fileID: 2009574209218139382}
   - component: {fileID: 555352218448992731}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WaterBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32,7 +32,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.3318882, y: 0.848, z: -3.725}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -243,4 +243,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 218b1b8d3d3eeab4bbbfed1b51559d5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  puddle: {fileID: 1316801036678416962, guid: cb9d1e240009d1545a53ce7663f668a6, type: 3}

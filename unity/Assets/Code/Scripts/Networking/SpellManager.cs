@@ -16,7 +16,6 @@ public class SpellManager : MonoBehaviour
         if (!Instance)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -115,9 +114,7 @@ public class SpellManager : MonoBehaviour
 
         // parse the response 
         string json = request.downloadHandler.text;
-        Debug.Log($"JSON {json}");
         var spellMap = JsonConvert.DeserializeObject<Dictionary<string, int>>(json);
-        Debug.Log($"MAP {spellMap}");
         return spellMap;
     }
 }

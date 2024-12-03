@@ -14,8 +14,6 @@ public class StartGameClient : MonoBehaviour
     private bool isInGame;
     private PlayerData playerData;
 
-    public static event Action OnJoinSharedSpaceClient;
-
     void Start()
     {
         continueServerButton.onClick.AddListener(JoinRoom);

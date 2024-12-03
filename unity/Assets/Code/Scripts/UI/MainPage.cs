@@ -10,8 +10,9 @@ public class MainPage : MonoBehaviour
     [SerializeField] private Button openStoreButton;
     [SerializeField] private Button returnButton;
     [SerializeField] private Button logoutButton;
-    [SerializeField] private Canvas storeCanvas;
-    [SerializeField] private Canvas homeCanvas;
+
+    [SerializeField] private Button joinServerButton;
+    [SerializeField] private Button startServerButton;
     [SerializeField] private TMPro.TMP_Text coinText;
 
     private PlayerData playerData;
@@ -22,22 +23,30 @@ public class MainPage : MonoBehaviour
         int userCoins = playerData.GetCoinTotal();
         coinText.text = $"Coins:\n{userCoins}";
 
-        openStoreButton.onClick.AddListener(() =>
-        {
-            homeCanvas.gameObject.SetActive(false);
-            storeCanvas.gameObject.SetActive(true);
-        });
+        openStoreButton.onClick.AddListener(SwapScreens.Instance.ToggleStore);
 
-        returnButton.onClick.AddListener(() =>
-        {
-            storeCanvas.gameObject.SetActive(false);
-            homeCanvas.gameObject.SetActive(true);
-        });
+        returnButton.onClick.AddListener(SwapScreens.Instance.ToggleMainFromStore);
+
+        joinServerButton.onClick.AddListener(StartJoinScreen);
+        startServerButton.onClick.AddListener(StartHostScreen);
 
         logoutButton.onClick.AddListener(() =>
         {
             UnityWebRequest.ClearCookieCache();
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            SwapScreens.Instance.QuitGame();
         });
     }
+
+    private void StartJoinScreen()
+    {
+        playerData.SetIsPlayerHost(false);
+        SwapScreens.Instance.ToggleTakePictureScreen();
+    }
+
+    private void StartHostScreen()
+    {
+        playerData.SetIsPlayerHost(true);
+        SwapScreens.Instance.ToggleTakePictureScreen();
+    }
+
 }

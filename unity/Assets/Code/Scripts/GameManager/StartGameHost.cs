@@ -11,8 +11,6 @@ public class StartGameHost : MonoBehaviour
     [SerializeField] private TMPro.TMP_Dropdown bossDropdown;
     private PlayerData playerData;
 
-    public static event Action OnStartSharedSpaceHost;
-
     async void Start()
     {
         playerData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();

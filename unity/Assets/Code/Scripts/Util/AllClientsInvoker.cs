@@ -12,7 +12,6 @@ public class AllClientsInvoker : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -103,10 +102,9 @@ public class AllClientsInvoker : MonoBehaviour
     private async Task<string> EndPlayerGames()
     {
         BossData bossData = GameObject.FindWithTag(TagManager.BossParent).GetComponent<BossData>();
-        string bossName = bossData.GetBossName();
         int bossLevel = bossData.GetBossLevel();
 
-        return await RoomManager.Instance.EndGame(bossName, true, bossLevel);
+        return await RoomManager.Instance.EndGame(true, bossLevel);
     }
 
     private void DestoyDragon()

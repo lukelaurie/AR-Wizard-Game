@@ -21,6 +21,7 @@ TagManager:
   - Boss
   - PartyHealth
   - ScenaryAr
+  - NetworkManagerAr
   layers:
   - Default
   - TransparentFX
@@ -31,7 +32,7 @@ TagManager:
   - Player
   - Lightning
   - Boss
-  - Fireball
+  - BossProjectile
   - PlayerProjectile
   - 
   - 

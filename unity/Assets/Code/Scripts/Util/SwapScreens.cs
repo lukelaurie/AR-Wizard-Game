@@ -21,12 +21,13 @@ public class SwapScreens : MonoBehaviour
     [SerializeField] private GameObject takePictureScreen;
     [SerializeField] private GameObject joinRoomEnterIdScreen;
     [SerializeField] private GameObject joinRoomStartScreen;
-    
-    [SerializeField] private GameObject GameStateScreens;
+
+    [SerializeField] private GameObject gameStateScreens;
     [SerializeField] private GameObject winScreen;
     [SerializeField] private GameObject loseScreen;
     [SerializeField] private GameObject deathScreen;
-    
+    [SerializeField] private GameObject crossHair;
+
     [SerializeField] private GameObject gameScreen;
     [SerializeField] private GameObject spellBar;
     [SerializeField] private GameObject partyHealth;
@@ -39,7 +40,6 @@ public class SwapScreens : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -49,19 +49,43 @@ public class SwapScreens : MonoBehaviour
 
     public void QuitGame()
     {
+        // the game is already in reset state 
+        if (GameObject.FindWithTag(TagManager.Scenary) == null)
+            return;
+
         NetworkManager.Singleton.Shutdown();
-        List<GameObject> netObjects =
-            FindObjectsOfType<NetworkObject>().Select(obj => obj.transform.gameObject).ToList();
+        //     List<GameObject> netObjects =
+        // FindObjectsOfType<NetworkObject>().Select(obj => obj.transform.gameObject).ToList();
 
-        foreach (var obj in netObjects)
-        {
-            Destroy(obj);
-        }
+        //     while (netObjects.Count > 0)
+        //     {
+        //         GameObject removeObj = netObjects[0];
+        //         netObjects.RemoveAt(0);
+        //         Destroy(removeObj);
+        //     }
 
-        Destroy(FindObjectOfType<StartGameAr>().gameObject);
-
-        Destroy(FindObjectOfType<NetworkManager>().transform.gameObject);
+        Destroy(GameObject.FindWithTag(TagManager.Scenary));
+        Destroy(GameObject.FindWithTag(TagManager.NetworkManagerAr));
         SceneManager.LoadScene("Game", LoadSceneMode.Single);
+    }
+
+    public void ToggleMainFromStore()
+    {
+        homeScreen.SetActive(true);
+        storeScreen.SetActive(false);
+    }
+
+    public void ToggleStore()
+    {
+        homeScreen.SetActive(false);
+        storeScreen.SetActive(true);
+    }
+
+    public void ToggleMainPage()
+    {
+        startGameScreens.SetActive(true);
+        mainScreens.SetActive(true);
+        gameStateScreens.SetActive(true);
     }
 
     public void ToggleTakePictureScreen()
@@ -83,12 +107,21 @@ public class SwapScreens : MonoBehaviour
         joinRoomScreen.SetActive(true);
     }
 
+    public void ToggleSpellBarOn()
+    {
+        spellBar.SetActive(true);
+    }
+
     public void ToggleGameBackgroundClient()
     {
         joinRoomScreen.SetActive(false);
         gameScreen.SetActive(true);
-        spellBar.SetActive(true);
         partyHealth.SetActive(true);
+    }
+    
+    public void ToggeOnCrosshair()
+    {
+        crossHair.SetActive(true);
     }
 
     public void ToggleResetGameClient()
@@ -108,6 +141,7 @@ public class SwapScreens : MonoBehaviour
         gameScreen.SetActive(false);
         deathScreen.SetActive(false);
         spellBar.SetActive(false);
+        crossHair.SetActive(false);
         loseScreen.SetActive(true);
 
         // have the host and client display different text
@@ -128,6 +162,7 @@ public class SwapScreens : MonoBehaviour
     public void ToggleWinScreen(int userReward)
     {
         gameScreen.SetActive(false);
+        crossHair.SetActive(false);
         winScreen.SetActive(true);
 
         TMPro.TMP_Text childText = winScreen.transform.GetChild(3).GetComponent<TMPro.TMP_Text>();
@@ -137,6 +172,7 @@ public class SwapScreens : MonoBehaviour
     public void ToggleDeathScreen()
     {
         gameScreen.SetActive(false);
+        crossHair.SetActive(false);
         deathScreen.SetActive(true);
     }
 }

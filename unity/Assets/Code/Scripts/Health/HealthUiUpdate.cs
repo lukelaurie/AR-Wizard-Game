@@ -16,7 +16,7 @@ public class HealthUiUpdate : MonoBehaviour
     void Awake()
     {
         playerData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
-        PLAYER_HEALTH = 50;
+        PLAYER_HEALTH = 100;
     }
 
     public void UpdateHealthBars(string roomsJson)

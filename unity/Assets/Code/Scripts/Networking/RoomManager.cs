@@ -18,7 +18,6 @@ public class RoomManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -122,7 +121,7 @@ public class RoomManager : MonoBehaviour
                 string[] players = JsonConvert.DeserializeObject<string[]>(response);
                 return players;
             }
-            catch (JsonException ex)
+            catch (JsonException)
             {
                 Debug.LogError("Error parsing the json");
                 return null;
@@ -187,12 +186,12 @@ public class RoomManager : MonoBehaviour
         }
     }
 
-    public async Task<string> EndGame(string bossName, bool winStatus, int level)
+    public async Task<string> EndGame(bool winStatus, int level)
     {
         string url = $"{GlobalConfig.baseURL}/api/protected/end-game";
 
         using UnityWebRequest request = new UnityWebRequest(url, "POST");
-        byte[] bodyRaw = Encoding.UTF8.GetBytes("{ \"bossName\": \"" + bossName + "\", \"winStatus\": " + winStatus.ToString().ToLower() + ", \"level\": " + level + " }");
+        byte[] bodyRaw = Encoding.UTF8.GetBytes("{ \"winStatus\": " + winStatus.ToString().ToLower() + ", \"level\": " + level + " }");
         request.uploadHandler = new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");

@@ -32,11 +32,14 @@ public class NotifyClient : NetworkBehaviour
         StartGameAr.StartNewGame();
 
         // if the dragon exists in scene already just start the game 
+        SwapScreens.Instance.ToggleGameBackgroundClient();
         GameObject dragon = ScreenToggle.FindGameObjectWithTag(TagManager.BossParent);
         if (dragon != null)
+        {
             ToggleOffPlacementText();
+            SwapScreens.Instance.ToggleSpellBarOn();
+        }
 
-        SwapScreens.Instance.ToggleGameBackgroundClient();
         NotifyClientsUserHealth();
     }
 
@@ -80,6 +83,8 @@ public class NotifyClient : NetworkBehaviour
 
         ToggleOffPlacementText();
         SwapScreens.Instance.ToggleGameBackgroundClient();
+        SwapScreens.Instance.ToggleSpellBarOn();
+
         NotifyClientsUserHealth();
     }
 
@@ -165,6 +170,7 @@ public class NotifyClient : NetworkBehaviour
     {
         GameObject gameBackground = GameObject.FindWithTag(TagManager.GameBackground);
         TMPro.TMP_Text placeBossText = gameBackground.transform.GetChild(1).GetComponent<TMPro.TMP_Text>();
+        SwapScreens.Instance.ToggeOnCrosshair();
 
         placeBossText.text = "";
     }

@@ -6,7 +6,6 @@ public class BossData : NetworkBehaviour
 {
 
     private int bossLevel;
-    private string bossName;
     private NetworkVariable<float> bossHealth = new NetworkVariable<float>();
     private NetworkVariable<float> maxHealth = new NetworkVariable<float>();
 
@@ -21,9 +20,8 @@ public class BossData : NetworkBehaviour
     {
         bossLevel = level;
         // have the boss health scale with level of the boss
-        float startHealth = 20 * level;
+        float startHealth = 1 * level;
 
-        SelectRandomBoss();
         UpdateHealthServerRpc(startHealth);
         SetMaxHealthServerRpc(startHealth);
     }
@@ -31,11 +29,6 @@ public class BossData : NetworkBehaviour
     public int GetBossLevel()
     {
         return bossLevel;
-    }
-
-    public string GetBossName()
-    {
-        return bossName;
     }
 
     public float GetBossHealth()
@@ -47,18 +40,6 @@ public class BossData : NetworkBehaviour
     public void BossTakeDamage(float damageAmt)
     {
         UpdateHealthServerRpc(bossHealth.Value - damageAmt);
-    }
-
-
-    private void SelectRandomBoss()
-    {
-        string[] bosses = { "lavaspewer-tier1", "basilisk-tier2", "hydra-tier3", "toxicdragon-tier4" };
-
-        // select a random string from the list of bosses 
-        System.Random random = new System.Random();
-        int randIndex = random.Next(bosses.Length);
-
-        bossName = bosses[randIndex];
     }
 
     [ServerRpc(RequireOwnership = false)]

@@ -18,4 +18,5 @@ public static class TagManager
     public const string PartyHealth = "PartyHealth";
     public const string Player = "Player";
     public const string Scenary = "ScenaryAr";
+    public const string NetworkManagerAr = "NetworkManagerAr";
 }

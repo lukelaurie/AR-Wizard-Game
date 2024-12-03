@@ -1,12 +1,11 @@
 using System.Collections;
 using Unity.Netcode;
-using Unity.Netcode.Transports.UTP;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 
-public class LossScreen : NetworkBehaviour
+public class LossScreen : MonoBehaviour
 {
     [SerializeField] private Button tryAgain;
     [SerializeField] private Button quit;
@@ -15,7 +14,7 @@ public class LossScreen : NetworkBehaviour
     private PlayerData playerData;
 
     // Start is called before the first frame update
-    async void Start()
+    void Start()
     {
         playerData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
         placeBoss = GameObject.FindWithTag(TagManager.GameLogic).GetComponent<PlaceCharacter>();
@@ -28,8 +27,7 @@ public class LossScreen : NetworkBehaviour
     {
         if (playerData.IsPlayerHost())
         {
-            BossData bossData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<BossData>();
-            await RoomManager.Instance.EndGame("hydra", false, 1);
+            await RoomManager.Instance.EndGame(false, 1);
         }
         else
         {
@@ -41,6 +39,7 @@ public class LossScreen : NetworkBehaviour
     private void TryAgain()
     {
         placeBoss.ResetIsPlaced();
+        playerData.SetIsPlayerDead(false);
 
         var server = GameObject.FindWithTag(TagManager.GameLogic).GetComponent<NotifyServer>();
         server.ResetClientDeaths();

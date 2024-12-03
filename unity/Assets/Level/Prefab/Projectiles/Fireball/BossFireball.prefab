@@ -19379,7 +19379,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 5.34, z: 0.21}
-  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
+  m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2192716163870708243}
@@ -24350,4 +24350,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 218b1b8d3d3eeab4bbbfed1b51559d5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  puddle: {fileID: 9172233667358306048, guid: 8edb1dc090d511d4086a9defa5c448c7, type: 3}

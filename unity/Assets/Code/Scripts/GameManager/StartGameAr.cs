@@ -16,11 +16,7 @@ public class StartGameAr : MonoBehaviour
     [SerializeField] private Texture2D targetImage;
     [SerializeField] private float targetImageSize;
 
-    [SerializeField] private Button joinServerButton;
-    [SerializeField] private Button startServerButton;
-
     public static event Action OnStartGame;
-    public static event Action OnStartSharedSpace;
 
     private static string roomId = "";
     private PlayerData playerData;
@@ -32,22 +28,7 @@ public class StartGameAr : MonoBehaviour
         playerData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
         SetRandomUserId();
 
-        joinServerButton.onClick.AddListener(StartJoinScreen);
-        startServerButton.onClick.AddListener(StartHostScreen);
-
         NetworkManager.Singleton.OnClientDisconnectCallback += OnDisconnectedFromHost;
-    }
-
-    private void StartJoinScreen()
-    {
-        playerData.SetIsPlayerHost(false);
-        SwapScreens.Instance.ToggleTakePictureScreen();
-    }
-
-    private void StartHostScreen()
-    {
-        playerData.SetIsPlayerHost(true);
-        SwapScreens.Instance.ToggleTakePictureScreen();
     }
 
     private void SetRandomUserId()
@@ -61,15 +42,7 @@ public class StartGameAr : MonoBehaviour
     {
         if (NetworkManager.Singleton.LocalClientId == clientId)
         {
-            try
-            {
-                SwapScreens.Instance.QuitGame();
-            }
-            catch
-            {
-                Debug.Log("Look! No error is thrown because it was caught and this printed instead!!!!");
-            }
-
+            SwapScreens.Instance.QuitGame();
         }
     }
 

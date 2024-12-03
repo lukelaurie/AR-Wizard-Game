@@ -8,13 +8,10 @@ using UnityEngine.XR.ARFoundation;
 public class BlitImageForColocalization : MonoBehaviour
 {
     [SerializeField] private RenderTexture m_RenderTexture;
-    public static event Action<Texture2D> OnTextureRendered;
     
     private ARCameraBackground m_ARCameraBackground;
     private Texture2D _cameraTexture;
     private PlayerData playerData;
-    private bool _textureReady = false;
-
 
     public static BlitImageForColocalization Instance { get; private set; }
 
@@ -105,12 +102,6 @@ public class BlitImageForColocalization : MonoBehaviour
         }
     }
 
-    // public void OnDestroy()
-    // {
-    //     StartGameHost.OnStartSharedSpaceHost -= OnStartSharedSpace;
-    //     StartGameClient.OnJoinSharedSpaceClient -= OnStartSharedSpace;
-    // }
-
     private void CopyRenderTextureTo2DTexture()
     {
 
@@ -127,7 +118,6 @@ public class BlitImageForColocalization : MonoBehaviour
         _cameraTexture.Apply();
         RenderTexture.active = null;
 
-        // OnTextureRendered?.Invoke(_cameraTexture);
         playerData.SetTargetImage(_cameraTexture);
     }
 

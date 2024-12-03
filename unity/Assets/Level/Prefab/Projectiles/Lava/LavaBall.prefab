@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1418137828416338570}
   - component: {fileID: 8177805834501694137}
   - component: {fileID: 9060658714706546895}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: LavaBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32,7 +32,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.705, y: 0.848, z: -3.725}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}

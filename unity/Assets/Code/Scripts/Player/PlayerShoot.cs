@@ -45,7 +45,6 @@ public class PlayerShoot : NetworkBehaviour
         if (!Instance)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {

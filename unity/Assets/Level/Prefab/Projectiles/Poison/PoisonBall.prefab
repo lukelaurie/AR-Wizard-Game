@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7001534035041760500}
   - component: {fileID: 2023918502942388098}
   - component: {fileID: 914416493374698114}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: PoisonBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32,7 +32,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.089, y: 0.6147, z: -4.4127}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -216,7 +216,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 218b1b8d3d3eeab4bbbfed1b51559d5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  puddle: {fileID: 7321197505506881284, guid: 4926e800e903552479f8af1f754e00cd, type: 3}
 --- !u!54 &914416493374698114
 Rigidbody:
   m_ObjectHideFlags: 0

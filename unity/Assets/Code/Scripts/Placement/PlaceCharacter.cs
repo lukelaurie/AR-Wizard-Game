@@ -15,7 +15,6 @@ public class PlaceCharacter : NetworkBehaviour
     private bool isPlaced = false;
     private Camera mainCam;
     private PlayerData playerData;
-    public static event Action characterPlaced;
 
     void Start()
     {
