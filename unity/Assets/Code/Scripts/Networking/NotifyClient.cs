@@ -148,7 +148,7 @@ public class NotifyClient : NetworkBehaviour
 
         GameObject projectile = Instantiate(spellPrefab, spawnPos, Quaternion.LookRotation(direction));
 
-        projectile.GetComponent<IBossSpell>().SetDamage(0);
+        projectile.GetComponent<IPlayerSpell>().SetDamage(0);
         projectile.GetComponent<Rigidbody>().velocity = direction * spellSpeed;
 
     }

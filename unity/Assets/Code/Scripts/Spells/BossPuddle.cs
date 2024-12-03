@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
-public class BossPuddle : MonoBehaviour, IBossSpell
+public class BossPuddle : MonoBehaviour
 {
     private float damageAmount;
     private float lifetime = 4f;

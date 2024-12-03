@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
-public class BossRock : MonoBehaviour, IBossSpell
+public class BossRock : MonoBehaviour
 {
     private float damageAmount;
     private float lifetime = 4f;

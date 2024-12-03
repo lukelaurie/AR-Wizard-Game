@@ -216,7 +216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 218b1b8d3d3eeab4bbbfed1b51559d5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  puddle: {fileID: 0}
+  puddle: {fileID: 7321197505506881284, guid: 4926e800e903552479f8af1f754e00cd, type: 3}
 --- !u!54 &914416493374698114
 Rigidbody:
   m_ObjectHideFlags: 0

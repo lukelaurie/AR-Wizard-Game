@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 5568470661622741333}
   - component: {fileID: 4276111633128954287}
   - component: {fileID: 4962820327145714608}
-  - component: {fileID: 668801939753174835}
   - component: {fileID: -4048477039616369730}
   m_Layer: 6
   m_Name: PlayerAr
@@ -103,20 +102,6 @@ MonoBehaviour:
   fireball: {fileID: 8634321614551258705, guid: d6cd1333671fc964b95053165f336027, type: 3}
   lightning: {fileID: 8297969081835673719, guid: 5b2066b37d9c9e94998ed02b0df55f8e, type: 3}
   rock: {fileID: 2498187935734536976, guid: db7022bfc92160d4ea97fb494037b470, type: 3}
---- !u!114 &668801939753174835
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9110343311535083804}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a85c0f7bdd31c1442b960ed5306e4056, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 0
-  takeDamageSound: {fileID: 8300000, guid: b49720e4fef1f2443b21a52ade62c11c, type: 3}
 --- !u!65 &-4048477039616369730
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -91,12 +91,13 @@ public class Enemy : NetworkBehaviour
             //calc spawn pos based on angle
             float spawnX = transform.position.x + Mathf.Cos(angle * Mathf.Deg2Rad) * radius;
             float spawnZ = transform.position.z + Mathf.Sin(angle * Mathf.Deg2Rad) * radius;
-            float spawnY = transform.position.y + 1f; //spawns above slightly
+            float spawnY = transform.position.y + .25f; //spawns above slightly
             Vector3 spawnPosition = new Vector3(spawnX, spawnY, spawnZ);
 
             GameObject spawnedObj = Instantiate(spawnObj, spawnPosition, Quaternion.identity);
 
-            IBossSpell spellScript = (name == "fireball") ? spawnedObj.GetComponent<BossFireball>() : spawnedObj.GetComponent<BossRock>();
+            // IBossSpell spellScript = (name == "fireball") ? spawnedObj.GetComponent<BossFireball>() : spawnedObj.GetComponent<BossRock>();
+            BossProjectile spellScript = spawnedObj.GetComponent<BossProjectile>();
             spellScript.SetDamage(10f);
 
             Rigidbody rb = spawnedObj.GetComponent<Rigidbody>();
