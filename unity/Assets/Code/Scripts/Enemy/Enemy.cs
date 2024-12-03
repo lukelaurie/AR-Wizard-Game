@@ -9,7 +9,7 @@ using UnityEngine;
 public class Enemy : NetworkBehaviour
 {
     [SerializeField] public GameObject fireball;
-    [SerializeField] public GameObject rock;
+    [SerializeField] public GameObject otherProjectile;
     public Animator enemyAnimator;
 
     private float waitTime = 3.0f;
@@ -81,7 +81,7 @@ public class Enemy : NetworkBehaviour
         else
         {
             FindObjectOfType<AudioManager>().Play("AlbinoRoarAttack");
-            spawnObj = rock;
+            spawnObj = otherProjectile;
             speed = 11f;
             numberOfObjects = 9;
         }
