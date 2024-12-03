@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MainPage : MonoBehaviour
 {
     [SerializeField] private Button openStoreButton;
     [SerializeField] private Button returnButton;
+    [SerializeField] private Button logoutButton;
     [SerializeField] private Canvas storeCanvas;
     [SerializeField] private Canvas homeCanvas;
     [SerializeField] private TMPro.TMP_Text coinText;
@@ -29,6 +32,12 @@ public class MainPage : MonoBehaviour
         {
             storeCanvas.gameObject.SetActive(false);
             homeCanvas.gameObject.SetActive(true);
+        });
+
+        logoutButton.onClick.AddListener(() =>
+        {
+            UnityWebRequest.ClearCookieCache();
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         });
     }
 }
