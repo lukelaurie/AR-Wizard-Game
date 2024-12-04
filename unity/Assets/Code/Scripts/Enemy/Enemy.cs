@@ -3,6 +3,7 @@ using System.Collections;
 using System.Threading.Tasks;
 using Unity.Netcode;
 using UnityEngine;
+using TMPro;
 
 //keeps track of health, moveSpeed, animations, and following
 //used for dragon enemies,etc
@@ -36,6 +37,10 @@ public class Enemy : NetworkBehaviour
         FindObjectOfType<AudioManager>().Stop("StartMusic");
 
         bossLevel = bossData.GetBossLevel();
+        TMP_Text textField = gameObject.GetComponentInChildren<TMP_Text>();
+        textField.text = $"{System.Math.Ceiling(bossData.GetBossHealth())}";
+
+
         switch (bossLevel)
         {
             case 1:
@@ -118,7 +123,7 @@ public class Enemy : NetworkBehaviour
             spawnObj = otherProjectile;
         }
 
-        float radius = 2f;
+        float radius = 1f;
         float angleStep = 360f / projectileNum;
 
         // start angle is random each time
@@ -181,10 +186,11 @@ public class Enemy : NetworkBehaviour
         int randInt = UnityEngine.Random.Range(0, 5);
 
         //has a chance to randomly block an attack
-        if (randInt == 0)
+        if (randInt > -1)
         {
             if(canPlayAnim)
             {
+                enemyAnimator.Play("Defend");
                 FindObjectOfType<AudioManager>().Play("AlbinoBlock");
                 canPlayAnim = false;
                 StartCoroutine(WaitAndPerformAction(2f));

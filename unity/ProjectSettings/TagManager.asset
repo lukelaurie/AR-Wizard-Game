@@ -22,6 +22,7 @@ TagManager:
   - PartyHealth
   - ScenaryAr
   - NetworkManagerAr
+  - Fill
   layers:
   - Default
   - TransparentFX
