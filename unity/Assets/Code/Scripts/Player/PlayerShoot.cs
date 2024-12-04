@@ -27,7 +27,7 @@ public class PlayerShoot : NetworkBehaviour
     public readonly float RockCoolDown = 4f;
 
     private readonly Dictionary<string, float> spellAmounts = new(){
-        {"fireball", 100000f},
+        {"fireball", 15f},
         {"lightning", 8f},
         {"healing", 10f},
         {"rock", 35f},
