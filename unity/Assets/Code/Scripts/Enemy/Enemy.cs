@@ -156,7 +156,7 @@ public class Enemy : NetworkBehaviour
         int randInt = UnityEngine.Random.Range(0, 5);
 
         //has a chance to randomly block an attack
-        if (randInt > -1)
+        if (randInt == 0)
         {
             if (canPlayAnim)
             {
