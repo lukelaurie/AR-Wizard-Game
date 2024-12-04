@@ -23,12 +23,46 @@ public class Enemy : NetworkBehaviour
     private BossData bossData;
     private PlayerData playerData;
 
+    private int bossLevel;
+
+    private int projectileNum;
+    private float projectileSpeed;
+    private float projectileDamage;
+
     void Start()
     {
         bossData = gameObject.GetComponent<BossData>();
 
         FindObjectOfType<AudioManager>().Stop("StartMusic");
-        FindObjectOfType<AudioManager>().Play("BossMusic");
+
+        bossLevel = bossData.GetBossLevel();
+        switch (bossLevel)
+        {
+            case 1:
+                projectileNum = 9;
+                projectileSpeed = 5f;
+                projectileDamage = 10;
+                FindObjectOfType<AudioManager>().Play($"BossMusic{bossLevel}");
+                break;
+            case 2:
+                projectileNum = 10;
+                projectileSpeed = 6f;
+                projectileDamage = 15;
+                FindObjectOfType<AudioManager>().Play($"BossMusic{bossLevel}");
+                break;
+            case 3:
+                projectileNum = 12;
+                projectileSpeed = 6f;
+                projectileDamage = 20;
+                FindObjectOfType<AudioManager>().Play($"BossMusic{bossLevel}");
+                break;
+            case 4:
+                projectileNum = 15;
+                projectileSpeed = 8f;
+                projectileDamage = 100;
+                FindObjectOfType<AudioManager>().Play($"BossMusic{bossLevel}");
+                break;
+        }
 
         canPlayAnim = true;
         canBeHit = true;
@@ -68,28 +102,29 @@ public class Enemy : NetworkBehaviour
 
     private void SpawnObjectsAround(string name)
     {
-        int numberOfObjects = 12;
-        float radius = 2f;
-        float speed = 6f;
-
-        float angleStep = 360f / numberOfObjects;
-        float angle = 0f;
-
         GameObject spawnObj;
 
         if (name == "fireball")
         {
             spawnObj = fireball;
         }
-        else
+        else if(bossLevel == 1) //if its a rock
         {
             FindObjectOfType<AudioManager>().Play("AlbinoRoarAttack");
             spawnObj = otherProjectile;
-            speed = 11f;
-            numberOfObjects = 9;
+        }
+        else
+        {
+            spawnObj = otherProjectile;
         }
 
-        for (int i = 0; i < numberOfObjects; i++)
+        float radius = 2f;
+        float angleStep = 360f / projectileNum;
+
+        // start angle is random each time
+        float angle = UnityEngine.Random.Range(0f, angleStep);
+
+        for (int i = 0; i < projectileNum; i++)
         {
             //calc spawn pos based on angle
             float spawnX = transform.position.x + Mathf.Cos(angle * Mathf.Deg2Rad) * radius;
@@ -101,7 +136,7 @@ public class Enemy : NetworkBehaviour
 
             // IBossSpell spellScript = (name == "fireball") ? spawnedObj.GetComponent<BossFireball>() : spawnedObj.GetComponent<BossRock>();
             BossProjectile spellScript = spawnedObj.GetComponent<BossProjectile>();
-            spellScript.SetDamage(10f);
+            spellScript.SetDamage(projectileDamage);
 
             Rigidbody rb = spawnedObj.GetComponent<Rigidbody>();
             if (rb != null)
@@ -112,21 +147,12 @@ public class Enemy : NetworkBehaviour
                     0, //zero out Y to ignore height offset
                     spawnPosition.z - transform.position.z
                 ).normalized;
-                rb.velocity = direction * speed;
+                rb.velocity = direction * projectileSpeed;
             }
 
             //increment angle
             angle += angleStep;
         }
-    }
-
-    private IEnumerator WaitAndDestroy()
-    {
-        yield return new WaitForSeconds(3f);
-
-        NotifyServer server = GameObject.FindWithTag(TagManager.GameLogic).GetComponent<NotifyServer>();
-
-        FindObjectOfType<AudioManager>().Play("StartMusic");
     }
 
     private IEnumerator WaitAndPerformAction(float seconds)
@@ -155,18 +181,27 @@ public class Enemy : NetworkBehaviour
         int randInt = UnityEngine.Random.Range(0, 5);
 
         //has a chance to randomly block an attack
-        if (randInt == 0 && canPlayAnim)
+        if (randInt == 0)
         {
-            FindObjectOfType<AudioManager>().Play("AlbinoBlock");
-            canPlayAnim = false;
-            StartCoroutine(WaitAndPerformAction(2f));
+            if(canPlayAnim)
+            {
+                FindObjectOfType<AudioManager>().Play("AlbinoBlock");
+                canPlayAnim = false;
+                StartCoroutine(WaitAndPerformAction(2f));
+            }
         }
-        else if (canPlayAnim && bossData.GetBossHealth() > 0)
+        else if (bossData.GetBossHealth() > 0)
         {
-            enemyAnimator.Play("Get Hit");
-            canPlayAnim = false;
-            StartCoroutine(WaitAndPerformAction(1.5f));
-
+            if (canPlayAnim)
+            {
+                enemyAnimator.Play("Get Hit");
+                canPlayAnim = false;
+                StartCoroutine(WaitAndPerformAction(1.5f));
+            }
+            bossData.BossTakeDamage(damageAmount);
+        }
+        else
+        {
             bossData.BossTakeDamage(damageAmount);
         }
     }
@@ -202,10 +237,12 @@ public class Enemy : NetworkBehaviour
 
     public IEnumerator PlayBossDeath(float seconds, System.Action onDeathComplete)
     {
-        enemyAnimator.Play("Die");
+        enemyAnimator.Play("Die", 0, 0);
         FindObjectOfType<AudioManager>().Play("AlbinoDeath");
         canPlayAnim = false;
         canBeHit = false;
+        FindObjectOfType<AudioManager>().Stop($"BossMusic{bossLevel}");
+        FindObjectOfType<AudioManager>().Play("StartMusic");
 
         yield return new WaitForSeconds(seconds);
 

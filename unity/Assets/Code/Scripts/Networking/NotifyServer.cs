@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class NotifyServer : NetworkBehaviour
 {
-    [SerializeField] private GameObject fireball;
     private int clientDeathCount = 0;
 
     [ServerRpc(RequireOwnership = false)]
