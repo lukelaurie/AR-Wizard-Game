@@ -55,14 +55,13 @@ public class Enemy : NetworkBehaviour
         if (timer < waitTime)
             return;
 
-        int randAttack = UnityEngine.Random.Range(0, 5);
-        // int randAttack = 1;
+        int randAttack = UnityEngine.Random.Range(0, 8);
 
         if (randAttack == 0)
         {
             AllClientsInvoker.Instance.InvokeBossAttackPlayers("Roar");
         }
-        else if (randAttack < 3)
+        else if (randAttack < 5)
         {
             AllClientsInvoker.Instance.InvokeBossAttackPlayers("GroundPound");
         }
@@ -78,6 +77,7 @@ public class Enemy : NetworkBehaviour
     private void SpawnObjectsAround(string name)
     {
         GameObject spawnObj;
+        float curProjectileSpeed = projectileSpeed.Value;
 
         if (name == "fireball")
         {
@@ -87,13 +87,15 @@ public class Enemy : NetworkBehaviour
         {
             FindObjectOfType<AudioManager>().Play("AlbinoRoarAttack");
             spawnObj = otherProjectile;
+            curProjectileSpeed = projectileSpeed.Value + 2f;
         }
         else
         {
             spawnObj = otherProjectile;
+            curProjectileSpeed = projectileSpeed.Value + 4f;
         }
 
-        float radius = 2f;
+        float radius = 1.25f;
         float angleStep = 360f / projectileNum.Value;
 
         // start angle is random each time
@@ -114,16 +116,22 @@ public class Enemy : NetworkBehaviour
             spellScript.SetDamage(projectileDamage.Value);
 
             Rigidbody rb = spawnedObj.GetComponent<Rigidbody>();
-            if (rb != null)
+            Vector3 direction = new Vector3(
+                    spawnPosition.x - transform.position.x,
+                    spawnPosition.y - transform.position.y + 0.25f,
+                    spawnPosition.z - transform.position.z
+                ).normalized;
+            if (name == "fireball")
             {
                 //shoot in the direction of where the object was spawned
-                Vector3 direction = new Vector3(
+                direction = new Vector3(
                     spawnPosition.x - transform.position.x,
                     0, //zero out Y to ignore height offset
                     spawnPosition.z - transform.position.z
                 ).normalized;
-                rb.velocity = direction * projectileSpeed.Value;
             }
+
+            rb.velocity = direction * curProjectileSpeed;
 
             //increment angle
             angle += angleStep;
@@ -239,25 +247,31 @@ public class Enemy : NetworkBehaviour
         switch (bossLevel.Value)
         {
             case 1:
-                projectileNum.Value = 9;
-                projectileSpeed.Value = 5f;
+                projectileNum.Value = 14;
+                projectileSpeed.Value = 7f;
                 projectileDamage.Value = 15;
                 break;
             case 2:
-                projectileNum.Value = 10;
-                projectileSpeed.Value = 6f;
+                projectileNum.Value = 15;
+                projectileSpeed.Value = 8f;
                 projectileDamage.Value = 20;
                 break;
             case 3:
-                projectileNum.Value = 12;
-                projectileSpeed.Value = 6f;
+                projectileNum.Value = 17;
+                projectileSpeed.Value = 8f;
                 projectileDamage.Value = 25;
                 break;
             case 4:
-                projectileNum.Value = 15;
-                projectileSpeed.Value = 8f;
+                projectileNum.Value = 25;
+                projectileSpeed.Value = 10f;
                 projectileDamage.Value = 30;
                 break;
         }
+    }
+
+    public void StopBossMusic()
+    {
+        FindObjectOfType<AudioManager>().Stop($"BossMusic{bossLevel.Value}");
+        FindObjectOfType<AudioManager>().Play("StartMusic");
     }
 }

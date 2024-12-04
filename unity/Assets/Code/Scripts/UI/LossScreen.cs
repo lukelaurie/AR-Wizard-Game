@@ -13,15 +13,18 @@ public class LossScreen : MonoBehaviour
 
     private PlayerData playerData;
 
+    private Enemy enemy;
     // Start is called before the first frame update
     void Start()
     {
         playerData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
         placeBoss = GameObject.FindWithTag(TagManager.GameLogic).GetComponent<PlaceCharacter>();
+        enemy = ScreenToggle.FindGameObjectWithTag(TagManager.BossParent).GetComponent<Enemy>();
 
         playerData.SetIsGameOver();
         tryAgain.onClick.AddListener(TryAgain);
         quit.onClick.AddListener(EndGame);
+        enemy.StopBossMusic();
     }
 
     private async void EndGame()

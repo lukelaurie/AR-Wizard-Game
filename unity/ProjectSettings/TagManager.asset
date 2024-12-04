@@ -23,6 +23,8 @@ TagManager:
   - ScenaryAr
   - NetworkManagerAr
   - Fill
+  - Undefined
+  - Puddle
   layers:
   - Default
   - TransparentFX

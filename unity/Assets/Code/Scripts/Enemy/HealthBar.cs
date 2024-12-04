@@ -19,7 +19,7 @@ public class HealthBar: NetworkBehaviour
             bossHealth = 0;
         }
         TMP_Text textField = gameObject.GetComponentInChildren<TMP_Text>();
-        textField.text = $"{bossHealth}";
+        textField.text = $"{bossHealth} HP";
 
         slider.value = curVal / maxValue;
         if (curVal <= 0)
