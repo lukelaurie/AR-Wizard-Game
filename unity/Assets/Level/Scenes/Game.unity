@@ -4220,9 +4220,27 @@ MonoBehaviour:
     pitch: 1
     loop: 1
     source: {fileID: 0}
-  - name: BossMusic
-    clip: {fileID: 8300000, guid: cffb21e2c3b3b2243b67477c253c7674, type: 3}
+  - name: BossMusic1
+    clip: {fileID: 8300000, guid: 9ba09660921f21143aef5c293b053d40, type: 3}
     volume: 0.106
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: BossMusic2
+    clip: {fileID: 8300000, guid: 3ba6b256447ad7f45a3e4c6ca87fbf23, type: 3}
+    volume: 0.122
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: BossMusic3
+    clip: {fileID: 8300000, guid: eb9455d7f425f9b428a76c795255f691, type: 3}
+    volume: 0.104
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: BossMusic4
+    clip: {fileID: 8300000, guid: cffb21e2c3b3b2243b67477c253c7674, type: 3}
+    volume: 0.136
     pitch: 1
     loop: 1
     source: {fileID: 0}
@@ -15404,7 +15422,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 158bf7d1704e67c42809335af63a445d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireball: {fileID: 8634321614551258705, guid: 7cb2ec8296850cc46bb18886b0bd4962, type: 3}
 --- !u!114 &1766984772
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15418,7 +15435,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tier1Boss: {fileID: 844035104550790214, guid: 8a894ad2e2b68b14ca67b4d829bd2f5c, type: 3}
-  tier2Boss: {fileID: 4203312771211977905, guid: 83fc1af8bce05f54095f54483d7019dc, type: 3}
+  tier2Boss: {fileID: 4203312771211977905, guid: 2f8b4a6dbba08c24e8690a207e35a2da, type: 3}
   tier3Boss: {fileID: 5814206883048075406, guid: b94fb1754b401f84e942207408d75e16, type: 3}
   tier4Boss: {fileID: 7864248370299648407, guid: 37ce54f09e1ebab499a2cda93710de44, type: 3}
 --- !u!1 &1777654371
