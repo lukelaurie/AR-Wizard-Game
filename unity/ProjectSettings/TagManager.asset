@@ -22,6 +22,7 @@ TagManager:
   - PartyHealth
   - ScenaryAr
   - NetworkManagerAr
+  - Puddle
   layers:
   - Default
   - TransparentFX

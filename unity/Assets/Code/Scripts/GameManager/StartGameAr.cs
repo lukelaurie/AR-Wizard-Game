@@ -48,6 +48,7 @@ public class StartGameAr : MonoBehaviour
 
     public void BlitImageForColocalizationOnTextureRender()
     {
+        Debug.Log("this is called here");
         targetImage = playerData.GetTargetImage();
 
         const int MAX_AMOUNT_CLIENTS_ROOM = 34;

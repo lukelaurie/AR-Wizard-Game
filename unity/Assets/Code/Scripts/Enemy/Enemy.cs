@@ -41,25 +41,25 @@ public class Enemy : NetworkBehaviour
             case 1:
                 projectileNum = 9;
                 projectileSpeed = 5f;
-                projectileDamage = 10;
+                projectileDamage = 15;
                 FindObjectOfType<AudioManager>().Play($"BossMusic{bossLevel}");
                 break;
             case 2:
                 projectileNum = 10;
                 projectileSpeed = 6f;
-                projectileDamage = 15;
+                projectileDamage = 20;
                 FindObjectOfType<AudioManager>().Play($"BossMusic{bossLevel}");
                 break;
             case 3:
                 projectileNum = 12;
                 projectileSpeed = 6f;
-                projectileDamage = 20;
+                projectileDamage = 25;
                 FindObjectOfType<AudioManager>().Play($"BossMusic{bossLevel}");
                 break;
             case 4:
                 projectileNum = 15;
                 projectileSpeed = 8f;
-                projectileDamage = 100;
+                projectileDamage = 30;
                 FindObjectOfType<AudioManager>().Play($"BossMusic{bossLevel}");
                 break;
         }
@@ -80,20 +80,20 @@ public class Enemy : NetworkBehaviour
         if (timer < waitTime)
             return;
 
-        // int randAttack = UnityEngine.Random.Range(0, 3);
-        int randAttack = 1;
+        int randAttack = UnityEngine.Random.Range(0, 5);
+        // int randAttack = 1;
 
-        switch (randAttack)
+        if (randAttack == 0)
         {
-            case 0:
-                AllClientsInvoker.Instance.InvokeBossAttackPlayers("Roar");
-                break;
-            case 1:
-                AllClientsInvoker.Instance.InvokeBossAttackPlayers("GroundPound");
-                break;
-            case 2:
-                AllClientsInvoker.Instance.InvokeBossAttackPlayers("Fireball");
-                break;
+            AllClientsInvoker.Instance.InvokeBossAttackPlayers("Roar");
+        }
+        else if (randAttack < 3)
+        {
+            AllClientsInvoker.Instance.InvokeBossAttackPlayers("GroundPound");
+        }
+        else
+        {
+            AllClientsInvoker.Instance.InvokeBossAttackPlayers("Fireball");
         }
 
         waitTime = (float)UnityEngine.Random.Range(6, 9); // how long wait between attacks
@@ -108,7 +108,7 @@ public class Enemy : NetworkBehaviour
         {
             spawnObj = fireball;
         }
-        else if(bossLevel == 1) //if its a rock
+        else if (bossLevel == 1) //if its a rock
         {
             FindObjectOfType<AudioManager>().Play("AlbinoRoarAttack");
             spawnObj = otherProjectile;
@@ -183,7 +183,7 @@ public class Enemy : NetworkBehaviour
         //has a chance to randomly block an attack
         if (randInt == 0)
         {
-            if(canPlayAnim)
+            if (canPlayAnim)
             {
                 FindObjectOfType<AudioManager>().Play("AlbinoBlock");
                 canPlayAnim = false;

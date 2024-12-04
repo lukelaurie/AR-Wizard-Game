@@ -21,6 +21,7 @@ public class StartGameClient : MonoBehaviour
 
         playerData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
         isInGame = false;
+
     }
 
     private async void JoinRoom()
@@ -35,27 +36,27 @@ public class StartGameClient : MonoBehaviour
             invalidIdText.text = "";
 
             return;
-        }
-        
-        // have user join room and take the picture
+        }        
         isInGame = true;
         StartGameAr.SetRoomId(roomId);
-        SwapScreens.Instance.ToggleClientJoinGame();
 
         StartGameAr startGameAr = GameObject.FindWithTag(TagManager.Scenary).GetComponent<StartGameAr>();
         startGameAr.BlitImageForColocalizationOnTextureRender();
 
         Debug.Log("Starting AR Client...");
         NetworkManager.Singleton.StartClient();
+        
+        SwapScreens.Instance.ToggleClientJoinGame();
 
         playerData.SetIsPlayerHost(false);
+
     }
 
     private async void LeaveGame()
     {
         if (isInGame)
             await RoomManager.Instance.LeaveGame();
-        
+
         SwapScreens.Instance.QuitGame();
     }
 }

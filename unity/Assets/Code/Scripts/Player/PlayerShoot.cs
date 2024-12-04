@@ -21,19 +21,19 @@ public class PlayerShoot : NetworkBehaviour
     private readonly string rockName = "rock";
     private NotifyServer server;
 
-    public readonly float FireBallCoolDown = 1f;
-    public readonly float LightningCoolDown = 0.2f;
-    public readonly float HealCoolDown = 10f;
-    public readonly float RockCoolDown = 1f;
+    public readonly float FireBallCoolDown = 3f;
+    public readonly float LightningCoolDown = 1f;
+    public readonly float HealCoolDown = 15f;
+    public readonly float RockCoolDown = 4f;
 
     private readonly Dictionary<string, float> spellAmounts = new(){
-        {"fireball", 3f},
-        {"lightning", 1f},
-        {"healing", 2f},
-        {"rock", 6f},
+        {"fireball", 20f},
+        {"lightning", 8f},
+        {"healing", 10f},
+        {"rock", 35f},
     };
 
-    private readonly float increasePerLevel = 0.3f;
+    private readonly float increasePerLevel = 0.75f;
     private Camera playerCamera;
 
     private PlayerData playerData;
