@@ -5094,7 +5094,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2377c9fbe593ac449924b95e75fe85be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  puddleDamage: 8
+  puddleDamage: 6
   puddleWidth: 10
 --- !u!54 &2871150480660764954
 Rigidbody:
@@ -5242,7 +5242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2377c9fbe593ac449924b95e75fe85be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  puddleDamage: 8
+  puddleDamage: 6
   puddleWidth: 10
 --- !u!54 &2934270229294248809
 Rigidbody:
@@ -5390,7 +5390,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2377c9fbe593ac449924b95e75fe85be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  puddleDamage: 8
+  puddleDamage: 6
   puddleWidth: 10
 --- !u!54 &7795309876784587669
 Rigidbody:
