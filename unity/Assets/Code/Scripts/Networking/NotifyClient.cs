@@ -70,7 +70,6 @@ public class NotifyClient : NetworkBehaviour
             return;
 
         clientData.ResetGame();
-        Debug.Log(clientData.GetHealth());
         NotifyClientsUserHealth();
 
         if (!IsHost)
@@ -218,6 +217,7 @@ public class NotifyClient : NetworkBehaviour
     private void NotifyClientsUserHealth()
     {
         // send a request to all other clients so they can show the hp of this user
-        server.NotifyClientHealthServerRpc(clientData.GetUsername(), clientData.GetHealth());
+        if (server != null)
+            server.NotifyClientHealthServerRpc(clientData.GetUsername(), clientData.GetHealth());
     }
 }
