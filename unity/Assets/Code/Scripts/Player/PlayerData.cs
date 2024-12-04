@@ -102,6 +102,7 @@ public class PlayerData : MonoBehaviour
 
     public void PlayerTakeDamage(float damageAmt)
     {
+        Debug.Log(damageAmt);
         health -= damageAmt;
         OnPlayerTakeDamage?.Invoke(health);
     }

@@ -8,7 +8,7 @@ using UnityEngine.XR.ARFoundation;
 public class BlitImageForColocalization : MonoBehaviour
 {
     [SerializeField] private RenderTexture m_RenderTexture;
-    
+
     private ARCameraBackground m_ARCameraBackground;
     private Texture2D _cameraTexture;
     private PlayerData playerData;
@@ -119,6 +119,7 @@ public class BlitImageForColocalization : MonoBehaviour
         RenderTexture.active = null;
 
         playerData.SetTargetImage(_cameraTexture);
+        Debug.Log("setting target image");
     }
 
 }

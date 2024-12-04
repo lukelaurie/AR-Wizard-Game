@@ -26,7 +26,7 @@ public class BossProjectile : MonoBehaviour
         if (networkObject.IsOwner)
         {
             PlayerData playerData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
-            playerData.PlayerTakeDamage(50); //TODO
+            playerData.PlayerTakeDamage(damageAmount); 
             Destroy(gameObject);
         }
     }

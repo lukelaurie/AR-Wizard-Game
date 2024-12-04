@@ -173,6 +173,7 @@ public class SwapScreens : MonoBehaviour
 
     private void ToggleOffScreens()
     {
+        gameScreen.SetActive(false);
         spellBar.SetActive(false);
         winScreen.SetActive(false);
         deathScreen.SetActive(false);
