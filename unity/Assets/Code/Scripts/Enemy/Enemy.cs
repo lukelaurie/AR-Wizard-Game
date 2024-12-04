@@ -247,22 +247,22 @@ public class Enemy : NetworkBehaviour
         switch (bossLevel.Value)
         {
             case 1:
-                projectileNum.Value = 14;
+                projectileNum.Value = 5;
                 projectileSpeed.Value = 7f;
                 projectileDamage.Value = 15;
                 break;
             case 2:
-                projectileNum.Value = 15;
+                projectileNum.Value = 7;
                 projectileSpeed.Value = 8f;
                 projectileDamage.Value = 20;
                 break;
             case 3:
-                projectileNum.Value = 17;
+                projectileNum.Value = 10;
                 projectileSpeed.Value = 8f;
                 projectileDamage.Value = 25;
                 break;
             case 4:
-                projectileNum.Value = 25;
+                projectileNum.Value = 12;
                 projectileSpeed.Value = 10f;
                 projectileDamage.Value = 30;
                 break;

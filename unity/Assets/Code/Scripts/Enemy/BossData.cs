@@ -20,7 +20,7 @@ public class BossData : NetworkBehaviour
     {
         bossLevel = level;
         // have the boss health scale with level of the boss
-        float startHealth = (float)(400f * Math.Pow(2, (double)level - 1));
+        float startHealth = (float)(200f * Math.Pow(3, (double)level - 1));
 
         UpdateHealthServerRpc(startHealth);
         SetMaxHealthServerRpc(startHealth);

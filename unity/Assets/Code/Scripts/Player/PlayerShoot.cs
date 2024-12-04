@@ -14,17 +14,16 @@ public class PlayerShoot : NetworkBehaviour
 
     private readonly float fireballSpeed = 8f;
     private readonly float rockSpeed = 8f;
-    private readonly float lightningSpawnDist = 2f;
     private readonly string fireballName = "fireball";
     private readonly string lightningName = "lightning";
     private readonly string healName = "healing";
     private readonly string rockName = "rock";
     private NotifyServer server;
 
-    public readonly float FireBallCoolDown = 3f;
+    public readonly float FireBallCoolDown = 2f;
     public readonly float LightningCoolDown = 1f;
-    public readonly float HealCoolDown = 15f;
-    public readonly float RockCoolDown = 4f;
+    public readonly float HealCoolDown = 10f;
+    public readonly float RockCoolDown = 3f;
 
     private readonly Dictionary<string, float> spellAmounts = new(){
         {"fireball", 15f},
