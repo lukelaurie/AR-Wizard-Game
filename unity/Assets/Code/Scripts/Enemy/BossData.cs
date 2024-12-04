@@ -45,12 +45,12 @@ public class BossData : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     private void UpdateHealthServerRpc(float newHealth)
     {
-        Debug.Log(bossHealth.Value);
         bossHealth.Value = newHealth;
-        Debug.Log(newHealth);
 
-        if (bossHealth.Value <= 0)
+        PlayerData playerData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
+        if (!playerData.IsGameOver() && bossHealth.Value <= 0)
         {
+            playerData.SetIsGameOver();
             AllClientsInvoker.Instance.InvokePartyWinGameAllClients();
         }
     }

@@ -11,7 +11,8 @@ public class WinScreen : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("yess, we won!!!");
+        PlayerData playerData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
+        playerData.SetIsGameOver();
         continueButton.onClick.AddListener(SwapScreens.Instance.QuitGame);
     }
 }

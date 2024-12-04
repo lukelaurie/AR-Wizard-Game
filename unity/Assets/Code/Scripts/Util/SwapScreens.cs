@@ -118,7 +118,7 @@ public class SwapScreens : MonoBehaviour
         gameScreen.SetActive(true);
         partyHealth.SetActive(true);
     }
-    
+
     public void ToggeOnCrosshair()
     {
         crossHair.SetActive(true);
@@ -138,10 +138,7 @@ public class SwapScreens : MonoBehaviour
 
     public void ToggleLossScreen()
     {
-        gameScreen.SetActive(false);
-        deathScreen.SetActive(false);
-        spellBar.SetActive(false);
-        crossHair.SetActive(false);
+        ToggleOffScreens();
         loseScreen.SetActive(true);
 
         // have the host and client display different text
@@ -161,8 +158,7 @@ public class SwapScreens : MonoBehaviour
 
     public void ToggleWinScreen(int userReward)
     {
-        gameScreen.SetActive(false);
-        crossHair.SetActive(false);
+        ToggleOffScreens();
         winScreen.SetActive(true);
 
         TMPro.TMP_Text childText = winScreen.transform.GetChild(3).GetComponent<TMPro.TMP_Text>();
@@ -171,8 +167,17 @@ public class SwapScreens : MonoBehaviour
 
     public void ToggleDeathScreen()
     {
-        gameScreen.SetActive(false);
-        crossHair.SetActive(false);
+        ToggleOffScreens();
         deathScreen.SetActive(true);
+    }
+
+    private void ToggleOffScreens()
+    {
+        spellBar.SetActive(false);
+        winScreen.SetActive(false);
+        deathScreen.SetActive(false);
+        loseScreen.SetActive(false);
+        spellBar.SetActive(false);
+        crossHair.SetActive(false);
     }
 }

@@ -29,6 +29,9 @@ public class PlayerHealthManager : MonoBehaviour
 
     public void HandlePlayerDamage(float currentHealth)
     {
+        if (playerData.IsGameOver())
+            return;
+            
         server.NotifyClientHealthServerRpc(playerData.GetUsername(), currentHealth);
 
         if (currentHealth <= 0 && !playerData.IsPlayerDead())

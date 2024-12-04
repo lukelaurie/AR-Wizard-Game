@@ -66,13 +66,15 @@ public class NotifyClient : NetworkBehaviour
     [ClientRpc]
     public void PlayerRestartGameClientRpc()
     {
-        if (!IsOwner || IsHost)
+        if (!IsOwner)
             return;
 
-        SwapScreens.Instance.ToggleResetGameClient();
-
-        clientData.ResetHealth();
+        clientData.ResetGame();
+        Debug.Log(clientData.GetHealth());
         NotifyClientsUserHealth();
+
+        if (!IsHost)
+            SwapScreens.Instance.ToggleResetGameClient();
     }
 
     [ClientRpc]
@@ -132,31 +134,57 @@ public class NotifyClient : NetworkBehaviour
         if (!IsOwner || clientData.GetUsername() == casterUsername)
             return;
 
-        GameObject spellPrefab = null;
-        float spellSpeed = 0f;
-
         switch (spell)
         {
             case "fireball":
-                spellPrefab = fireball;
-                spellSpeed = 8f;
+                GameObject fireballRep = Instantiate(fireball, spawnPos, Quaternion.LookRotation(direction));
+                fireballRep.GetComponent<IPlayerSpell>().SetDamage(0);
+                fireballRep.GetComponent<Rigidbody>().velocity = direction * 8f;
                 break;
             case "lightning":
-                spellPrefab = lightning;
-                spellSpeed = 8f;
+                GameObject lightningRep = Instantiate(lightning, spawnPos, Quaternion.LookRotation(direction) * Quaternion.Euler(80, 0, 0));
+                lightningRep.GetComponent<IPlayerSpell>().SetDamage(0);
                 break;
             case "rock":
-                spellPrefab = rock;
-                spellSpeed = 8f;
+                GameObject rockRep = Instantiate(rock, spawnPos, Quaternion.LookRotation(direction));
+                rockRep.GetComponent<IPlayerSpell>().SetDamage(0);
+                rockRep.GetComponent<Rigidbody>().velocity = direction * 8f;
                 break;
         }
-
-        GameObject projectile = Instantiate(spellPrefab, spawnPos, Quaternion.LookRotation(direction));
-
-        projectile.GetComponent<IPlayerSpell>().SetDamage(0);
-        projectile.GetComponent<Rigidbody>().velocity = direction * spellSpeed;
-
     }
+
+
+    // [ClientRpc]
+    // public void SpawnOtherPlayerSpellClientRpc(Vector3 spawnPos, Vector3 direction, string casterUsername, string spell)
+    // {
+    //     if (!IsOwner || clientData.GetUsername() == casterUsername)
+    //         return;
+
+    //     GameObject spellPrefab = null;
+    //     float spellSpeed = 0f;
+
+    //     switch (spell)
+    //     {
+    //         case "fireball":
+    //             spellPrefab = fireball;
+    //             spellSpeed = 8f;
+    //             break;
+    //         case "lightning":
+    //             spellPrefab = lightning;
+    //             spellSpeed = 8f;
+    //             break;
+    //         case "rock":
+    //             spellPrefab = rock;
+    //             spellSpeed = 8f;
+    //             break;
+    //     }
+
+    //     GameObject projectile = Instantiate(spellPrefab, spawnPos, Quaternion.LookRotation(direction));
+
+    //     projectile.GetComponent<IPlayerSpell>().SetDamage(0);
+    //     projectile.GetComponent<Rigidbody>().velocity = direction * spellSpeed;
+
+    // }
 
     private void WinGameScreen(string rewardsDictJson)
     {

@@ -77,15 +77,27 @@ public class PlayerShoot : NetworkBehaviour
 
     public void ShootLightning()
     {
-        Vector3 spawnPos = playerCamera.transform.position + playerCamera.transform.forward * lightningSpawnDist;
+        Vector3 spawnPos = playerCamera.transform.position + playerCamera.transform.forward * (lightning.transform.localScale.y / 2f);
 
-        Vector3 lightningDetection = -playerCamera.transform.forward;
+        Vector3 lightningLookVector = playerCamera.transform.forward;
 
-        GameObject projectile = Instantiate(lightning, spawnPos, Quaternion.LookRotation(lightningDetection) * Quaternion.Euler(80, 0, 0));
+        GameObject projectile = Instantiate(lightning, spawnPos, Quaternion.LookRotation(lightningLookVector) * Quaternion.Euler(80, 0, 0));
         projectile.GetComponent<Lightning>().SetDamage(CalcAmount(lightningName));
 
-        server.SpawnObjectServerRpc(spawnPos, lightningDetection, playerData.GetUsername(), lightningName);
+        server.SpawnObjectServerRpc(spawnPos, lightningLookVector, playerData.GetUsername(), lightningName);
     }
+
+    // public void ShootLightning()
+    // {
+    //     Vector3 spawnPos = playerCamera.transform.position + playerCamera.transform.forward * lightningSpawnDist;
+
+    //     Vector3 lightningDetection = -playerCamera.transform.forward;
+
+    //     GameObject projectile = Instantiate(lightning, spawnPos, Quaternion.LookRotation(lightningDetection) * Quaternion.Euler(80, 0, 0));
+    //     projectile.GetComponent<Lightning>().SetDamage(CalcAmount(lightningName));
+
+    //     server.SpawnObjectServerRpc(spawnPos, lightningDetection, playerData.GetUsername(), lightningName);
+    // }
 
     public void Heal()
     {

@@ -16,10 +16,10 @@ public class LossScreen : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("uh oh, we lost");
         playerData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
         placeBoss = GameObject.FindWithTag(TagManager.GameLogic).GetComponent<PlaceCharacter>();
 
+        playerData.SetIsGameOver();
         tryAgain.onClick.AddListener(TryAgain);
         quit.onClick.AddListener(EndGame);
     }
@@ -40,14 +40,12 @@ public class LossScreen : MonoBehaviour
     private void TryAgain()
     {
         placeBoss.ResetIsPlaced();
-        playerData.SetIsPlayerDead(false);
 
         var server = GameObject.FindWithTag(TagManager.GameLogic).GetComponent<NotifyServer>();
         server.ResetClientDeaths();
 
         if (playerData.IsPlayerHost())
-        {
-            playerData.ResetHealth();
+        {            
             AllClientsInvoker.Instance.InvokePlayerRestartAllClients();
 
             SwapScreens.Instance.ToggleHostScreen();

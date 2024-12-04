@@ -11,14 +11,19 @@ public class PlayerData : MonoBehaviour
     private string username;
     private int coinTotal;
     private bool isPlayerHost;
-    private bool isPlayerDead = false;
+    private bool isPlayerDead;
     private int selectedBossLevel;
-
-    private readonly float MAX_HEALTH = 100f;
-    private float health = 100f;
+    private bool isGameOver;
+    private float MAX_HEALTH;
+    private float health;
     private Dictionary<string, int> spells;
     private Texture2D targetImage;
 
+    void Start()
+    {
+        MAX_HEALTH = 100f;
+        ResetGame();
+    }
 
     public string GetUsername()
     {
@@ -65,6 +70,11 @@ public class PlayerData : MonoBehaviour
         return targetImage;
     }
 
+    public bool IsGameOver()
+    {
+        return isGameOver;
+    }
+
     public bool IsSpellUnlocked(string spellName)
     {
         return spells.ContainsKey(spellName);
@@ -102,11 +112,6 @@ public class PlayerData : MonoBehaviour
         OnPlayerHealed?.Invoke(health);
     }
 
-    public void ResetHealth()
-    {
-        health = 50f;
-    }
-
     public void SetBossLevel(int bossLevel)
     {
         selectedBossLevel = bossLevel;
@@ -119,5 +124,17 @@ public class PlayerData : MonoBehaviour
     public void SetTargetImage(Texture2D newImage)
     {
         targetImage = newImage;
+    }
+
+    public void SetIsGameOver()
+    {
+        isGameOver = true;
+    }
+
+    public void ResetGame()
+    {
+        health = MAX_HEALTH;
+        isPlayerDead = false;
+        isGameOver = false;
     }
 }

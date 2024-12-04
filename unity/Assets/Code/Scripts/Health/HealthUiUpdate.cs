@@ -37,6 +37,7 @@ public class HealthUiUpdate : MonoBehaviour
 
     private void InitHealthBar(System.Tuple<string, float> partyMember)
     {
+        // Debug.Log("now here:   " + partyMember.Item2);
         GameObject playerHealthBar = Instantiate(healthBar, transform);
         PlayerHealthBar healthBarScript = playerHealthBar.GetComponent<PlayerHealthBar>();
 
