@@ -111,6 +111,8 @@ public class PlaceCharacter : NetworkBehaviour
         isPlaced = true;
 
         BossData bossData = character.GetComponent<BossData>();
+
+
         bossData.InitializeBossData(playerData.GetBossLevel());
 
         // notify all the clients that the boss has been placed

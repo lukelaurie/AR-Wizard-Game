@@ -5287,7 +5287,7 @@ GameObject:
   - component: {fileID: 2617253451404382489}
   m_Layer: 9
   m_Name: LavaPuddle
-  m_TagString: Untagged
+  m_TagString: Puddle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

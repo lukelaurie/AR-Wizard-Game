@@ -19,4 +19,5 @@ public static class TagManager
     public const string Player = "Player";
     public const string Scenary = "ScenaryAr";
     public const string NetworkManagerAr = "NetworkManagerAr";
+    public const string Puddle = "Puddle";
 }

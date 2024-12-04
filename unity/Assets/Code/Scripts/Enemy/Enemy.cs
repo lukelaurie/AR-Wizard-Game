@@ -23,11 +23,11 @@ public class Enemy : NetworkBehaviour
     private BossData bossData;
     private PlayerData playerData;
 
-    private int bossLevel;
-
-    private int projectileNum;
-    private float projectileSpeed;
-    private float projectileDamage;
+    // duplicate the variables to specify the boss attacks
+    private NetworkVariable<int> bossLevel = new NetworkVariable<int>();
+    private NetworkVariable<int> projectileNum = new NetworkVariable<int>();
+    private NetworkVariable<float> projectileSpeed = new NetworkVariable<float>();
+    private NetworkVariable<float> projectileDamage = new NetworkVariable<float>();
 
     void Start()
     {
@@ -35,38 +35,12 @@ public class Enemy : NetworkBehaviour
 
         FindObjectOfType<AudioManager>().Stop("StartMusic");
 
-        bossLevel = bossData.GetBossLevel();
-        switch (bossLevel)
-        {
-            case 1:
-                projectileNum = 9;
-                projectileSpeed = 5f;
-                projectileDamage = 15;
-                FindObjectOfType<AudioManager>().Play($"BossMusic{bossLevel}");
-                break;
-            case 2:
-                projectileNum = 10;
-                projectileSpeed = 6f;
-                projectileDamage = 20;
-                FindObjectOfType<AudioManager>().Play($"BossMusic{bossLevel}");
-                break;
-            case 3:
-                projectileNum = 12;
-                projectileSpeed = 6f;
-                projectileDamage = 25;
-                FindObjectOfType<AudioManager>().Play($"BossMusic{bossLevel}");
-                break;
-            case 4:
-                projectileNum = 15;
-                projectileSpeed = 8f;
-                projectileDamage = 30;
-                FindObjectOfType<AudioManager>().Play($"BossMusic{bossLevel}");
-                break;
-        }
-
         canPlayAnim = true;
         canBeHit = true;
         playerData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
+
+        UpdateBossLevelServerRpc();
+        FindObjectOfType<AudioManager>().Play($"BossMusic{bossLevel.Value}");
     }
 
     // Update is called once per frame
@@ -108,7 +82,7 @@ public class Enemy : NetworkBehaviour
         {
             spawnObj = fireball;
         }
-        else if (bossLevel == 1) //if its a rock
+        else if (bossLevel.Value == 1) //if its a rock
         {
             FindObjectOfType<AudioManager>().Play("AlbinoRoarAttack");
             spawnObj = otherProjectile;
@@ -119,12 +93,12 @@ public class Enemy : NetworkBehaviour
         }
 
         float radius = 2f;
-        float angleStep = 360f / projectileNum;
+        float angleStep = 360f / projectileNum.Value;
 
         // start angle is random each time
         float angle = UnityEngine.Random.Range(0f, angleStep);
 
-        for (int i = 0; i < projectileNum; i++)
+        for (int i = 0; i < projectileNum.Value; i++)
         {
             //calc spawn pos based on angle
             float spawnX = transform.position.x + Mathf.Cos(angle * Mathf.Deg2Rad) * radius;
@@ -136,7 +110,7 @@ public class Enemy : NetworkBehaviour
 
             // IBossSpell spellScript = (name == "fireball") ? spawnedObj.GetComponent<BossFireball>() : spawnedObj.GetComponent<BossRock>();
             BossProjectile spellScript = spawnedObj.GetComponent<BossProjectile>();
-            spellScript.SetDamage(projectileDamage);
+            spellScript.SetDamage(projectileDamage.Value);
 
             Rigidbody rb = spawnedObj.GetComponent<Rigidbody>();
             if (rb != null)
@@ -147,7 +121,7 @@ public class Enemy : NetworkBehaviour
                     0, //zero out Y to ignore height offset
                     spawnPosition.z - transform.position.z
                 ).normalized;
-                rb.velocity = direction * projectileSpeed;
+                rb.velocity = direction * projectileSpeed.Value;
             }
 
             //increment angle
@@ -241,7 +215,7 @@ public class Enemy : NetworkBehaviour
         FindObjectOfType<AudioManager>().Play("AlbinoDeath");
         canPlayAnim = false;
         canBeHit = false;
-        FindObjectOfType<AudioManager>().Stop($"BossMusic{bossLevel}");
+        FindObjectOfType<AudioManager>().Stop($"BossMusic{bossLevel.Value}");
         FindObjectOfType<AudioManager>().Play("StartMusic");
 
         yield return new WaitForSeconds(seconds);
@@ -254,5 +228,34 @@ public class Enemy : NetworkBehaviour
 
         // after boss dies toggle the screen
         onDeathComplete?.Invoke();
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void UpdateBossLevelServerRpc()
+    {
+        bossLevel.Value = bossData.GetBossLevel();
+        switch (bossLevel.Value)
+        {
+            case 1:
+                projectileNum.Value = 9;
+                projectileSpeed.Value = 5f;
+                projectileDamage.Value = 15;
+                break;
+            case 2:
+                projectileNum.Value = 10;
+                projectileSpeed.Value = 6f;
+                projectileDamage.Value = 20;
+                break;
+            case 3:
+                projectileNum.Value = 12;
+                projectileSpeed.Value = 6f;
+                projectileDamage.Value = 25;
+                break;
+            case 4:
+                projectileNum.Value = 15;
+                projectileSpeed.Value = 8f;
+                projectileDamage.Value = 30;
+                break;
+        }
     }
 }

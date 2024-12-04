@@ -72,6 +72,12 @@ public class NotifyClient : NetworkBehaviour
         clientData.ResetGame();
         NotifyClientsUserHealth();
 
+        GameObject[] puddles = GameObject.FindGameObjectsWithTag(TagManager.Puddle);
+        foreach (GameObject puddle in puddles)
+        {
+            Destroy(puddle);
+        }
+
         if (!IsHost)
             SwapScreens.Instance.ToggleResetGameClient();
     }
@@ -152,39 +158,6 @@ public class NotifyClient : NetworkBehaviour
         }
     }
 
-
-    // [ClientRpc]
-    // public void SpawnOtherPlayerSpellClientRpc(Vector3 spawnPos, Vector3 direction, string casterUsername, string spell)
-    // {
-    //     if (!IsOwner || clientData.GetUsername() == casterUsername)
-    //         return;
-
-    //     GameObject spellPrefab = null;
-    //     float spellSpeed = 0f;
-
-    //     switch (spell)
-    //     {
-    //         case "fireball":
-    //             spellPrefab = fireball;
-    //             spellSpeed = 8f;
-    //             break;
-    //         case "lightning":
-    //             spellPrefab = lightning;
-    //             spellSpeed = 8f;
-    //             break;
-    //         case "rock":
-    //             spellPrefab = rock;
-    //             spellSpeed = 8f;
-    //             break;
-    //     }
-
-    //     GameObject projectile = Instantiate(spellPrefab, spawnPos, Quaternion.LookRotation(direction));
-
-    //     projectile.GetComponent<IPlayerSpell>().SetDamage(0);
-    //     projectile.GetComponent<Rigidbody>().velocity = direction * spellSpeed;
-
-    // }
-
     private void WinGameScreen(string rewardsDictJson)
     {
         Dictionary<string, int> rewards = JsonConvert.DeserializeObject<Dictionary<string, int>>(rewardsDictJson);
@@ -195,9 +168,12 @@ public class NotifyClient : NetworkBehaviour
 
     private void ToggleOffPlacementText()
     {
-        GameObject gameBackground = GameObject.FindWithTag(TagManager.GameBackground);
-        TMPro.TMP_Text placeBossText = gameBackground.transform.GetChild(1).GetComponent<TMPro.TMP_Text>();
         SwapScreens.Instance.ToggeOnCrosshair();
+        GameObject gameBackground = GameObject.FindWithTag(TagManager.GameBackground);
+        if (gameBackground == null)
+            return; 
+
+        TMPro.TMP_Text placeBossText = gameBackground.transform.GetChild(1).GetComponent<TMPro.TMP_Text>();
 
         placeBossText.text = "";
     }
