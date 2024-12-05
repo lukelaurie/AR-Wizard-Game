@@ -33,9 +33,6 @@ public class BlitImageForColocalization : MonoBehaviour
         playerData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
 
         m_ARCameraBackground = FindObjectOfType<ARCameraBackground>();
-        // StartGameHost.OnStartSharedSpaceHost += OnStartSharedSpace;
-        // StartGameClient.OnJoinSharedSpaceClient += OnStartSharedSpace;
-        // RetakeImageLogic.OnRetakePicture += OnStartSharedSpace;
     }
 
     public void TakePicture()
@@ -105,12 +102,7 @@ public class BlitImageForColocalization : MonoBehaviour
     private void CopyRenderTextureTo2DTexture()
     {
 
-        if (_cameraTexture == null || _cameraTexture.width != m_RenderTexture.width ||
-            _cameraTexture.height != m_RenderTexture.height)
-        {
-            _cameraTexture = new Texture2D(m_RenderTexture.width, m_RenderTexture.height, TextureFormat.RGBA32,
-                false);
-        }
+        _cameraTexture = new Texture2D(m_RenderTexture.width, m_RenderTexture.height, TextureFormat.RGBA32, false);
 
         RenderTexture.active = m_RenderTexture;
         _cameraTexture.ReadPixels(new Rect(0, 0, m_RenderTexture.width, m_RenderTexture.height), 0, 0);
@@ -119,7 +111,6 @@ public class BlitImageForColocalization : MonoBehaviour
         RenderTexture.active = null;
 
         playerData.SetTargetImage(_cameraTexture);
-        Debug.Log("setting target image");
     }
 
 }
