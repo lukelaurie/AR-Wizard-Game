@@ -3289,7 +3289,7 @@ RectTransform:
   m_GameObject: {fileID: 377335919}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.4154, y: 1.4154, z: 1.4154}
+  m_LocalScale: {x: 1.2463616, y: 1.2463616, z: 1.2463616}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1777654372}
@@ -9484,7 +9484,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 1170}
+  m_AnchoredPosition: {x: 0, y: 1155}
   m_SizeDelta: {x: 800, y: 270}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &997881742
@@ -11533,8 +11533,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 80, y: -80.00001}
-  m_SizeDelta: {x: 80, y: 80}
+  m_AnchoredPosition: {x: 18.0831, y: -6.8831}
+  m_SizeDelta: {x: 50.1, y: 50.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1196941568
 MonoBehaviour:
@@ -11549,14 +11549,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.4528302, g: 0.21658373, b: 0.14311142, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: bb8f38b5145291e48bc98d6290353e0e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c1c60f9e256f9794abf8f834b8eef89d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -13896,7 +13896,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1521565364
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15452,7 +15452,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tier1Boss: {fileID: 844035104550790214, guid: 8a894ad2e2b68b14ca67b4d829bd2f5c, type: 3}
-  tier2Boss: {fileID: 4203312771211977905, guid: 83fc1af8bce05f54095f54483d7019dc, type: 3}
+  tier2Boss: {fileID: 4203312771211977905, guid: 2f8b4a6dbba08c24e8690a207e35a2da, type: 3}
   tier3Boss: {fileID: 5814206883048075406, guid: b94fb1754b401f84e942207408d75e16, type: 3}
   tier4Boss: {fileID: 7864248370299648407, guid: 37ce54f09e1ebab499a2cda93710de44, type: 3}
 --- !u!1 &1777654371
@@ -16852,7 +16852,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f34d80f01d008024492ff51f9ed6dc8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playAgain: {fileID: 0}
   continueButton: {fileID: 1529414054}
 --- !u!114 &1868073479
 MonoBehaviour:
