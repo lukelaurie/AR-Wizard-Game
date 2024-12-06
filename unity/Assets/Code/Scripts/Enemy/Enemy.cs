@@ -87,12 +87,12 @@ public class Enemy : NetworkBehaviour
         {
             FindObjectOfType<AudioManager>().Play("AlbinoRoarAttack");
             spawnObj = otherProjectile;
-            curProjectileSpeed = projectileSpeed.Value + 2f;
+            curProjectileSpeed = projectileSpeed.Value + 5f;
         }
         else
         {
             spawnObj = otherProjectile;
-            curProjectileSpeed = projectileSpeed.Value + 4f;
+            curProjectileSpeed = projectileSpeed.Value + 5f;
         }
 
         float radius = 1.25f;
@@ -118,7 +118,7 @@ public class Enemy : NetworkBehaviour
             Rigidbody rb = spawnedObj.GetComponent<Rigidbody>();
             Vector3 direction = new Vector3(
                     spawnPosition.x - transform.position.x,
-                    spawnPosition.y - transform.position.y + 0.25f,
+                    spawnPosition.y - transform.position.y + 0.5f,
                     spawnPosition.z - transform.position.z
                 ).normalized;
             if (name == "fireball")
@@ -252,19 +252,19 @@ public class Enemy : NetworkBehaviour
                 projectileDamage.Value = 15;
                 break;
             case 2:
-                projectileNum.Value = 7;
+                projectileNum.Value = 8;
                 projectileSpeed.Value = 8f;
                 projectileDamage.Value = 20;
                 break;
             case 3:
-                projectileNum.Value = 10;
+                projectileNum.Value = 11;
                 projectileSpeed.Value = 8f;
-                projectileDamage.Value = 25;
+                projectileDamage.Value = 23;
                 break;
             case 4:
-                projectileNum.Value = 12;
+                projectileNum.Value = 17;
                 projectileSpeed.Value = 10f;
-                projectileDamage.Value = 30;
+                projectileDamage.Value = 25;
                 break;
         }
     }
