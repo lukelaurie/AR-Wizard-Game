@@ -10,6 +10,7 @@ public class HealthBar: NetworkBehaviour
     [SerializeField] private Slider slider;
     [SerializeField] private BossData bossData;
     [SerializeField] private Transform fill;
+    private float xScale = 1f;
 
     public void UpdateHealthBar(float curVal, float maxValue)
     {
@@ -25,7 +26,13 @@ public class HealthBar: NetworkBehaviour
         if (curVal <= 0)
         {
             Vector3 currentScale = fill.localScale;
-            fill.localScale = new Vector3(0, currentScale.y, currentScale.z);
+            xScale = currentScale.x;
+            fill.localScale = new Vector3(0.0f, currentScale.y, currentScale.z);
+        }
+        else
+        {
+            Vector3 currentScale = fill.localScale;
+            fill.localScale = new Vector3(xScale, currentScale.y, currentScale.z);
         }
     }
 }
