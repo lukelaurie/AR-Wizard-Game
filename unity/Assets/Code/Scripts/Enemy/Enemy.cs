@@ -248,23 +248,23 @@ public class Enemy : NetworkBehaviour
         {
             case 1:
                 projectileNum.Value = 5;
-                projectileSpeed.Value = 7f;
-                projectileDamage.Value = 15;
+                projectileSpeed.Value = 7.5f;
+                projectileDamage.Value = 17; //6 shot
                 break;
             case 2:
                 projectileNum.Value = 8;
-                projectileSpeed.Value = 8f;
-                projectileDamage.Value = 20;
+                projectileSpeed.Value = 8.5f;
+                projectileDamage.Value = 20; //5 shot + puddle
                 break;
             case 3:
                 projectileNum.Value = 11;
-                projectileSpeed.Value = 8f;
-                projectileDamage.Value = 23;
+                projectileSpeed.Value = 9f;
+                projectileDamage.Value = 23; //5 shot + more puddle
                 break;
             case 4:
                 projectileNum.Value = 17;
                 projectileSpeed.Value = 10f;
-                projectileDamage.Value = 25;
+                projectileDamage.Value = 25; //4 shot + more puddle
                 break;
         }
     }
