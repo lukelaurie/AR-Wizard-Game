@@ -6,7 +6,7 @@ using UnityEngine;
 public class BossPuddle : MonoBehaviour
 {
     [SerializeField] private float puddleDamage;
-    [SerializeField] private float puddleWidth; 
+    [SerializeField] private float puddleWidth;
     private float lifetime;
     private float damageTickTime;
     private float currentTickTime;
@@ -40,19 +40,15 @@ public class BossPuddle : MonoBehaviour
             return;
         }
 
-        var networkObject = other.gameObject.GetComponent<NetworkObject>();
-        if (networkObject.IsOwner)
-        {
-            PlayerData playerData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
-            playerData.PlayerTakeDamage(puddleDamage);
-            currentTickTime = 0f;
-        }
+        PlayerData playerData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
+        playerData.PlayerTakeDamage(puddleDamage);
+        currentTickTime = 0f;
     }
 
     private IEnumerator GrowPuddle()
     {
         Vector3 initialSize = transform.localScale;
-        float timePassed = 0f; 
+        float timePassed = 0f;
         float growthDuration = 2f;
 
         while (timePassed < growthDuration)

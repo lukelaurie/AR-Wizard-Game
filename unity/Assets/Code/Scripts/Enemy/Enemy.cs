@@ -111,7 +111,6 @@ public class Enemy : NetworkBehaviour
 
             GameObject spawnedObj = Instantiate(spawnObj, spawnPosition, Quaternion.identity);
 
-            // IBossSpell spellScript = (name == "fireball") ? spawnedObj.GetComponent<BossFireball>() : spawnedObj.GetComponent<BossRock>();
             BossProjectile spellScript = spawnedObj.GetComponent<BossProjectile>();
             spellScript.SetDamage(projectileDamage.Value);
 
@@ -249,17 +248,17 @@ public class Enemy : NetworkBehaviour
             case 1:
                 projectileNum.Value = 5;
                 projectileSpeed.Value = 7.5f;
-                projectileDamage.Value = 17; //6 shot
+                projectileDamage.Value = 15; //7 shot
                 break;
             case 2:
                 projectileNum.Value = 8;
                 projectileSpeed.Value = 8.5f;
-                projectileDamage.Value = 20; //5 shot + puddle
+                projectileDamage.Value = 16; //7 shot + puddle
                 break;
             case 3:
                 projectileNum.Value = 11;
                 projectileSpeed.Value = 9f;
-                projectileDamage.Value = 23; //5 shot + more puddle
+                projectileDamage.Value = 20; //5 shot + more puddle
                 break;
             case 4:
                 projectileNum.Value = 17;
