@@ -239,6 +239,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slider: {fileID: 5062514413067098682}
   playerName: {fileID: 7504993683879496153}
+  fill: {fileID: 2791812899600902504}
 --- !u!114 &6954876530354484123
 MonoBehaviour:
   m_ObjectHideFlags: 0

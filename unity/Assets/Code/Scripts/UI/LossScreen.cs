@@ -15,7 +15,7 @@ public class LossScreen : MonoBehaviour
 
     private Enemy enemy;
     // Start is called before the first frame update
-    void Start()
+    void OnEnable()
     {
         playerData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
         placeBoss = GameObject.FindWithTag(TagManager.GameLogic).GetComponent<PlaceCharacter>();

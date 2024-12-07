@@ -39,6 +39,10 @@ public class NotifyClient : NetworkBehaviour
             ToggleOffPlacementText();
             SwapScreens.Instance.ToggleSpellBarOn();
         }
+        else
+        {
+            GameScreen.Instance.DisplayPlacementText();
+        }
 
         NotifyClientsUserHealth();
     }
@@ -88,8 +92,8 @@ public class NotifyClient : NetworkBehaviour
         if (!IsOwner)
             return;
 
-        ToggleOffPlacementText();
         SwapScreens.Instance.ToggleGameBackgroundClient();
+        ToggleOffPlacementText();
         SwapScreens.Instance.ToggleSpellBarOn();
 
         NotifyClientsUserHealth();
@@ -169,13 +173,7 @@ public class NotifyClient : NetworkBehaviour
     private void ToggleOffPlacementText()
     {
         SwapScreens.Instance.ToggeOnCrosshair();
-        GameObject gameBackground = GameObject.FindWithTag(TagManager.GameBackground);
-        if (gameBackground == null)
-            return; 
-
-        TMPro.TMP_Text placeBossText = gameBackground.transform.GetChild(1).GetComponent<TMPro.TMP_Text>();
-
-        placeBossText.text = "";
+        GameScreen.Instance.SetPlaceTextEmpty();
     }
 
     private void EnableSpellShootingScript()

@@ -4,18 +4,27 @@ using UnityEngine;
 
 public class GameScreen : MonoBehaviour
 {
+    public static GameScreen Instance { get; private set; }
     [SerializeField] private TMPro.TMP_Text placeBossText;
     private PlaceCharacter placeCharacter;
     private PlayerData playerData;
-
 
     void Awake()
     {
         placeCharacter = GameObject.FindWithTag(TagManager.GameLogic).GetComponent<PlaceCharacter>();
         playerData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
+
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
-    void OnEnable()
+    public void DisplayPlacementText()
     {
         if (playerData.IsPlayerHost())
         {
@@ -31,5 +40,10 @@ public class GameScreen : MonoBehaviour
         {
             placeBossText.text = "Waiting for host to place the boss...";
         }
+    }
+
+    public void SetPlaceTextEmpty()
+    {
+        placeBossText.text = "";
     }
 }

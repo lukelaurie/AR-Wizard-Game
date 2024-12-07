@@ -28,15 +28,14 @@ public class SwapScreens : MonoBehaviour
     [SerializeField] private GameObject deathScreen;
     [SerializeField] private GameObject crossHair;
 
-    [SerializeField] private GameObject gameScreen;
     [SerializeField] private GameObject spellBar;
     [SerializeField] private GameObject partyHealth;
     private PlayerData playerData;
 
-
     void Awake()
     {
         playerData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
+        
         if (Instance == null)
         {
             Instance = this;
@@ -54,15 +53,6 @@ public class SwapScreens : MonoBehaviour
             return;
 
         NetworkManager.Singleton.Shutdown();
-        //     List<GameObject> netObjects =
-        // FindObjectsOfType<NetworkObject>().Select(obj => obj.transform.gameObject).ToList();
-
-        //     while (netObjects.Count > 0)
-        //     {
-        //         GameObject removeObj = netObjects[0];
-        //         netObjects.RemoveAt(0);
-        //         Destroy(removeObj);
-        //     }
 
         Destroy(GameObject.FindWithTag(TagManager.Scenary));
         Destroy(GameObject.FindWithTag(TagManager.NetworkManagerAr));
@@ -115,7 +105,6 @@ public class SwapScreens : MonoBehaviour
     public void ToggleGameBackgroundClient()
     {
         joinRoomScreen.SetActive(false);
-        gameScreen.SetActive(true);
         partyHealth.SetActive(true);
     }
 
@@ -128,6 +117,7 @@ public class SwapScreens : MonoBehaviour
     {
         loseScreen.SetActive(false);
         joinRoomScreen.SetActive(true);
+        partyHealth.SetActive(false);
     }
 
     public void ToggleClientJoinGame()
@@ -173,12 +163,10 @@ public class SwapScreens : MonoBehaviour
 
     private void ToggleOffScreens()
     {
-        gameScreen.SetActive(false);
         spellBar.SetActive(false);
         winScreen.SetActive(false);
         deathScreen.SetActive(false);
         loseScreen.SetActive(false);
-        spellBar.SetActive(false);
         crossHair.SetActive(false);
     }
 }

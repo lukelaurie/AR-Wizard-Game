@@ -35,11 +35,6 @@ public class PlaceCharacter : NetworkBehaviour
 #if UNITY_EDITOR
         if (Input.GetMouseButtonDown(0))
         {
-            if (EventSystem.current.IsPointerOverGameObject())
-            {
-                Debug.Log("UI Hit was recognized");
-                return;
-            }
             TouchToRay(Input.mousePosition);
         }
 #endif
