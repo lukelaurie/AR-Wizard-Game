@@ -120,7 +120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   puddleDamage: 4
-  puddleWidth: 6
+  puddleWidth: 8.5
 --- !u!54 &4153887314461094205
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -268,7 +268,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   puddleDamage: 4
-  puddleWidth: 6
+  puddleWidth: 8.5
 --- !u!54 &6418723213089223144
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -416,7 +416,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   puddleDamage: 4
-  puddleWidth: 6
+  puddleWidth: 8.5
 --- !u!54 &866446464025092762
 Rigidbody:
   m_ObjectHideFlags: 0

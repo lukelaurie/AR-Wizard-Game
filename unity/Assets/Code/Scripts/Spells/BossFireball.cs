@@ -6,7 +6,7 @@ using UnityEngine;
 public class BossFireball : MonoBehaviour
 {
     private float damageAmount;
-    private float lifetime = 4f;
+    private float lifetime = 5f;
     [SerializeField] private GameObject explosion;
 
     void Start()
