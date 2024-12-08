@@ -19361,7 +19361,7 @@ GameObject:
   - component: {fileID: -7249498057256547297}
   - component: {fileID: 7691871114072602530}
   - component: {fileID: -4266536172778724927}
-  - component: {fileID: 300589875160917833}
+  - component: {fileID: -4461598962082466115}
   m_Layer: 9
   m_Name: BossFireball
   m_TagString: Fireball
@@ -24338,7 +24338,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &300589875160917833
+--- !u!114 &-4461598962082466115
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -24350,3 +24350,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 218b1b8d3d3eeab4bbbfed1b51559d5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  explosion: {fileID: 9172233667358306048, guid: 8edb1dc090d511d4086a9defa5c448c7, type: 3}

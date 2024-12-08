@@ -7,6 +7,8 @@ public class BossProjectile : MonoBehaviour
 {
     private float damageAmount;
     private float lifetime = 4f;
+    [SerializeField] private GameObject explosion;
+
 
     void Start()
     {
@@ -17,19 +19,16 @@ public class BossProjectile : MonoBehaviour
     {
         if (!collision.gameObject.CompareTag(TagManager.Player))
         {
-            // Instantiate(puddle, collision.contacts[0].point, Quaternion.identity);
             Destroy(gameObject);
             return;
         }
 
-        var networkObject = collision.gameObject.GetComponent<NetworkObject>();
-        if (networkObject.IsOwner)
-        {
-            PlayerData playerData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
-            //Debug.LogError($"EEERRROORRRRRRRRRRRRRRRRRRRRRRR!!!!! projectile delt {damageAmount}");
-            playerData.PlayerTakeDamage(damageAmount); 
-            Destroy(gameObject);
-        }
+        PlayerData playerData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
+        playerData.PlayerTakeDamage(damageAmount);
+        if (explosion != null)
+            Instantiate(explosion, collision.contacts[0].point, Quaternion.identity);
+            
+        Destroy(gameObject);
     }
 
 

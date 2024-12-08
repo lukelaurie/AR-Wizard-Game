@@ -13,7 +13,7 @@ public class PlayerShoot : NetworkBehaviour
     [SerializeField] private Image healFX;
 
     private readonly float fireballSpeed = 8f;
-    private readonly float rockSpeed = 8f;
+    private readonly float rockSpeed = 10f;
     private readonly string fireballName = "fireball";
     private readonly string lightningName = "lightning";
     private readonly string healName = "healing";
@@ -85,18 +85,6 @@ public class PlayerShoot : NetworkBehaviour
 
         server.SpawnObjectServerRpc(spawnPos, lightningLookVector, playerData.GetUsername(), lightningName);
     }
-
-    // public void ShootLightning()
-    // {
-    //     Vector3 spawnPos = playerCamera.transform.position + playerCamera.transform.forward * lightningSpawnDist;
-
-    //     Vector3 lightningDetection = -playerCamera.transform.forward;
-
-    //     GameObject projectile = Instantiate(lightning, spawnPos, Quaternion.LookRotation(lightningDetection) * Quaternion.Euler(80, 0, 0));
-    //     projectile.GetComponent<Lightning>().SetDamage(CalcAmount(lightningName));
-
-    //     server.SpawnObjectServerRpc(spawnPos, lightningDetection, playerData.GetUsername(), lightningName);
-    // }
 
     public void Heal()
     {

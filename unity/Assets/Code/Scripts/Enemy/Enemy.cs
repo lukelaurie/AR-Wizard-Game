@@ -111,7 +111,6 @@ public class Enemy : NetworkBehaviour
 
             GameObject spawnedObj = Instantiate(spawnObj, spawnPosition, Quaternion.identity);
 
-            // IBossSpell spellScript = (name == "fireball") ? spawnedObj.GetComponent<BossFireball>() : spawnedObj.GetComponent<BossRock>();
             BossProjectile spellScript = spawnedObj.GetComponent<BossProjectile>();
             spellScript.SetDamage(projectileDamage.Value);
 
