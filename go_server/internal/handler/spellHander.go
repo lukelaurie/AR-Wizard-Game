@@ -187,17 +187,17 @@ func getPlayerSpellData(username string) (int, []model.PlayerSpell, error) {
 func getSpellPrice(name string, level int) (int, bool) {
 	var spellPrices = map[string]int{
 		"fireball":  750,
-		"lightning": 1250,
-		"healing":   1750,
-		"rock":      3000,
+		"lightning": 1000,
+		"healing":   1250,
+		"rock":      2000,
 	}
 
 	var levelPrices = map[int]int{
 		1: 1,
 		2: 2,
-		3: 5,
-		4: 10,
-		5: 15,
+		3: 4,
+		4: 7,
+		5: 12,
 	}
 
 	basePrice, ok := spellPrices[name]
