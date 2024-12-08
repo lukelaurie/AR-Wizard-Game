@@ -28,19 +28,19 @@ public class SpellStore : MonoBehaviour
     private readonly int MAX_LEVEL = 5;
 
     private readonly Dictionary<string, int> spellPrices = new(){
-        {"fireball",  500},
-        {"lightning", 1000},
-        {"healing",   2000},
-        {"rock",      4000},
+        {"fireball",  750},
+        {"lightning", 1250},
+        {"healing",   1750},
+        {"rock",      3000},
     };
 
     private readonly Dictionary<int, int> levelPrices = new()
     {
         {1, 1},
-        {2, 3},
-        {3, 8},
-        {4, 15},
-        {5, 22},
+        {2, 2},
+        {3, 5},
+        {4, 10},
+        {5, 15},
     };
 
     private readonly Color red = new Color(255, 0, 0);
