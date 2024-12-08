@@ -41,7 +41,17 @@ public class Enemy : NetworkBehaviour
         playerData = GameObject.FindWithTag(TagManager.GameInfo).GetComponent<PlayerData>();
 
         UpdateBossLevelServerRpc();
-        FindObjectOfType<AudioManager>().Play($"BossMusic{bossLevel.Value}");
+
+        string bossMusic;
+        if (bossLevel.Value == 0)
+        {
+            bossMusic = $"BossMusic{1}";
+        }
+        else
+        {
+            bossMusic = $"BossMusic{bossLevel.Value}";
+        }
+        FindObjectOfType<AudioManager>().Play(bossMusic);
     }
 
     // Update is called once per frame

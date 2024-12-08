@@ -116,8 +116,8 @@ public class SwapScreens : MonoBehaviour
     public void ToggleResetGameClient()
     {
         loseScreen.SetActive(false);
-        joinRoomScreen.SetActive(true);
         partyHealth.SetActive(false);
+        joinRoomScreen.SetActive(true);
     }
 
     public void ToggleClientJoinGame()
@@ -129,6 +129,7 @@ public class SwapScreens : MonoBehaviour
     public void ToggleLossScreen()
     {
         ToggleOffScreens();
+        partyHealth.SetActive(false);
         loseScreen.SetActive(true);
 
         // have the host and client display different text
@@ -149,6 +150,7 @@ public class SwapScreens : MonoBehaviour
     public void ToggleWinScreen(int userReward)
     {
         ToggleOffScreens();
+        partyHealth.SetActive(false);
         winScreen.SetActive(true);
 
         TMPro.TMP_Text childText = winScreen.transform.GetChild(3).GetComponent<TMPro.TMP_Text>();
