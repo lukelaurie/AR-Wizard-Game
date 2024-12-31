@@ -1,5 +1,5 @@
-apple appstore link-
-name: ARWizard
-video demo- https://www.youtube.com/watch?v=CkQq0kWshIw
+apple appstore link- \n
+name: ARWizard \n
+video demo- https://www.youtube.com/watch?v=CkQq0kWshIw \n
 
-<insert images here>
+<insert images here> \n
