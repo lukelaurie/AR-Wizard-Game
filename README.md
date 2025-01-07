@@ -25,3 +25,48 @@ video demo- https://www.youtube.com/watch?v=jhyTkqzB2dI<br>
 <img src="https://github.com/user-attachments/assets/5079ceaa-7089-4ac5-8835-de27fcdd9f3b" width=200>
 <img src="https://github.com/user-attachments/assets/8ef987bc-e859-47fd-a08c-411f1349773a" width=200>
 <img src="https://github.com/user-attachments/assets/b50a0755-352d-439b-b432-5a063a88290a" width=200>
+
+
+Lightship ARDK & Data Privacy
+Last updated: May 24, 2022
+
+Lightship ARDK collects personal information from application end users in certain situations. This information may be subject to privacy regulations around the world, such as the General Data Privacy Regulation (GDPR) in the European Union.
+
+Although developers are required to ensure applications using ARDK comply with applicable laws, Niantic recognizes the need to share information regarding the data that ARDK collects to enable developers to be transparent with their end users.
+
+What is GDPR and how is it relevant to my use of Lightship ARDK?
+GDPR is a privacy regulation which replaced the 95/46/EC Directive on Data Protection of 24 October 1995 on 25 May 2018. GDPR lays out specific requirements for businesses and organizations established in Europe or who serve users in Europe.
+
+Developers should consult their own legal advisors to understand whether GDPR is applicable to their proposed use of ARDK. We also always recommend updating to the latest version of Lightship ARDK so you can take advantage of tools and processes that we may make available to assist with GDPR compliance.
+
+What personal information does Niantic collect from end users?
+Categories of personal information collected by Lightship ARDK are set out below. Further details can be found in Niantic’s consumer privacy policy, which can be found at https://nianticlabs.com/privacy/.
+
+Data collection applicable to all Lightship ARDK features
+Device information such as device OS, model, and configuration settings
+In-app activity data such as ARDK features used (e.g semantic segmentation, meshing, multiplayer)
+Log information such as unique user IDs as well as performance and other diagnostic data
+Data collection applicable to specific Lightship ARDK features
+In addition to the data outlined above, the following features collect the data outlined below:
+
+Shared AR
+
+Geospatial information derived from the device camera, which is not persistently stored
+Visual Positioning Service (VPS)
+
+Location information, including GPS information
+Geospatial information and images collected from the device camera and sensors
+Important: Niantic may also make improvements to existing features resulting in a change in personal data collected. Developers should check back to this page to keep up to date with any changes in this regard. The above list is also only applicable to the latest release version of the Lightship ARDK.
+
+Does Niantic provide any support for handling data subject requests made by end users in accordance with GDPR?
+Lightship ARDK includes tooling to handle end user requests to support developers with data privacy requests and GDPR compliance. Please see https://lightship.dev/docs/ for more information on this and the use of User IDs in Lightship ARDK. We would also recommend that you update to the latest version of Lightship ARDK to ensure you can take advantage of these tools and other related updates.
+
+Do I need to provide my end users with information about Lightship ARDK?
+Developers are required to publish a privacy policy for any apps which use Lightship ARDK. This privacy policy should fully and accurately describe to end-users any personal information you collect about them and how you process, use and share such personal information. It should clearly state that information will be collected by Niantic and include a link to our consumer privacy policy (https://nianticlabs.com/privacy/).
+
+Are there any specific requirements I need to keep in mind if I am using Lightship ARDK to create an application which may be used by children?
+Some countries impose specific regulations on services which are provided to, or which may be accessed by, children.
+
+As an example, the Children’s Online Privacy Act (COPPA) regulates the collection of personal information from children under the age of 13 in the United States. COPPA imposes certain requirements, such as the need to obtain verifiable parental consent in some cases, on operators of websites or online services directed to children under 13 years of age, and on operators of other websites or online services that have actual knowledge that they are collecting personal information online from a child under 13 years of age.
+
+Developers using ARDK to create applications which may be used by, or are specifically directed at, children, should consult their own legal advisors to understand which additional requirements will apply.
