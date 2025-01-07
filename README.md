@@ -26,5 +26,5 @@ video demo- https://www.youtube.com/watch?v=jhyTkqzB2dI<br>
 <img src="https://github.com/user-attachments/assets/8ef987bc-e859-47fd-a08c-411f1349773a" width=200>
 <img src="https://github.com/user-attachments/assets/b50a0755-352d-439b-b432-5a063a88290a" width=200>
 
-<br>
-Privacy Policy: https://lightship.dev/legal/data-privacy
+<br>Privacy Policy: https://lightship.dev/legal/data-privacy
+<br>Class project for CSC 436- Software Development
