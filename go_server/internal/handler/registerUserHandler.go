@@ -3,6 +3,7 @@ package handler
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/lukelaurie/AR-Wizard-Game/go_server/internal/database"
@@ -53,6 +54,7 @@ func RegisterUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteUser(w http.ResponseWriter, r *http.Request) {
+	log.Println("Deleting user now")
 	username, ok := middleware.GetUsernameFromContext(r.Context())
 	if !ok {
 		http.Error(w, "Username not found in context", http.StatusInternalServerError)
