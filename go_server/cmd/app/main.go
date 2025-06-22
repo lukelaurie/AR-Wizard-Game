@@ -24,6 +24,6 @@ func main() {
 
 	// set up the router
 	router := route.InitializeRoutes()
-	log.Println("Server started on port 3000")
-	log.Fatal(http.ListenAndServe(":3000", router))
+	log.Println("Server started on port 3030")
+	log.Fatal(http.ListenAndServe(":3030", router))
 }
