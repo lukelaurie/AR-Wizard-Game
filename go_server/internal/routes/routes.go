@@ -20,6 +20,7 @@ func InitializeRoutes() *mux.Router {
 	protectedRouter := apiRouter.PathPrefix("/protected").Subrouter()
 	protectedRouter.Use(middleware.CheckAuthMiddleware) // apply the middleware to first authorize
 
+	protectedRouter.HandleFunc("/delete-user", handler.DeleteUser).Methods("DELETE")
 	protectedRouter.HandleFunc("/test", handler.Test).Methods("GET")
 	protectedRouter.HandleFunc("/join-room", handler.JoinRoom).Methods("GET")
 	protectedRouter.HandleFunc("/get-coins", handler.GetCoins).Methods("GET")
