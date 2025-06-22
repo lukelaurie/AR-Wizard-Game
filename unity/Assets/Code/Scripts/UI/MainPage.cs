@@ -37,11 +37,11 @@ public class MainPage : MonoBehaviour
             SwapScreens.Instance.QuitGame();
         });
 
-        deleteButton.onClick.AddListener(() =>
+        deleteButton.onClick.AddListener(async () =>
         {
-            AccountManager.Instance.DeleteUser();
-            // UnityWebRequest.ClearCookieCache();
-            // SwapScreens.Instance.QuitGame();
+            await AccountManager.Instance.DeleteUser();
+            UnityWebRequest.ClearCookieCache();
+            SwapScreens.Instance.QuitGame();
         });
     }
 
