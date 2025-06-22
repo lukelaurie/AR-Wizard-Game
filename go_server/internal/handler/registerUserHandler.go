@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/lukelaurie/AR-Wizard-Game/go_server/internal/database"
+	"github.com/lukelaurie/AR-Wizard-Game/go_server/internal/middleware"
 	"github.com/lukelaurie/AR-Wizard-Game/go_server/internal/model"
 	"github.com/lukelaurie/AR-Wizard-Game/go_server/internal/utils"
 )
@@ -49,4 +50,20 @@ func RegisterUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	json.NewEncoder(w).Encode("user registered")
+}
+
+func DeleteUser(w http.ResponseWriter, r *http.Request) {
+	username, ok := middleware.GetUsernameFromContext(r.Context())
+	if !ok {
+		http.Error(w, "Username not found in context", http.StatusInternalServerError)
+		return
+	}
+
+	err := database.DeleteUser(username)
+	if err != nil {
+		utils.LogAndAddServerError(err, w)
+		return
+	}
+
+	json.NewEncoder(w).Encode("user deleted")
 }

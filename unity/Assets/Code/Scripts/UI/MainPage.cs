@@ -10,6 +10,7 @@ public class MainPage : MonoBehaviour
     [SerializeField] private Button openStoreButton;
     [SerializeField] private Button returnButton;
     [SerializeField] private Button logoutButton;
+    [SerializeField] private Button deleteButton;
 
     [SerializeField] private Button joinServerButton;
     [SerializeField] private Button startServerButton;
@@ -34,6 +35,13 @@ public class MainPage : MonoBehaviour
         {
             UnityWebRequest.ClearCookieCache();
             SwapScreens.Instance.QuitGame();
+        });
+
+        deleteButton.onClick.AddListener(() =>
+        {
+            AccountManager.Instance.DeleteUser();
+            // UnityWebRequest.ClearCookieCache();
+            // SwapScreens.Instance.QuitGame();
         });
     }
 

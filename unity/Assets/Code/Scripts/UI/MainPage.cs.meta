@@ -3,7 +3,14 @@ guid: fefc7a10f4ecd884e8b72105abd6ce18
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - openStoreButton: {instanceID: 0}
+  - returnButton: {instanceID: 0}
+  - logoutButton: {instanceID: 0}
+  - deleteButton: {fileID: 2185034552134638904, guid: 34558ea1a2279ef49ac2a69df54e6e7b, type: 3}
+  - joinServerButton: {instanceID: 0}
+  - startServerButton: {instanceID: 0}
+  - coinText: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

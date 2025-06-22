@@ -107,6 +107,38 @@ public class AccountManager : MonoBehaviour
         return true;
     }
 
+    public async Task<string> DeleteUser()
+    {
+        Debug.Log("deleting account master!");
+        string url = $"{GlobalConfig.baseURL}/api/protected/delete-user";
+
+        using (UnityWebRequest request = new UnityWebRequest(url, "DELETE")) // using ensures removed after 
+        {
+            request.SetRequestHeader("Content-Type", "application/json");
+
+            request.downloadHandler = new DownloadHandlerBuffer();
+
+            // Send the web request 
+            UnityWebRequestAsyncOperation operation = request.SendWebRequest();
+            while (!operation.isDone)
+            {
+                await Task.Yield();
+            }
+
+            // check for a response of 200 
+            if (request.result != UnityWebRequest.Result.Success)
+            {
+                return null;
+            }
+
+            string response = request.downloadHandler.text.Trim();
+            response = response.Trim('"');
+            Debug.Log(response);
+
+            return response;
+        }
+    }
+
     public async Task<string> GetUserCoins()
     {
         string url = $"{GlobalConfig.baseURL}/api/protected/get-coins";
