@@ -4,8 +4,8 @@ video demo- https://www.youtube.com/watch?v=jhyTkqzB2dI<br>
 
 <img src="https://github.com/user-attachments/assets/fd2cb087-4c40-4bd1-9581-1bb4fdc00551" width=200>
 <img src="https://github.com/user-attachments/assets/798089b4-c6dc-49d3-841b-d01303dc02f4" width=200>
-<img width="1170" height="2532" alt="image" src="https://github.com/user-attachments/assets/e11af9b4-09f6-4f06-b194-09a307d3b464" /><br>
-<img width="1170" height="2532" alt="image" src="https://github.com/user-attachments/assets/a3c43dae-24b2-470c-875a-009dac7d911c" />
+<img width="200" height="433" alt="image" src="https://github.com/user-attachments/assets/e11af9b4-09f6-4f06-b194-09a307d3b464" />
+<img width="200" height="433" alt="image" src="https://github.com/user-attachments/assets/a3c43dae-24b2-470c-875a-009dac7d911c" /><br>
 
 <img src="https://github.com/user-attachments/assets/28d94de9-23ce-44aa-9dfe-8ce714e5776b" width=200>
 <img src="https://github.com/user-attachments/assets/e837fbfa-9cd5-4855-b863-ad17720f02f8" width=200>
