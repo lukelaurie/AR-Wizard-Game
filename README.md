@@ -1,4 +1,4 @@
-apple appstore link-<br>
+apple appstore link- https://apps.apple.com/us/app/ar-wizard/id6737245994<br>
 name: ARWizard<br>
 video demo- https://www.youtube.com/watch?v=jhyTkqzB2dI<br>
 
